@@ -1,0 +1,700 @@
+[
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "copy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "copy",
+        "description": "copy",
+        "detail": "copy",
+        "documentation": {}
+    },
+    {
+        "label": "DelegatingLexer",
+        "importPath": "pygments.lexer",
+        "description": "pygments.lexer",
+        "isExtraImport": true,
+        "detail": "pygments.lexer",
+        "documentation": {}
+    },
+    {
+        "label": "PhpLexer",
+        "importPath": "pygments.lexers.web",
+        "description": "pygments.lexers.web",
+        "isExtraImport": true,
+        "detail": "pygments.lexers.web",
+        "documentation": {}
+    },
+    {
+        "label": "HtmlLexer",
+        "importPath": "pygments.lexers.web",
+        "description": "pygments.lexers.web",
+        "isExtraImport": true,
+        "detail": "pygments.lexers.web",
+        "documentation": {}
+    },
+    {
+        "label": "setup",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "sys,",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys.",
+        "description": "sys.",
+        "detail": "sys.",
+        "documentation": {}
+    },
+    {
+        "label": "CodeIgniterLexer",
+        "kind": 6,
+        "importPath": "training.user_guide_src.cilexer.cilexer.cilexer",
+        "description": "training.user_guide_src.cilexer.cilexer.cilexer",
+        "peekOfCode": "class CodeIgniterLexer(DelegatingLexer):\n    \"\"\"\n    Handles HTML, PHP, JavaScript, and CSS is highlighted\n    PHP is highlighted with the \"startline\" option\n    \"\"\"\n    name = 'CodeIgniter'\n    aliases = ['ci', 'codeigniter']\n    filenames = ['*.html', '*.css', '*.php', '*.xml', '*.static']\n    mimetypes = ['text/html', 'application/xhtml+xml']\n    def __init__(self, **options):",
+        "detail": "training.user_guide_src.cilexer.cilexer.cilexer",
+        "documentation": {}
+    },
+    {
+        "label": "__all__",
+        "kind": 5,
+        "importPath": "training.user_guide_src.cilexer.cilexer.cilexer",
+        "description": "training.user_guide_src.cilexer.cilexer.cilexer",
+        "peekOfCode": "__all__ = ['CodeIgniterLexer']\nclass CodeIgniterLexer(DelegatingLexer):\n    \"\"\"\n    Handles HTML, PHP, JavaScript, and CSS is highlighted\n    PHP is highlighted with the \"startline\" option\n    \"\"\"\n    name = 'CodeIgniter'\n    aliases = ['ci', 'codeigniter']\n    filenames = ['*.html', '*.css', '*.php', '*.xml', '*.static']\n    mimetypes = ['text/html', 'application/xhtml+xml']",
+        "detail": "training.user_guide_src.cilexer.cilexer.cilexer",
+        "documentation": {}
+    },
+    {
+        "label": "entry_points",
+        "kind": 5,
+        "importPath": "training.user_guide_src.cilexer.setup",
+        "description": "training.user_guide_src.cilexer.setup",
+        "peekOfCode": "entry_points = \"\"\"\n[pygments.lexers]\ncilexer = cilexer.cilexer:CodeIgniterLexer\n\"\"\"\nsetup(\n    name='pycilexer',\n    version='0.1',\n    description=__doc__,\n    author=\"EllisLab, Inc.\",\n    packages=['cilexer'],",
+        "detail": "training.user_guide_src.cilexer.setup",
+        "documentation": {}
+    },
+    {
+        "label": "cilexer",
+        "kind": 5,
+        "importPath": "training.user_guide_src.cilexer.setup",
+        "description": "training.user_guide_src.cilexer.setup",
+        "peekOfCode": "cilexer = cilexer.cilexer:CodeIgniterLexer\n\"\"\"\nsetup(\n    name='pycilexer',\n    version='0.1',\n    description=__doc__,\n    author=\"EllisLab, Inc.\",\n    packages=['cilexer'],\n    install_requires=(\n        'sphinx >= 1.0.7',",
+        "detail": "training.user_guide_src.cilexer.setup",
+        "documentation": {}
+    },
+    {
+        "label": "#needs_sphinx",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#needs_sphinx = '1.0'\n# Add any Sphinx extension module names here, as strings. They can be extensions\n# coming with Sphinx (named 'sphinx.ext.*') or your custom ones.\nextensions = ['sphinx.ext.ifconfig', 'sphinxcontrib.phpdomain']\n# Add any paths that contain templates here, relative to this directory.\ntemplates_path = ['_templates']\n# The suffix of source filenames.\nsource_suffix = '.rst'\n# The encoding of source files.\n#source_encoding = 'utf-8-sig'",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "extensions",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "extensions = ['sphinx.ext.ifconfig', 'sphinxcontrib.phpdomain']\n# Add any paths that contain templates here, relative to this directory.\ntemplates_path = ['_templates']\n# The suffix of source filenames.\nsource_suffix = '.rst'\n# The encoding of source files.\n#source_encoding = 'utf-8-sig'\n# The master toctree document.\nmaster_doc = 'index'\n# General information about the project.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "templates_path",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "templates_path = ['_templates']\n# The suffix of source filenames.\nsource_suffix = '.rst'\n# The encoding of source files.\n#source_encoding = 'utf-8-sig'\n# The master toctree document.\nmaster_doc = 'index'\n# General information about the project.\nproject = u'CodeIgniter'\ncopyright = u'2014 - 2017, British Columbia Institute of Technology'",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "source_suffix",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "source_suffix = '.rst'\n# The encoding of source files.\n#source_encoding = 'utf-8-sig'\n# The master toctree document.\nmaster_doc = 'index'\n# General information about the project.\nproject = u'CodeIgniter'\ncopyright = u'2014 - 2017, British Columbia Institute of Technology'\n# The version info for the project you're documenting, acts as replacement for\n# |version| and |release|, also used in various other places throughout the",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#source_encoding",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#source_encoding = 'utf-8-sig'\n# The master toctree document.\nmaster_doc = 'index'\n# General information about the project.\nproject = u'CodeIgniter'\ncopyright = u'2014 - 2017, British Columbia Institute of Technology'\n# The version info for the project you're documenting, acts as replacement for\n# |version| and |release|, also used in various other places throughout the\n# built documents.\n#",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "master_doc",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "master_doc = 'index'\n# General information about the project.\nproject = u'CodeIgniter'\ncopyright = u'2014 - 2017, British Columbia Institute of Technology'\n# The version info for the project you're documenting, acts as replacement for\n# |version| and |release|, also used in various other places throughout the\n# built documents.\n#\n# The short X.Y version.\nversion = '3.2.0-dev'",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "project",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "project = u'CodeIgniter'\ncopyright = u'2014 - 2017, British Columbia Institute of Technology'\n# The version info for the project you're documenting, acts as replacement for\n# |version| and |release|, also used in various other places throughout the\n# built documents.\n#\n# The short X.Y version.\nversion = '3.2.0-dev'\n# The full version, including alpha/beta/rc tags.\nrelease = '3.2.0-dev'",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "copyright",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "copyright = u'2014 - 2017, British Columbia Institute of Technology'\n# The version info for the project you're documenting, acts as replacement for\n# |version| and |release|, also used in various other places throughout the\n# built documents.\n#\n# The short X.Y version.\nversion = '3.2.0-dev'\n# The full version, including alpha/beta/rc tags.\nrelease = '3.2.0-dev'\n# The language for content autogenerated by Sphinx. Refer to documentation",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "version",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "version = '3.2.0-dev'\n# The full version, including alpha/beta/rc tags.\nrelease = '3.2.0-dev'\n# The language for content autogenerated by Sphinx. Refer to documentation\n# for a list of supported languages.\n#language = None\n# There are two options for replacing |today|: either, you set today to some\n# non-false value, then it is used:\n#today = ''\n# Else, today_fmt is used as the format for a strftime call.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "release",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "release = '3.2.0-dev'\n# The language for content autogenerated by Sphinx. Refer to documentation\n# for a list of supported languages.\n#language = None\n# There are two options for replacing |today|: either, you set today to some\n# non-false value, then it is used:\n#today = ''\n# Else, today_fmt is used as the format for a strftime call.\n#today_fmt = '%B %d, %Y'\n# List of patterns, relative to source directory, that match files and",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#language",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#language = None\n# There are two options for replacing |today|: either, you set today to some\n# non-false value, then it is used:\n#today = ''\n# Else, today_fmt is used as the format for a strftime call.\n#today_fmt = '%B %d, %Y'\n# List of patterns, relative to source directory, that match files and\n# directories to ignore when looking for source files.\nexclude_patterns = []\n# The reST default role (used for this markup: `text`) to use for all documents.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#today",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#today = ''\n# Else, today_fmt is used as the format for a strftime call.\n#today_fmt = '%B %d, %Y'\n# List of patterns, relative to source directory, that match files and\n# directories to ignore when looking for source files.\nexclude_patterns = []\n# The reST default role (used for this markup: `text`) to use for all documents.\n#default_role = None\n# If true, '()' will be appended to :php:func: etc. cross-reference text.\n#add_function_parentheses = True",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#today_fmt",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#today_fmt = '%B %d, %Y'\n# List of patterns, relative to source directory, that match files and\n# directories to ignore when looking for source files.\nexclude_patterns = []\n# The reST default role (used for this markup: `text`) to use for all documents.\n#default_role = None\n# If true, '()' will be appended to :php:func: etc. cross-reference text.\n#add_function_parentheses = True\n# If true, the current module name will be prepended to all description\n# unit titles (such as .. php:function::).",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "exclude_patterns",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "exclude_patterns = []\n# The reST default role (used for this markup: `text`) to use for all documents.\n#default_role = None\n# If true, '()' will be appended to :php:func: etc. cross-reference text.\n#add_function_parentheses = True\n# If true, the current module name will be prepended to all description\n# unit titles (such as .. php:function::).\n#add_module_names = True\n# If true, sectionauthor and moduleauthor directives will be shown in the\n# output. They are ignored by default.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#default_role",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#default_role = None\n# If true, '()' will be appended to :php:func: etc. cross-reference text.\n#add_function_parentheses = True\n# If true, the current module name will be prepended to all description\n# unit titles (such as .. php:function::).\n#add_module_names = True\n# If true, sectionauthor and moduleauthor directives will be shown in the\n# output. They are ignored by default.\n#show_authors = False\n# The name of the Pygments (syntax highlighting) style to use.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#add_function_parentheses",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#add_function_parentheses = True\n# If true, the current module name will be prepended to all description\n# unit titles (such as .. php:function::).\n#add_module_names = True\n# If true, sectionauthor and moduleauthor directives will be shown in the\n# output. They are ignored by default.\n#show_authors = False\n# The name of the Pygments (syntax highlighting) style to use.\npygments_style = 'trac'\nhighlight_language = 'ci'",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#add_module_names",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#add_module_names = True\n# If true, sectionauthor and moduleauthor directives will be shown in the\n# output. They are ignored by default.\n#show_authors = False\n# The name of the Pygments (syntax highlighting) style to use.\npygments_style = 'trac'\nhighlight_language = 'ci'\n# A list of ignored prefixes for module index sorting.\n#modindex_common_prefix = []\n# -- Options for HTML output ---------------------------------------------------",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#show_authors",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#show_authors = False\n# The name of the Pygments (syntax highlighting) style to use.\npygments_style = 'trac'\nhighlight_language = 'ci'\n# A list of ignored prefixes for module index sorting.\n#modindex_common_prefix = []\n# -- Options for HTML output ---------------------------------------------------\n# The theme to use for HTML and HTML Help pages.  See the documentation for\n# a list of builtin themes.\n#",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "pygments_style",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "pygments_style = 'trac'\nhighlight_language = 'ci'\n# A list of ignored prefixes for module index sorting.\n#modindex_common_prefix = []\n# -- Options for HTML output ---------------------------------------------------\n# The theme to use for HTML and HTML Help pages.  See the documentation for\n# a list of builtin themes.\n#\nhtml_theme = 'sphinx_rtd_theme'\n# Theme options are theme-specific and customize the look and feel of a theme",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "highlight_language",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "highlight_language = 'ci'\n# A list of ignored prefixes for module index sorting.\n#modindex_common_prefix = []\n# -- Options for HTML output ---------------------------------------------------\n# The theme to use for HTML and HTML Help pages.  See the documentation for\n# a list of builtin themes.\n#\nhtml_theme = 'sphinx_rtd_theme'\n# Theme options are theme-specific and customize the look and feel of a theme\n# further.  For a list of options available for each theme, see the",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#modindex_common_prefix",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#modindex_common_prefix = []\n# -- Options for HTML output ---------------------------------------------------\n# The theme to use for HTML and HTML Help pages.  See the documentation for\n# a list of builtin themes.\n#\nhtml_theme = 'sphinx_rtd_theme'\n# Theme options are theme-specific and customize the look and feel of a theme\n# further.  For a list of options available for each theme, see the\n# documentation.\n#",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "html_theme",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "html_theme = 'sphinx_rtd_theme'\n# Theme options are theme-specific and customize the look and feel of a theme\n# further.  For a list of options available for each theme, see the\n# documentation.\n#\n# Specifying a few options; just a starting point & we can play with it.\nhtml_theme_options = {\n}\n# Add any paths that contain custom themes here, relative to this directory.\nhtml_theme_path = [\"./_themes\"]",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "html_theme_options",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "html_theme_options = {\n}\n# Add any paths that contain custom themes here, relative to this directory.\nhtml_theme_path = [\"./_themes\"]\n# The name for this set of Sphinx documents.  If None, it defaults to\n# \"<project> v<release> documentation\".\n#html_title = None\n# A shorter title for the navigation bar.  Default is the same as html_title.\n#html_short_title = None\n# The name of an image file (relative to this directory) to place at the top",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "html_theme_path",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "html_theme_path = [\"./_themes\"]\n# The name for this set of Sphinx documents.  If None, it defaults to\n# \"<project> v<release> documentation\".\n#html_title = None\n# A shorter title for the navigation bar.  Default is the same as html_title.\n#html_short_title = None\n# The name of an image file (relative to this directory) to place at the top\n# of the sidebar.\n#html_logo = None\n# The name of an image file (within the static path) to use as favicon of the",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#html_title",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#html_title = None\n# A shorter title for the navigation bar.  Default is the same as html_title.\n#html_short_title = None\n# The name of an image file (relative to this directory) to place at the top\n# of the sidebar.\n#html_logo = None\n# The name of an image file (within the static path) to use as favicon of the\n# docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32\n# pixels large.\nhtml_favicon = 'images/ci-icon.ico'",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#html_short_title",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#html_short_title = None\n# The name of an image file (relative to this directory) to place at the top\n# of the sidebar.\n#html_logo = None\n# The name of an image file (within the static path) to use as favicon of the\n# docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32\n# pixels large.\nhtml_favicon = 'images/ci-icon.ico'\n# Add any paths that contain custom static files (such as style sheets) here,\n# relative to this directory. They are copied after the builtin static files,",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#html_logo",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#html_logo = None\n# The name of an image file (within the static path) to use as favicon of the\n# docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32\n# pixels large.\nhtml_favicon = 'images/ci-icon.ico'\n# Add any paths that contain custom static files (such as style sheets) here,\n# relative to this directory. They are copied after the builtin static files,\n# so a file named \"default.css\" will overwrite the builtin \"default.css\".\n#html_static_path = ['_static']\n# If not '', a 'Last updated on:' timestamp is inserted at every page bottom,",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "html_favicon",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "html_favicon = 'images/ci-icon.ico'\n# Add any paths that contain custom static files (such as style sheets) here,\n# relative to this directory. They are copied after the builtin static files,\n# so a file named \"default.css\" will overwrite the builtin \"default.css\".\n#html_static_path = ['_static']\n# If not '', a 'Last updated on:' timestamp is inserted at every page bottom,\n# using the given strftime format.\nhtml_last_updated_fmt = '%b %d, %Y'\n# If true, SmartyPants will be used to convert quotes and dashes to\n# typographically correct entities.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#html_static_path",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#html_static_path = ['_static']\n# If not '', a 'Last updated on:' timestamp is inserted at every page bottom,\n# using the given strftime format.\nhtml_last_updated_fmt = '%b %d, %Y'\n# If true, SmartyPants will be used to convert quotes and dashes to\n# typographically correct entities.\n#html_use_smartypants = True\n# Custom sidebar templates, maps document names to template names.\n#html_sidebars = {}\n# Additional templates that should be rendered to pages, maps page names to",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "html_last_updated_fmt",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "html_last_updated_fmt = '%b %d, %Y'\n# If true, SmartyPants will be used to convert quotes and dashes to\n# typographically correct entities.\n#html_use_smartypants = True\n# Custom sidebar templates, maps document names to template names.\n#html_sidebars = {}\n# Additional templates that should be rendered to pages, maps page names to\n# template names.\n#html_additional_pages = {}\n# If false, no module index is generated.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#html_use_smartypants",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#html_use_smartypants = True\n# Custom sidebar templates, maps document names to template names.\n#html_sidebars = {}\n# Additional templates that should be rendered to pages, maps page names to\n# template names.\n#html_additional_pages = {}\n# If false, no module index is generated.\n#html_domain_indices = True\n# If false, no index is generated.\n#html_use_index = True",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#html_sidebars",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#html_sidebars = {}\n# Additional templates that should be rendered to pages, maps page names to\n# template names.\n#html_additional_pages = {}\n# If false, no module index is generated.\n#html_domain_indices = True\n# If false, no index is generated.\n#html_use_index = True\n# If true, the index is split into individual pages for each letter.\n#html_split_index = False",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#html_additional_pages",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#html_additional_pages = {}\n# If false, no module index is generated.\n#html_domain_indices = True\n# If false, no index is generated.\n#html_use_index = True\n# If true, the index is split into individual pages for each letter.\n#html_split_index = False\n# If true, links to the reST sources are added to the pages.\n#html_show_sourcelink = True\n# If true, \"Created using Sphinx\" is shown in the HTML footer. Default is True.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#html_domain_indices",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#html_domain_indices = True\n# If false, no index is generated.\n#html_use_index = True\n# If true, the index is split into individual pages for each letter.\n#html_split_index = False\n# If true, links to the reST sources are added to the pages.\n#html_show_sourcelink = True\n# If true, \"Created using Sphinx\" is shown in the HTML footer. Default is True.\n#html_show_sphinx = True\n# If true, \"(C) Copyright ...\" is shown in the HTML footer. Default is True.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#html_use_index",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#html_use_index = True\n# If true, the index is split into individual pages for each letter.\n#html_split_index = False\n# If true, links to the reST sources are added to the pages.\n#html_show_sourcelink = True\n# If true, \"Created using Sphinx\" is shown in the HTML footer. Default is True.\n#html_show_sphinx = True\n# If true, \"(C) Copyright ...\" is shown in the HTML footer. Default is True.\n#html_show_copyright = True\n# If true, an OpenSearch description file will be output, and all pages will",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#html_split_index",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#html_split_index = False\n# If true, links to the reST sources are added to the pages.\n#html_show_sourcelink = True\n# If true, \"Created using Sphinx\" is shown in the HTML footer. Default is True.\n#html_show_sphinx = True\n# If true, \"(C) Copyright ...\" is shown in the HTML footer. Default is True.\n#html_show_copyright = True\n# If true, an OpenSearch description file will be output, and all pages will\n# contain a <link> tag referring to it.  The value of this option must be the\n# base URL from which the finished HTML is served.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#html_show_sourcelink",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#html_show_sourcelink = True\n# If true, \"Created using Sphinx\" is shown in the HTML footer. Default is True.\n#html_show_sphinx = True\n# If true, \"(C) Copyright ...\" is shown in the HTML footer. Default is True.\n#html_show_copyright = True\n# If true, an OpenSearch description file will be output, and all pages will\n# contain a <link> tag referring to it.  The value of this option must be the\n# base URL from which the finished HTML is served.\n#html_use_opensearch = ''\n# This is the file name suffix for HTML files (e.g. \".xhtml\").",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#html_show_sphinx",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#html_show_sphinx = True\n# If true, \"(C) Copyright ...\" is shown in the HTML footer. Default is True.\n#html_show_copyright = True\n# If true, an OpenSearch description file will be output, and all pages will\n# contain a <link> tag referring to it.  The value of this option must be the\n# base URL from which the finished HTML is served.\n#html_use_opensearch = ''\n# This is the file name suffix for HTML files (e.g. \".xhtml\").\n#html_file_suffix = None\n# Output file base name for HTML help builder.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#html_show_copyright",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#html_show_copyright = True\n# If true, an OpenSearch description file will be output, and all pages will\n# contain a <link> tag referring to it.  The value of this option must be the\n# base URL from which the finished HTML is served.\n#html_use_opensearch = ''\n# This is the file name suffix for HTML files (e.g. \".xhtml\").\n#html_file_suffix = None\n# Output file base name for HTML help builder.\nhtmlhelp_basename = 'CodeIgniterdoc'\nhtml_copy_source = False",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#html_use_opensearch",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#html_use_opensearch = ''\n# This is the file name suffix for HTML files (e.g. \".xhtml\").\n#html_file_suffix = None\n# Output file base name for HTML help builder.\nhtmlhelp_basename = 'CodeIgniterdoc'\nhtml_copy_source = False\n# -- Options for LaTeX output --------------------------------------------------\n# The paper size ('letter' or 'a4').\n#latex_paper_size = 'letter'\n# The font size ('10pt', '11pt' or '12pt').",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#html_file_suffix",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#html_file_suffix = None\n# Output file base name for HTML help builder.\nhtmlhelp_basename = 'CodeIgniterdoc'\nhtml_copy_source = False\n# -- Options for LaTeX output --------------------------------------------------\n# The paper size ('letter' or 'a4').\n#latex_paper_size = 'letter'\n# The font size ('10pt', '11pt' or '12pt').\n#latex_font_size = '10pt'\n# Grouping the document tree into LaTeX files. List of tuples",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "htmlhelp_basename",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "htmlhelp_basename = 'CodeIgniterdoc'\nhtml_copy_source = False\n# -- Options for LaTeX output --------------------------------------------------\n# The paper size ('letter' or 'a4').\n#latex_paper_size = 'letter'\n# The font size ('10pt', '11pt' or '12pt').\n#latex_font_size = '10pt'\n# Grouping the document tree into LaTeX files. List of tuples\n# (source start file, target name, title, author, documentclass [howto/manual]).\nlatex_documents = [",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "html_copy_source",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "html_copy_source = False\n# -- Options for LaTeX output --------------------------------------------------\n# The paper size ('letter' or 'a4').\n#latex_paper_size = 'letter'\n# The font size ('10pt', '11pt' or '12pt').\n#latex_font_size = '10pt'\n# Grouping the document tree into LaTeX files. List of tuples\n# (source start file, target name, title, author, documentclass [howto/manual]).\nlatex_documents = [\n  ('index', 'CodeIgniter.tex', u'CodeIgniter Documentation',",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#latex_paper_size",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#latex_paper_size = 'letter'\n# The font size ('10pt', '11pt' or '12pt').\n#latex_font_size = '10pt'\n# Grouping the document tree into LaTeX files. List of tuples\n# (source start file, target name, title, author, documentclass [howto/manual]).\nlatex_documents = [\n  ('index', 'CodeIgniter.tex', u'CodeIgniter Documentation',\n   u'British Columbia Institute of Technology', 'manual'),\n]\n# The name of an image file (relative to this directory) to place at the top of",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#latex_font_size",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#latex_font_size = '10pt'\n# Grouping the document tree into LaTeX files. List of tuples\n# (source start file, target name, title, author, documentclass [howto/manual]).\nlatex_documents = [\n  ('index', 'CodeIgniter.tex', u'CodeIgniter Documentation',\n   u'British Columbia Institute of Technology', 'manual'),\n]\n# The name of an image file (relative to this directory) to place at the top of\n# the title page.\n#latex_logo = None",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "latex_documents",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "latex_documents = [\n  ('index', 'CodeIgniter.tex', u'CodeIgniter Documentation',\n   u'British Columbia Institute of Technology', 'manual'),\n]\n# The name of an image file (relative to this directory) to place at the top of\n# the title page.\n#latex_logo = None\n# For \"manual\" documents, if this is true, then toplevel headings are parts,\n# not chapters.\n#latex_use_parts = False",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#latex_logo",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#latex_logo = None\n# For \"manual\" documents, if this is true, then toplevel headings are parts,\n# not chapters.\n#latex_use_parts = False\n# If true, show page references after internal links.\n#latex_show_pagerefs = False\n# If true, show URL addresses after external links.\n#latex_show_urls = False\n# Additional stuff for the LaTeX preamble.\n#latex_preamble = ''",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#latex_use_parts",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#latex_use_parts = False\n# If true, show page references after internal links.\n#latex_show_pagerefs = False\n# If true, show URL addresses after external links.\n#latex_show_urls = False\n# Additional stuff for the LaTeX preamble.\n#latex_preamble = ''\n# Documents to append as an appendix to all manuals.\n#latex_appendices = []\n# If false, no module index is generated.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#latex_show_pagerefs",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#latex_show_pagerefs = False\n# If true, show URL addresses after external links.\n#latex_show_urls = False\n# Additional stuff for the LaTeX preamble.\n#latex_preamble = ''\n# Documents to append as an appendix to all manuals.\n#latex_appendices = []\n# If false, no module index is generated.\n#latex_domain_indices = True\n# -- Options for manual page output --------------------------------------------",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#latex_show_urls",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#latex_show_urls = False\n# Additional stuff for the LaTeX preamble.\n#latex_preamble = ''\n# Documents to append as an appendix to all manuals.\n#latex_appendices = []\n# If false, no module index is generated.\n#latex_domain_indices = True\n# -- Options for manual page output --------------------------------------------\n# One entry per manual page. List of tuples\n# (source start file, name, description, authors, manual section).",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#latex_preamble",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#latex_preamble = ''\n# Documents to append as an appendix to all manuals.\n#latex_appendices = []\n# If false, no module index is generated.\n#latex_domain_indices = True\n# -- Options for manual page output --------------------------------------------\n# One entry per manual page. List of tuples\n# (source start file, name, description, authors, manual section).\nman_pages = [\n    ('index', 'codeigniter', u'CodeIgniter Documentation',",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#latex_appendices",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#latex_appendices = []\n# If false, no module index is generated.\n#latex_domain_indices = True\n# -- Options for manual page output --------------------------------------------\n# One entry per manual page. List of tuples\n# (source start file, name, description, authors, manual section).\nman_pages = [\n    ('index', 'codeigniter', u'CodeIgniter Documentation',\n     [u'British Columbia Institute of Technology'], 1)\n]",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#latex_domain_indices",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#latex_domain_indices = True\n# -- Options for manual page output --------------------------------------------\n# One entry per manual page. List of tuples\n# (source start file, name, description, authors, manual section).\nman_pages = [\n    ('index', 'codeigniter', u'CodeIgniter Documentation',\n     [u'British Columbia Institute of Technology'], 1)\n]\n# -- Options for Epub output ---------------------------------------------------\n# Bibliographic Dublin Core info.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "man_pages",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "man_pages = [\n    ('index', 'codeigniter', u'CodeIgniter Documentation',\n     [u'British Columbia Institute of Technology'], 1)\n]\n# -- Options for Epub output ---------------------------------------------------\n# Bibliographic Dublin Core info.\nepub_title = u'CodeIgniter'\nepub_author = u'British Columbia Institute of Technology'\nepub_publisher = u'British Columbia Institute of Technology'\nepub_copyright = u'2014 - 2017, British Columbia Institute of Technology'",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "epub_title",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "epub_title = u'CodeIgniter'\nepub_author = u'British Columbia Institute of Technology'\nepub_publisher = u'British Columbia Institute of Technology'\nepub_copyright = u'2014 - 2017, British Columbia Institute of Technology'\n# The language of the text. It defaults to the language option\n# or en if the language is not set.\n#epub_language = ''\n# The scheme of the identifier. Typical schemes are ISBN or URL.\n#epub_scheme = ''\n# The unique identifier of the text. This can be a ISBN number",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "epub_author",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "epub_author = u'British Columbia Institute of Technology'\nepub_publisher = u'British Columbia Institute of Technology'\nepub_copyright = u'2014 - 2017, British Columbia Institute of Technology'\n# The language of the text. It defaults to the language option\n# or en if the language is not set.\n#epub_language = ''\n# The scheme of the identifier. Typical schemes are ISBN or URL.\n#epub_scheme = ''\n# The unique identifier of the text. This can be a ISBN number\n# or the project homepage.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "epub_publisher",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "epub_publisher = u'British Columbia Institute of Technology'\nepub_copyright = u'2014 - 2017, British Columbia Institute of Technology'\n# The language of the text. It defaults to the language option\n# or en if the language is not set.\n#epub_language = ''\n# The scheme of the identifier. Typical schemes are ISBN or URL.\n#epub_scheme = ''\n# The unique identifier of the text. This can be a ISBN number\n# or the project homepage.\n#epub_identifier = ''",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "epub_copyright",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "epub_copyright = u'2014 - 2017, British Columbia Institute of Technology'\n# The language of the text. It defaults to the language option\n# or en if the language is not set.\n#epub_language = ''\n# The scheme of the identifier. Typical schemes are ISBN or URL.\n#epub_scheme = ''\n# The unique identifier of the text. This can be a ISBN number\n# or the project homepage.\n#epub_identifier = ''\n# A unique identification for the text.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#epub_language",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#epub_language = ''\n# The scheme of the identifier. Typical schemes are ISBN or URL.\n#epub_scheme = ''\n# The unique identifier of the text. This can be a ISBN number\n# or the project homepage.\n#epub_identifier = ''\n# A unique identification for the text.\n#epub_uid = ''\n# HTML files that should be inserted before the pages created by sphinx.\n# The format is a list of tuples containing the path and title.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#epub_scheme",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#epub_scheme = ''\n# The unique identifier of the text. This can be a ISBN number\n# or the project homepage.\n#epub_identifier = ''\n# A unique identification for the text.\n#epub_uid = ''\n# HTML files that should be inserted before the pages created by sphinx.\n# The format is a list of tuples containing the path and title.\n#epub_pre_files = []\n# HTML files shat should be inserted after the pages created by sphinx.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#epub_identifier",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#epub_identifier = ''\n# A unique identification for the text.\n#epub_uid = ''\n# HTML files that should be inserted before the pages created by sphinx.\n# The format is a list of tuples containing the path and title.\n#epub_pre_files = []\n# HTML files shat should be inserted after the pages created by sphinx.\n# The format is a list of tuples containing the path and title.\n#epub_post_files = []\n# A list of files that should not be packed into the epub file.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#epub_uid",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#epub_uid = ''\n# HTML files that should be inserted before the pages created by sphinx.\n# The format is a list of tuples containing the path and title.\n#epub_pre_files = []\n# HTML files shat should be inserted after the pages created by sphinx.\n# The format is a list of tuples containing the path and title.\n#epub_post_files = []\n# A list of files that should not be packed into the epub file.\n#epub_exclude_files = []\n# The depth of the table of contents in toc.ncx.",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#epub_pre_files",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#epub_pre_files = []\n# HTML files shat should be inserted after the pages created by sphinx.\n# The format is a list of tuples containing the path and title.\n#epub_post_files = []\n# A list of files that should not be packed into the epub file.\n#epub_exclude_files = []\n# The depth of the table of contents in toc.ncx.\n#epub_tocdepth = 3\n# Allow duplicate toc entries.\n#epub_tocdup = True",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#epub_post_files",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#epub_post_files = []\n# A list of files that should not be packed into the epub file.\n#epub_exclude_files = []\n# The depth of the table of contents in toc.ncx.\n#epub_tocdepth = 3\n# Allow duplicate toc entries.\n#epub_tocdup = True",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#epub_exclude_files",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#epub_exclude_files = []\n# The depth of the table of contents in toc.ncx.\n#epub_tocdepth = 3\n# Allow duplicate toc entries.\n#epub_tocdup = True",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#epub_tocdepth",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#epub_tocdepth = 3\n# Allow duplicate toc entries.\n#epub_tocdup = True",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    },
+    {
+        "label": "#epub_tocdup",
+        "kind": 5,
+        "importPath": "training.user_guide_src.source.conf",
+        "description": "training.user_guide_src.source.conf",
+        "peekOfCode": "#epub_tocdup = True",
+        "detail": "training.user_guide_src.source.conf",
+        "documentation": {}
+    }
+]
