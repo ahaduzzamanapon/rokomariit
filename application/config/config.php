@@ -27,11 +27,10 @@ $config['modules_locations'] = array(
 |
 */
 
-if($_SERVER['HTTP_HOST'] === 'localhost'){
-    $config['base_url'] = 'http://localhost/rokomariit/';
-}else{
-    $config['base_url'] = 'http://rokomariit.com/';
-}  
+$hrsale_url = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
+$hrsale_url .= "://".$_SERVER['HTTP_HOST'];
+$hrsale_url .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
+$config['base_url'] = $hrsale_url;
 
 /*
 |--------------------------------------------------------------------------

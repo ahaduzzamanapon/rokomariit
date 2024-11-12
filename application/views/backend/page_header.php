@@ -100,6 +100,7 @@
         </div>
       </div>
       
+      <?php if(!$this->ion_auth->in_group([4])): ?>
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
         <li class="treeview <?=backend_activate_menu_class('dashboard');?>"> <a href="<?=base_url('admin/dashboard');?>"> <i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>     
@@ -164,7 +165,15 @@
             <li><a href="<?=base_url('admin/services/all');?>"><i class="fa fa-circle-o"></i> All Services</a></li>
           </ul>
         </li>
-
+        <li class="treeview <?=backend_activate_menu_class('packages');?>">
+          <a href="javascript:void();">
+            <i class="fa fa-dashboard"></i> <span>Packages</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?=base_url('admin/packages/add');?>"><i class="fa fa-circle-o"></i> Add Packages</a></li>
+            <li><a href="<?=base_url('admin/packages/all');?>"><i class="fa fa-circle-o"></i> All Packages</a></li>
+          </ul>
+        </li>
         <li class="treeview <?=backend_activate_menu_class('news');?>">
           <a href="javascript:void();">
             <i class="fa fa-dashboard"></i> <span>Events</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span>
@@ -258,6 +267,18 @@
           
         <li class="<?=backend_activate_menu_class('change_password');?>"><a href="<?php echo base_url('change_password');?>"><i class="fa fa-book"></i> <span>Change Password</span></a></li>        
       </ul>
+      <?php else: ?>
+        <ul class="sidebar-menu">
+        <li class="header">MAIN NAVIGATION</li>
+        <li class="treeview <?=backend_activate_menu_class('user_dashboard');?>"> <a href="<?=base_url('admin/user_dashboard');?>"> <i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>     
+        <li class="treeview <?=backend_activate_menu_class('purchase_history');?>"> <a href="<?=base_url('admin/purchase_history');?>"> <i class="fa fa-dashboard"></i> <span>Purchase History</span></a> </li>     
+        <li class="<?=backend_activate_menu_class('change_password');?>"><a href="<?php echo base_url('change_password');?>"><i class="fa fa-book"></i> <span>Change Password</span></a></li>        
+      </ul>
+
+      <?php endif; ?>
+
+
+
     </section>
   </aside>
 

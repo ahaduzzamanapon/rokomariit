@@ -39,3 +39,11 @@ if(!function_exists('backend_active_menu_class')) {
       return ($class == $controller) ? 'active' : '';
     }
 }
+
+
+if(!function_exists('dd')) {
+    function dd($var) {
+     echo '<pre>'; print_r($var); echo '</pre>';
+     exit;
+    }
+}

@@ -55,11 +55,22 @@ $route['translate_uri_dashes'] 	= FALSE;
 
 
 // $route['course'] 				= 'site/course';
-$route['article/(:any)'] 		= 'site/article/$1';
-$route['service/(:any)'] 		= 'site/services/$1';
-$route['events'] 				= 'site/events';
-$route['apply'] 				= 'site/apply';
-$route['contact-us'] 			= 'site/contact_us';
-$route['terms'] 				= 'site/terms';
-$route['privacy-policy'] 		= 'site/privacyPolicy';
+$route['article/(:any)'] 		  = 'site/article/$1';
+$route['service/(:any)'] 		  = 'site/services/$1';
+
+$route['events'] 				  = 'site/events';
+$route['apply'] 				  = 'site/apply';
+$route['contact-us'] 			  = 'site/contact_us';
+$route['terms'] 				  = 'site/terms';
+$route['privacy-policy'] 		  = 'site/privacyPolicy';
+
+// packages
+$route['packages'] 		          = 'site/packages';
+$route['purchase_create/(:any)']  = 'site/purchase_create/$1';
+$route['payment_process']         = 'site/payment_process';
+
+//payment
+$route['payment/success/(:any)/(:any)'] 		  = 'site/payment_success/$1/$2';
+$route['payment/fail/(:any)'] 		  = 'site/payment_fail/$1';
+$route['payment/cancel/(:any)'] 		  = 'site/payment_cancel/$1';
 

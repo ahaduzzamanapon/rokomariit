@@ -135,14 +135,14 @@
                                         ?>
                                     </ul>
                                 </li>
+                                <li class="<?php if($method=='packages'){echo 'active';} ?>"><a href="<?=base_url().'packages'?>">Packages</a>
+                                </li>
                                 <!-- <li><a href="<?=base_url().'#'?>">E-Learning</a></li> -->
                                 <!-- <li class="<?php if($method=='events'){echo 'active';} ?>"><a href="<?=base_url().'events'?>">Events</a></li> -->
                                 <li class="<?php if($method=='contact'){echo 'active';} ?>"><a href="<?=base_url().'contact-us'?>">Contact Us</a></li>
                               
                                 <li class="training btn-grad-training"><a class="train" href="<?=base_url().'training'?>">Training</a></li>
                                 <!-- training (Hide) -->
-
-                                    
                             </ul>
                             <!-- /navigation menu -->
                         </div>
