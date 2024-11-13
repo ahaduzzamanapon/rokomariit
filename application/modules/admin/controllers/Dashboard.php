@@ -19,8 +19,17 @@ class Dashboard extends Backend_Controller {
         $this->data['total_article'] = $this->Dashboard_model->get_count('article'); 
         $this->data['total_event'] = $this->Dashboard_model->get_count('news'); 
 
+
+
 		$this->data['meta_title'] = 'Dashboard';
-		$this->data['subview'] = 'dashboard/index';
+		if(!$this->ion_auth->in_group([4])){
+			$this->data['subview'] = 'dashboard/index';
+		}else{
+			$this->data['total_purchase'] = $this->Dashboard_model->get_count('user_purchase_packages', ['user_id' => $this->session->userdata('user_id')]); 
+
+			$this->data['subview'] = 'dashboard/user_index';
+		}
+
     	$this->load->view('backend/_layout_main', $this->data);
 	}
 

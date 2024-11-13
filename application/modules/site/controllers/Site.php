@@ -99,7 +99,7 @@ class Site extends Frontend_Controller {
         $user_id=$this->input->post('user_id');
         $package_id=$this->input->post('package_id');
         if ($user_id=='' || $user_id==null) {
-            $password=substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 8);
+            $password='12345678';
             $data_user_info=array(
                 'ip_address'=>0,
                 'username'=>$this->input->post('email'),
@@ -125,7 +125,7 @@ class Site extends Frontend_Controller {
             <p>Hi, here are your login credentials:</p>
             <p>Username: ' . htmlspecialchars($this->input->post('email')) . '</p>
             <p>Password: ' . htmlspecialchars($password) . '</p>
-            <p>Link: <a href="' . base_url('site/login') . '">' . base_url('site/login') . ' Go to login </a></p>
+            <p>Link: <a href="' . base_url('login') . '">' . base_url('login') . ' Go to login </a></p>
             ';
             $this->session->set_flashdata('credentials', $data_view);
 
@@ -436,7 +436,21 @@ class Site extends Frontend_Controller {
                 'create_at'=>date('Y-m-d H:i:s'),
             );
             $this->db->insert('user_purchase_packages', $data_user_purchase_packages);
-            $this->session->set_flashdata('success', 'Payment Successful');
+
+
+
+            $data_view = '
+            Payment Successful 
+            Please login to your account.
+            <p>Here are your login credentials Please Do Not Share with anyone And Keep it Safe and make sure to change your password:</p>
+            <p>Username: ' . htmlspecialchars($$user_info->email) . '</p>
+            <p>Password: ' . htmlspecialchars($password_r) . '</p>
+            <p>Link: <a href="' . base_url('login') . '">' . base_url('login') . ' Go to login </a></p>
+            ';
+
+
+
+            $this->session->set_flashdata('success',  $data_view);
             redirect(base_url("site/purchase_create/$package_id"));
     }
     public function trigger_login($email, $password){

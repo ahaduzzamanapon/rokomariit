@@ -116,6 +116,9 @@
           </ul>
         </li>
 
+        <li class="treeview <?=backend_activate_menu_class('purchase_history');?>"> <a href="<?=base_url('admin/purchase_history');?>"> <i class="fa fa-dashboard"></i> <span>Purchase History</span></a> </li>     
+
+
         <li class="treeview <?=backend_activate_menu_class('gallery');?>">
           <a href="javascript:void();">
             <i class="fa fa-dashboard"></i> <span>Gallery</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span>
@@ -270,8 +273,9 @@
       <?php else: ?>
         <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="treeview <?=backend_activate_menu_class('user_dashboard');?>"> <a href="<?=base_url('admin/user_dashboard');?>"> <i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>     
+        <li class="treeview <?=backend_activate_menu_class('dashboard');?>"> <a href="<?=base_url('admin/dashboard');?>"> <i class="fa fa-dashboard"></i> <span>Dashboard</span></a> </li>     
         <li class="treeview <?=backend_activate_menu_class('purchase_history');?>"> <a href="<?=base_url('admin/purchase_history');?>"> <i class="fa fa-dashboard"></i> <span>Purchase History</span></a> </li>     
+
         <li class="<?=backend_activate_menu_class('change_password');?>"><a href="<?php echo base_url('change_password');?>"><i class="fa fa-book"></i> <span>Change Password</span></a></li>        
       </ul>
 
