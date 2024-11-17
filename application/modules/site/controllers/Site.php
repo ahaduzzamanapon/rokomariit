@@ -443,8 +443,8 @@ class Site extends Frontend_Controller {
             Payment Successful 
             Please login to your account.
             <p>Here are your login credentials Please Do Not Share with anyone And Keep it Safe and make sure to change your password:</p>
-            <p>Username: ' . htmlspecialchars($$user_info->email) . '</p>
-            <p>Password: ' . htmlspecialchars($password_r) . '</p>
+            <p>Username: ' . htmlspecialchars($user_info->email) . '</p>
+            <p>Password: ' . htmlspecialchars($user_info->password_r) . '</p>
             <p>Link: <a href="' . base_url('login') . '">' . base_url('login') . ' Go to login </a></p>
             ';
 

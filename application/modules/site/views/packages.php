@@ -152,7 +152,7 @@
     
     <section class="page-section with-sidebar">
         <div class="container">
-            <div class="row">
+            <div class="row" style="gap: 27px;display: flex;flex-wrap: wrap;">
 
             <?php
             $this->db->select('*');
