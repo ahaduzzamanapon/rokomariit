@@ -194,6 +194,9 @@ $config['controller_trigger'] = 'c';
 $config['function_trigger'] = 'm';
 $config['directory_trigger'] = 'd';
 
+$config['controller_suffix'] = ''; // Default to an empty string
+
+
 /*
 |--------------------------------------------------------------------------
 | Allow $_GET array
