@@ -96,8 +96,11 @@ class Site extends Frontend_Controller {
     }
 
     public function payment_process(){
+        // dd($_POST);
         $user_id=$this->input->post('user_id');
         $package_id=$this->input->post('package_id');
+        $amount=$this->input->post('amount');
+        // dd($amount);
         if ($user_id=='' || $user_id==null) {
             $password='12345678';
             $data_user_info=array(
@@ -132,7 +135,7 @@ class Site extends Frontend_Controller {
             
         }
 
-        $this->initiatePayment($user_id,$package_id);
+        $this->initiatePayment($user_id,$package_id,$amount);
 
 
 
@@ -140,13 +143,14 @@ class Site extends Frontend_Controller {
 
 
 
-    public function initiatePayment($user_id, $package_id)
-    {
+    public function initiatePayment($user_id, $package_id, $amount)
+    {   
+        // dd($amount);
         $user_info = $this->db->where('id', $user_id)->get('users')->row();
         $package_info = $this->db->where('id', $package_id)->get('packages')->row();
     
         $email = $user_info->email;
-        $amount = $package_info->amount;
+        // $amount = $package_info->amount;
         $store_id = "aamarpaytest";  // Replace with your Store ID / Merchant ID
         $signature_key = "dbb74894e82415a2f7ff0ec3a97e4183"; // Replace with your signature key from AamarPay
         $url = 'https://sandbox.aamarpay.com/jsonpost.php'; // Sandbox URL

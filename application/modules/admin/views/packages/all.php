@@ -30,7 +30,7 @@
                   <th>SL</th>
                   <th>Name</th>
                   <th>Description</th>
-                  <th>Amount</th>
+                  <th>Discount </th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -46,7 +46,7 @@
                 <td><?=$key+1;?></td>
                 <td><?=$row->packages_name;?></td>
                 <td><?=$row->description;?></td>
-                <td><?=$row->amount;?></td>
+                <td><?=$row->amount;?>%</td>
                 <td><?=$row->status==1?'Active':'Inactive';?></td>
                 <td> 
                   <div class="btn-group">

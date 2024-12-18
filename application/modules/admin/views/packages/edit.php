@@ -6,118 +6,80 @@
   </ol>
 </section>
 
+
+
 <section class="content">
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title"><?=$meta_title?></h3>
-          <a href="<?=base_url('admin/packages/all')?>" class="btn btn-info btn-xs pull-right" style="margin-left: 15px;"> All Service</a>
-          <a href="<?=base_url('admin/packages/details/'.$info->id)?>" class="btn btn-info btn-xs pull-right" style="margin-left: 15px;"> Details Service</a>
-          <a href="<?=base_url('admin/packages/add')?>" class="btn btn-info btn-xs pull-right"> Add Service</a> 
-        </div>        
-        <?php echo form_open_multipart("admin/packages/edit/".$info->id);?>
-          <div class="box-body">            
-            <?php if($this->session->flashdata('success')):?>
-                <div class="alert alert-success">
-                    <a class="close" data-dismiss="alert">&times;</a>
-                    <?php echo $this->session->flashdata('success');;?>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Edit Package</h3>
+                    <a href="<?= base_url('admin/packages/all') ?>" class="btn btn-info btn-xs pull-right">Back to All Packages</a>
                 </div>
-            <?php endif; ?>
-
-            <div class="row">
-              <div class="col-md-7">
-                <div class="form-group">
-                  <label>Service Name</label>
-                  <div><?php echo form_error('name'); ?></div>
-                  <input type="text" class="form-control" name="name" value="<?=set_value('name', $info->name)?>">
+                <?php echo form_open("admin/packages/update/{$package->id}"); ?>
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="package-name">Package Name</label>
+                        <input type="text" class="form-control" id="package-name" name="packages_name" value="<?= set_value('packages_name', $package->packages_name) ?>" placeholder="Enter package name">
+                        <small class="text-danger"><?php echo form_error('packages_name'); ?></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" name="description" placeholder="Enter description"><?= set_value('description', $package->description) ?></textarea>
+                        <small class="text-danger"><?php echo form_error('description'); ?></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Discount</label>
+                        <input type="number" class="form-control" id="amount" name="amount" value="<?= set_value('amount', $package->amount) ?>" placeholder="Enter Discount">
+                        <small class="text-danger"><?php echo form_error('amount'); ?></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select class="form-control" id="status" name="status">
+                            <option value="1" <?= set_select('status', '1', $package->status == 1) ?>>Active</option>
+                            <option value="2" <?= set_select('status', '2', $package->status == 2) ?>>Inactive</option>
+                        </select>
+                        <small class="text-danger"><?php echo form_error('status'); ?></small>
+                    </div>
+                    <div class="form-group">
+                        <label>Package Items</label>
+                        <div id="item-list">
+                            <?php if (!empty($package_items)): ?>
+                                <?php foreach ($package_items as $key => $item): ?>
+                                    <div class="item-row" style="margin-bottom: 10px;">
+                                        <input type="text" class="form-control" name="packages_item[<?= $key ?>][name]" value="<?= $item['name'] ?>" placeholder="Item Name" style="display:inline-block; width:32%; margin-right:1%;">
+                                        <input type="number" class="form-control" name="packages_item[<?= $key ?>][regular_price]" value="<?= $item['regular_price'] ?>" placeholder="Regular Price" style="display:inline-block; width:32%; margin-right:1%;">
+                                        <input type="number" class="form-control" name="packages_item[<?= $key ?>][market_price]" value="<?= $item['market_price'] ?>" placeholder="Market Price" style="display:inline-block; width:32%;">
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary" onclick="addItem()">Add Item</button>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                  <label>Short Description</label>
-                  <div><?php echo form_error('short_desc'); ?></div>
-                  <textarea class="form-control" rows="3" name="short_desc" placeholder="Short Description Maximum 255 character"><?=set_value('short_desc', $info->short_desc)?></textarea>
+                <div class="box-footer">
+                    <?php echo form_submit('submit', 'Update', "class='btn btn-primary pull-right'"); ?>
                 </div>
-
-                <div class="form-group">
-                  <label>Details Description</label>
-                  <div><?php echo form_error('description'); ?></div>
-                  <textarea id="editor1" name="description" rows="10" cols="80"><?=set_value('description', $info->description)?></textarea>
-                </div>
-              </div>
-
-              <div class="col-md-5">
-              <div class="form-group">
-                  <label>Icon Image</label>
-                  <div><?php echo form_error('fa_icon'); ?></div>
-                  <input type="file" name="fa_icon">   
-                  <label style="color:red">Image Size: Width:600px, Height: 400px</label>                
-                  <p class="help-block">File type png and maximun file size 1 MB.</p>
-                  <?php 
-                  $img_path = base_url().'service_img/icon_img/';
-                  if($info->image_file != NULL){
-                          $src= $img_path.$info->fa_icon;
-                          echo "<img src='$src'>";
-                      }
-                  ?>
-
-                </div>
-
-                <!-- <div class="form-group">
-                    <label>Fontawesome Icon</label>
-                    <div><?php echo form_error('fa_icon'); ?></div>
-                    <input type="text" class="form-control" name="fa_icon" value="<?=set_value('fa_icon', $info->fa_icon)?>" placeholder="e.g. fa-camera-retro">
-                </div> -->
-
-                <div class="form-group">
-                  <label>Meta Keywords</label>
-                  <textarea class="form-control" rows="3" name="meta_keys" placeholder="tag1, tag2, tag3, tag4, tag5"><?=set_value('meta_keys', $info->meta_keys)?></textarea>
-                </div>                
-
-                <div class="form-group">
-                  <label class="form-label required">Display Home</label> <br>
-                  <input type="radio" name="display_home" value="1" <?=set_value('display_home', $info->display_home)=='1'?'checked':'';?>> Yes 
-                  <input type="radio" name="display_home" value="0" <?=set_value('display_home', $info->display_home)=='0'?'checked':'';?>> No
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label required">Status</label> <br>
-                  <input type="radio" name="status" value="1" <?=set_value('status', $info->status)=='1'?'checked':'';?>> Yes 
-                  <input type="radio" name="status" value="0" <?=set_value('status', $info->status)=='0'?'checked':'';?>> No
-                </div>
-
-                <div class="form-group">
-                  <label>Image Upload</label>
-                  <div><?php echo form_error('userfile'); ?></div>
-                  <input type="file" name="userfile">   
-                  <label style="color:red">Image Size: Width:600px, Height: 400px</label>                
-                  <p class="help-block">File type jpg, png, jpeg, gif and maximun file size 1 MB.</p>
-                  <?php 
-                  $img_path = base_url().'service_img/';
-                  if($info->image_file != NULL){
-                          $src= $img_path.$info->image_file;
-                          echo "<img src='$src'>";
-                      }
-                  ?>
-
-                </div>
-
-              </div>
+                <?php echo form_close(); ?>
             </div>
-          </div>
-          <!-- /.box-body -->
-
-          <div class="box-footer">    
-            <?php //echo form_input($user_id);?>        
-            <?php echo form_submit('submit', 'Save Update', "class='btn btn-primary pull-right'"); ?>
-          </div>
-        <?php echo form_close();?>
-      </div>
-      <!-- /.box -->
+        </div>
     </div>
-  </div>
-  <!-- /.row -->
-
 </section>
+
+<script>
+    var itemCount = <?= count($package_items) ?>; // Start count from existing items
+
+    function addItem() {
+        var html = `
+            <div class="item-row" style="margin-bottom: 10px;">
+                <input type="text" class="form-control" name="packages_item[` + itemCount + `][name]" placeholder="Item Name" style="display:inline-block; width:32%; margin-right:1%;">
+                <input type="number" class="form-control" name="packages_item[` + itemCount + `][regular_price]" placeholder="Regular Price" style="display:inline-block; width:32%; margin-right:1%;">
+                <input type="number" class="form-control" name="packages_item[` + itemCount + `][market_price]" placeholder="Market Price" style="display:inline-block; width:32%;">
+            </div>`;
+        document.getElementById('item-list').insertAdjacentHTML('beforeend', html);
+        itemCount++;
+    }
+</script>
+
+
 <!-- /.content -->
