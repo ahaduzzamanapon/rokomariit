@@ -75,6 +75,23 @@ class Site extends Frontend_Controller {
         $this->data['subview'] = 'packages';
         $this->load->view('frontend/_layout_main', $this->data);
     }
+
+    public function packages_details($id){
+        $this->db->where('id', $id);
+        $this->data['package_info'] = $this->db->get('packages')->row();
+        $user_id=$this->session->userdata('user_id');
+        if ($user_id) {
+            $this->data['user_info'] = $this->db->where('id', $user_id)->get('users')->row();
+        }else{
+            $this->data['user_info']=null;
+        }
+
+        $this->data['meta_title'] = 'Packages Details';
+        $this->data['method'] = 'packages';
+        $this->data['subview'] = 'packages_details';
+        $this->load->view('frontend/_layout_main', $this->data);
+    }
+
     public function purchase_create($id){
 
 

@@ -43,35 +43,18 @@ class Packages extends Backend_Controller
 
     public function details($id)
     {
-        $this->data['info'] = $this->packages_model->get_info($id);
+        // dd($id);
+        $package = $this->db->get_where('packages', ['id' => $id])->row();
+        $package_items = json_decode($package->packages_item, true);
+
+        $this->data['package'] = $package;
+        $this->data['package_items'] = $package_items ? $package_items : [];
+        // $this->data['info'] = $this->packages_model->get_info($id);
+        // dd($this->data['package_items']);
         $this->data['meta_title'] = 'Package Details';
         $this->data['subview'] = 'packages/details';
         $this->load->view('backend/_layout_main', $this->data);
     }
-
-    // public function edit($id)
-    // {
-    //     $this->form_validation->set_rules('packages_name', 'Package name', 'required|trim');
-    //     $this->form_validation->set_rules('description', 'Description', 'required|trim');
-    //     $this->form_validation->set_rules('amount', 'Amount', 'required|trim');
-    //     $this->data['info'] = $this->packages_model->get_info($id);
-    //     if ($this->form_validation->run() == true) {
-    //         $form_data = array(
-    //             'packages_name' => $this->input->post('packages_name'),
-    //             'description' => $this->input->post('description'),
-    //             'amount' => $this->input->post('amount'),
-    //             'packages_item' => json_encode($this->input->post('packages_item')),
-    //             'status' => $this->input->post('status'),
-    //         );
-    //         if ($this->Common_model->edit('packages', $id, 'id', $form_data)) {
-    //             $this->session->set_flashdata('success', 'Information update successfully.');
-    //             redirect('admin/packages/all');
-    //         }
-    //     }
-    //     $this->data['meta_title'] = 'Edit package';
-    //     $this->data['subview'] = 'packages/edit';
-    //     $this->load->view('backend/_layout_main', $this->data);
-    // }
 
 
     public function add()
@@ -86,12 +69,18 @@ class Packages extends Backend_Controller
 
             // Convert input into a clean JSON structure
             $packages_item_json = json_encode($packages_item);
-            // dd($packages_item);
+
+            $video_link = $this->input->post('video_link');
+            $video_id = $this->extractVideoId($video_link);
+            // dd($video_id);
             $form_data = array(
                 'packages_name' => $this->input->post('packages_name'),
                 'description' => $this->input->post('description'),
                 'amount' => $this->input->post('amount'),
                 'packages_item' => $packages_item_json, // Save as JSON
+                'package_video' => $video_id,
+                'package_video_title_1' => $this->input->post('video_title_1'),
+                'package_video_title_2' => $this->input->post('video_title_2'),
                 'status' => $this->input->post('status'),
             );
 
@@ -104,6 +93,16 @@ class Packages extends Backend_Controller
         $this->data['meta_title'] = 'Add package';
         $this->data['subview'] = 'packages/add';
         $this->load->view('backend/_layout_main', $this->data);
+    }
+
+    private function extractVideoId($url)
+    {
+        $parsed_url = parse_url($url);
+        $query = [];
+        if (isset($parsed_url['query'])) {
+            parse_str($parsed_url['query'], $query);
+        }
+        return $query['v'] ?? null; // Return the video ID if available, or null otherwise
     }
 
     public function edit($id)

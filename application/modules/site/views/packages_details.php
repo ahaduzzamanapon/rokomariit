@@ -23,6 +23,12 @@
         font-weight: 600;
     }
 
+    .packages_info {
+        background-color: #F8F5FF;
+        margin-bottom: 20px;
+        padding: 20px;
+    }
+
     /* Package Item Styling */
     .packages_item::before {
         content: "✔";
@@ -70,8 +76,6 @@
     .packages_purchase {
         background-color: #ffffff;
         padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
 
     /* Add space between columns */
@@ -87,6 +91,25 @@
         flex-direction: column;
     }
 
+    .packages_video {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .video_title {
+        margin-top: 25px;
+        margin-bottom: 25px;
+        font-weight: 700;
+    }
+
+    iframe {
+        width: 840px;
+        height: 480px;
+    }
+
     /* Responsive Layout */
     @media (max-width: 767px) {
         .col-md-6 {
@@ -98,7 +121,7 @@
 <div class="content-area">
     <div class="c_box">
 
-        <section class="page-section with-sidebar">
+        <section class=" with-sidebar">
             <?php if ($this->session->flashdata('success')): ?>
                 <div class="alert alert-success">
                     <a class="close" data-dismiss="alert">&times;</a>
@@ -117,19 +140,38 @@
                     <?php echo $this->session->flashdata('credentials'); ?>
                 </div>
             <?php endif; ?>
-            <div class="packages_purchase p-4 shadow-sm rounded bg-light">
+            <div class="packages_purchase  ">
+                <div class="row">
+                    <div class="text-center video_title">
+                        <h1 class="text-center"><?= $package_info->package_video_title_1 ?></h1>
+                    </div>
+                    <div class="mt-3 packages_video">
+                        <iframe 
+                            src="https://www.youtube.com/embed/<?= $package_info->package_video ?>?playlist=<?= $package_info->package_video ?>&loop=1"
+                            frameborder="0"
+                            allowfullscreen>
+                        </iframe>
+
+                    </div>
+
+                    <div class="text-center video_title">
+                        <h3 class="text-center"><?= $package_info->package_video_title_2 ?></h3>
+                    </div>
+
+                </div>
                 <div class="row g-4">
+                    <div class="col-md-3"></div>
                     <!-- Package Information -->
-                    <div class="col-md-6 packages_info text-left" style="border-right: 3px solid black;">
+                    <div class="col-md-6 packages_info text-left">
                         <h1>Package Information</h1>
                         <h2 class="text-primary mb-3"><?= $package_info->packages_name ?></h2>
                         <p class="text-muted"><?= $package_info->description ?></p>
                         <div class="mt-3" style="width: 80%;">
                             <ul class="list-unstyled">
-                                <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: bold;">
-                                    <h4 style="font-size: 14px; font-weight: bold;">S. Name</h4>
-                                    <h4 style="font-size: 14px; font-weight: bold;">M. Price</h4>
-                                    <h4 style="font-size: 14px; font-weight: bold;">R. Price</h4>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <h4 style="font-size: 14px; font-weight: bold; color: #8544FF;">S. Name</h4>
+                                    <h4 style="font-size: 14px; font-weight: bold; color: #8544FF;">M. Price</h4>
+                                    <h4 style="font-size: 14px; font-weight: bold; color: #8544FF;">R. Price</h4>
                                 </div>
 
                                 <?php
@@ -144,8 +186,8 @@
                                     $total_market_price += $market_price;
                                     $total_regular_price += $regular_price;
 
-                                    echo '<li>
-                                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                    echo '<li style="border-bottom: 1px dotted #8544FF;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; ">
                                             <div style="width:33%; text-align:start">' . $value->name . '</div>
                                             <div style="width:33%; text-align:center">' . number_format($market_price, 2) . '</div>
                                             <div style="width:33%; text-align:end">' . number_format($regular_price, 2) . '</div>
@@ -189,54 +231,10 @@
 
                             </div>
                         </div>
+                        <a href="<?= base_url('site/purchase_create/' . $package_info->id) ?>" class="btn btn-primary btn-block">Purchase Now</a>
                     </div>
-                    <!-- Purchase Form -->
-                    <div class="col-md-6 packages_form">
-                        <?php echo form_open('site/payment_process', 'class="form-horizontal bg-white p-4 rounded shadow"'); ?>
-                        <?php if ($user_info != null) { ?>
-                            <input type="hidden" name="user_id" value="<?= $user_info->id ?>">
-                        <?php } ?>
-                        <input type="hidden" name="package_id" value="<?= $package_info->id ?>">
-                        <div class="col-md-12">
-                            <div class="mb-3 col-md-6">
-                                <label for="firstName" class="form-label">First Name</label>
-                                <input type="text" class="form-control" name="first_name" id="firstName" value="<?= $user_info != null ? $user_info->first_name : "" ?>"
-                                    placeholder="Enter your first name" required aria-label="Domain Name">
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="lastName" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" name="last_name" id="lastName"
-                                    placeholder="Enter your last name" required aria-label="Domain Name" value="<?= $user_info != null ? $user_info->last_name : "" ?>">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="mb-3 col-md-6">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email" id="email" value="<?= $user_info != null ? $user_info->email : "" ?>"
-                                    placeholder="Enter your email" required aria-label="Email">
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="number" class="form-label">Number</label>
-                                <input type="text" class="form-control" name="number" id="number" value="<?= $user_info != null ?  $user_info->phone : "" ?>">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <!-- <div class="mb-3 col-md-6">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email" id="email"
-                                    placeholder="Enter your email" required aria-label="Email">
-                            </div> -->
-                            <div class="mb-3 col-md-6">
-                                <label for="amount" class="form-label">Price</label>
-                                <input type="text" class="form-control" name="amount" id="amount"
-                                    value="<?= $discounted_price ?>" readonly>
-                            </div>
-                        </div>
-                        <div class="col-md-12 text-right">
-                            <button type="submit" class="btn btn-primary">Purchase</button>
-                        </div>
-                        <?php echo form_close(); ?>
-                    </div>
+
+                    <div class="col-md-3"></div>
                 </div>
             </div>
         </section>
