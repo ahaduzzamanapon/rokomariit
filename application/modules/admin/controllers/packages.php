@@ -142,15 +142,20 @@ class Packages extends Backend_Controller
             $this->edit($id); // Reload edit view with validation errors
         } else {
             $packages_item = $this->input->post('packages_item');
-
             // Convert input into a clean JSON structure
             $packages_item_json = json_encode($packages_item);
-            // dd($packages_item);
+
+            $video_link = $this->input->post('video_link');
+            $video_id = $this->extractVideoId($video_link);
+            // dd($video_id);
             $form_data = array(
                 'packages_name' => $this->input->post('packages_name'),
                 'description' => $this->input->post('description'),
                 'amount' => $this->input->post('amount'),
                 'packages_item' => $packages_item_json, // Save as JSON
+                'package_video' => $video_id ? $video_id : $this->input->post('video_link'), 
+                'package_video_title_1' => $this->input->post('video_title_1'),
+                'package_video_title_2' => $this->input->post('video_title_2'),
                 'status' => $this->input->post('status'),
             );
 

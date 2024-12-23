@@ -1,0 +1,367 @@
+<?php
+
+defined('BASEPATH') or exit('No direct script access allowed');
+
+//include('url_slug.php');
+
+//header('Content-type: text/plain; charset=utf-8');
+
+
+
+class Pages extends Backend_Controller
+{
+    var $img_path;
+
+    public function __construct()
+    {
+
+        parent::__construct();
+
+        if (!$this->ion_auth->logged_in()):
+
+            redirect('login');
+
+        endif;
+
+        $this->load->model('Common_model');
+
+        $this->load->model('Pages_model');
+
+        $this->img_path = realpath(APPPATH . '../pages_img');
+
+
+
+        // Slug Generator
+
+        $config = array(
+
+            'field' => 'slug',
+
+            'title' => 'name',
+
+            'table' => 'pages',
+
+            'id' => 'id',
+
+        );
+
+        $this->load->library('slug', $config);
+    }
+
+
+
+    public function index()
+    {
+
+        redirect('admin/pages/all');
+    }
+
+
+
+    public function all()
+    {
+
+
+
+
+
+        $this->data['results'] = $this->db->order_by('id', 'desc')->get('pages')->result();
+
+        // print_r($this->data['results']); exit;
+
+        //Load page
+
+        $this->data['meta_title'] = 'All Event';
+
+        $this->data['subview'] = 'pages/all';
+
+        $this->load->view('backend/_layout_main', $this->data);
+    }
+
+
+
+    public function details($id)
+    {
+
+        $this->data['info'] = $this->Pages_model->get_info($id);
+
+        $this->data['meta_title'] = 'Event Details';
+
+        $this->data['subview'] = 'pages/details';
+
+        $this->load->view('backend/_layout_main', $this->data);
+    }
+
+
+
+    public function edit($id)
+    {
+
+
+
+        $this->form_validation->set_rules('title_pages', 'pages title', 'required|trim');
+
+        if ($this->form_validation->run() == true) {
+
+            $slug_data = array('title' => $this->input->post('title_pages'));
+
+            $form_data = array(
+
+                'title' => $this->input->post('title_pages'),
+
+                'page_link' => $this->input->post('link_pages'),
+
+                'slug' =>  $this->slug->create_uri($slug_data),
+
+                'description' =>  $this->input->post('description_pages'),
+
+                'meta_keys' =>  $this->input->post('meta_keys_pages'),
+
+                'meta_description' =>  $this->input->post('meta_description_pages'),
+
+                'meta_tags' =>  $this->input->post('meta_tags_pages'),
+
+                'status' => 1,
+
+            );
+
+            $this->db->where('id', $id);
+
+            if ($this->db->update('pages', $form_data)) {
+
+                $this->session->set_flashdata('success', 'Information update successfully');
+
+                redirect('admin/pages/all');
+            } else {
+
+                $this->session->set_flashdata('error', 'Information not update successfully');
+
+                redirect('admin/pages/edit/' . $id);
+            }
+        }
+
+
+
+        $this->data['info'] = $this->Pages_model->get_info($id);
+
+        $this->data['meta_title'] = 'Add Pages';
+
+        $this->data['subview'] = 'pages/edit';
+
+        $this->load->view('backend/_layout_main', $this->data);
+    }
+
+
+
+
+
+    public function add()
+    {
+
+        $this->form_validation->set_rules('title_pages', 'pages title', 'required|trim');
+
+        if ($this->form_validation->run() == true) {
+
+            $slug_data = array('title' => $this->input->post('title_pages'));
+
+            $form_data = array(
+
+                'title' => $this->input->post('title_pages'),
+
+                'page_link' => $this->input->post('link_pages'),
+
+                'slug' =>  $this->slug->create_uri($slug_data),
+
+                'description' =>  $this->input->post('description_pages'),
+
+                'meta_keys' =>  $this->input->post('meta_keys_pages'),
+
+                'meta_description' =>  $this->input->post('meta_description_pages'),
+
+                'meta_tags' =>  $this->input->post('meta_tags_pages'),
+
+                'status' => 1,
+
+            );
+
+            if ($this->Common_model->save('pages', $form_data)) {
+
+
+
+                $tags = $this->input->post('meta_tags_pages');
+
+                $tags = explode(',', $tags);
+
+                $link = 'pages/' . $this->input->post('link_pages');
+
+                foreach ($tags as $key => $str) {
+
+                    $this->db->insert('tags', array('tag' => $str, 'url' => $link));
+                }
+
+                $this->session->set_flashdata('success', 'New Page save successfully.');
+
+                redirect("admin/pages/all");
+            }
+        }
+
+
+
+        $this->data['meta_title'] = 'Add Pages';
+
+        $this->data['subview'] = 'pages/add';
+
+        $this->load->view('backend/_layout_main', $this->data);
+    }
+
+
+
+    public function file_check($str)
+    {
+
+        $this->load->helper('file');
+
+        $allowed_mime_type_arr = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png');
+
+        $mime = get_mime_by_extension($_FILES['userfile']['name']);
+
+        $file_size = 1050000;
+
+        $size_kb = '1 MB';
+
+
+
+        if (isset($_FILES['userfile']['name']) && $_FILES['userfile']['name'] != "") {
+
+            if (!in_array($mime, $allowed_mime_type_arr)) {
+
+                $this->form_validation->set_message('file_check', 'Please select only jpg, jpeg, png, gif file.');
+
+                return false;
+            } elseif ($_FILES["userfile"]["size"] > $file_size) {
+
+                $this->form_validation->set_message('file_check', 'Maximum file size ' . $size_kb);
+
+                return false;
+            } else {
+
+                return true;
+            }
+        } else {
+
+            $this->form_validation->set_message('file_check', 'Please choose a image file to upload.');
+
+            return false;
+        }
+    }
+
+
+
+    function delete($id)
+    {
+
+        $this->data['info'] = $this->Pages_model->delete($id);
+
+        $this->session->set_flashdata('success', 'Information delete successfully.');
+
+        redirect('admin/pages/all');
+    }
+
+
+
+    function upload_image()
+    {
+
+        $this->load->library('upload');
+
+        $config['upload_path'] = $this->img_path;
+
+        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+
+        $config['max_size'] = 0;
+
+        $config['file_name'] = time() . '_' . str_replace(' ', '_', $_FILES['userfile']['name']);
+
+        $this->upload->initialize($config);
+
+        if (!$this->upload->do_upload('userfile')) {
+
+            $error = $this->upload->display_errors();
+
+            $this->session->set_flashdata('error', $error);
+
+            redirect($_SERVER['HTTP_REFERER']);
+        } else {
+
+            $data = $this->upload->data();
+
+            $img_path = base_url() . 'pages_img/' . $data['file_name'];
+
+            $link = $data['file_name'];
+        }
+
+
+
+        // image_path	image_link	img_alt	
+
+        $form_data = array(
+
+            'image_path' => $img_path,
+
+            'image_link' => $link,
+
+            'img_alt' => $img_path
+
+        );
+
+        $this->db->insert('image', $form_data);
+
+        echo $img_path;
+    }
+
+    function link_check()
+    {
+
+        $str = $this->input->post('link');
+
+        $this->db->like('page_link', $str);
+
+        $query = $this->db->get('pages');
+
+        // dd($query->result());
+
+        if ($query->num_rows() > 0) {
+
+            echo "have";
+        } else {
+
+            echo "no";
+        }
+    }
+
+    function tag_add()
+    {
+
+        $tag = $this->input->post('tag');
+
+        $all_tag = explode(',', $tag);
+
+        $valid = true;
+
+        foreach ($all_tag as $key => $str) {
+
+            $this->db->where('tag', $str);
+
+            $query = $this->db->get('tags');
+
+            if ($query->num_rows() > 0) {
+
+                echo "have";
+
+                exit;
+            }
+        }
+
+        echo "no";
+    }
+}

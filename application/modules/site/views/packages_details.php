@@ -145,13 +145,16 @@
                     <div class="text-center video_title">
                         <h1 class="text-center"><?= $package_info->package_video_title_1 ?></h1>
                     </div>
-                    <div class="mt-3 packages_video">
-                        <iframe 
+                    <div class="packages_video">
+                        <iframe
                             src="https://www.youtube.com/embed/<?= $package_info->package_video ?>?playlist=<?= $package_info->package_video ?>&loop=1"
                             frameborder="0"
                             allowfullscreen>
                         </iframe>
 
+                    </div>
+                    <div style="display: flex; justify-content: center;">
+                        <button type="button" class="btn btn-primary text-center" id="registrationButton" data-toggle="modal" data-target="#videoModal">রেজিস্ট্রেশন করুন</button>
                     </div>
 
                     <div class="text-center video_title">
@@ -187,12 +190,12 @@
                                     $total_regular_price += $regular_price;
 
                                     echo '<li style="border-bottom: 1px dotted #8544FF;">
-                                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; ">
-                                            <div style="width:33%; text-align:start">' . $value->name . '</div>
-                                            <div style="width:33%; text-align:center">' . number_format($market_price, 2) . '</div>
-                                            <div style="width:33%; text-align:end">' . number_format($regular_price, 2) . '</div>
-                                        </div>
-                                    </li>';
+                                            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; ">
+                                                <div style="width:33%; text-align:start">' . $value->name . '</div>
+                                                <div style="width:33%; text-align:center">' . number_format($market_price, 2) . '</div>
+                                                <div style="width:33%; text-align:end">' . number_format($regular_price, 2) . '</div>
+                                            </div>
+                                        </li>';
                                 }
                                 ?>
                             </ul>
@@ -239,6 +242,16 @@
             </div>
         </section>
     </div>
+
+    <script>
+        document.getElementById('registrationButton').addEventListener('click', function() {
+            const targetDiv = document.querySelector('.card-p-footer');
+            targetDiv.scrollIntoView({
+                behavior: 'smooth', // Smooth scrolling animation
+                block: 'center' // Aligns the div to the center of the viewport
+            });
+        });
+    </script>
 
     <section class="page-section" style="border-top:1px solid #d3cecd;margin-left: 10px;margin-right: 10px;">
         <div class="container section1">

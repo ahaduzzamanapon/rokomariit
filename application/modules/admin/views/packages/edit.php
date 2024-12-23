@@ -1,9 +1,9 @@
 <section class="content-header">
-  <h1> <?=$meta_title; ?> </h1>
-  <ol class="breadcrumb">
-    <li><a href="<?=base_url('admin/dashboard');?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-    <li class="active"><?=$meta_title; ?></li>
-  </ol>
+    <h1> <?= $meta_title; ?> </h1>
+    <ol class="breadcrumb">
+        <li><a href="<?= base_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li class="active"><?= $meta_title; ?></li>
+    </ol>
 </section>
 
 
@@ -55,6 +55,22 @@
                             <?php endif; ?>
                         </div>
                         <button type="button" class="btn btn-sm btn-primary" onclick="addItem()">Add Item</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="video_link">Video Link </label>
+                        <input type="text" class="form-control" id="video_link" name="video_link" value="<?= set_value('video_link', $package->package_video) ?>" placeholder="Enter video link">
+                        <span style="font-size: 13px; color: red;">Note: If you want to edit video link then Please enter video URL from youtube</span>
+                        <small class="text-danger"><?php echo form_error('video_link'); ?></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="video_title_1">Video Title 1</label>
+                        <input type="text" class="form-control" id="video_title_1" name="video_title_1" value="<?= set_value('video_title_1', $package->package_video_title_1) ?>" placeholder="Enter video title">
+                        <small class="text-danger"><?php echo form_error('video_title_1'); ?></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="video_title_2">Video Title 2</label>
+                        <input type="text" class="form-control" id="video_title_2" name="video_title_2" value="<?= set_value('video_title_2', $package->package_video_title_2) ?>" placeholder="Enter video title">
+                        <small class="text-danger"><?php echo form_error('video_title_2'); ?></small>
                     </div>
                 </div>
                 <div class="box-footer">
