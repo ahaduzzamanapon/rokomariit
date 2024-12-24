@@ -47,3 +47,40 @@ if(!function_exists('dd')) {
      exit;
     }
 }
+
+if ( ! function_exists('update_sitemap_txt'))
+
+{
+
+    function update_sitemap_txt($url) {
+
+        $sitemap_path = FCPATH . 'sitemap.txt'; // Path to your sitemap.txt
+
+        // Check if the file exists
+
+        if (file_exists($sitemap_path)) {
+
+            $urls = file($sitemap_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        } else {
+
+            $urls = [];
+
+        }
+
+        // Check if the URL already exists
+        if (!in_array($url, $urls)) {
+
+            // Add the new URL to the array
+            $urls[] = $url;
+
+            // Save the updated URLs back to the file
+            file_put_contents($sitemap_path, implode(PHP_EOL, $urls) . PHP_EOL);
+
+        }
+
+    }
+
+    
+
+}

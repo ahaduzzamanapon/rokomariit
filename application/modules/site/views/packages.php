@@ -165,6 +165,62 @@
 
 
 
+<?php
+
+$this->db->select('*');
+$this->db->from('packages');
+$this->db->where('status', '1');
+$query = $this->db->get();
+?>
+
+
+<script>
+    dataLayer.push({
+        ecommerce: null
+    });
+    dataLayer.push({
+                event: "view_item_list",
+                name: "MD Masud",
+                phone_number: "01327701184",
+                email: "foodbd.com1@gmail.com",
+                city: "Dhaka",
+                zip_code: "1212",
+                country: "Bangladesh",
+                ecommerce: {
+                    items: [
+                        <?php
+                        foreach ($query->result() as $row) {
+                           
+                            ?>
+                                {
+                                        item_id: "<?= $row->id ?>",
+                                        item_name: "<?= $row->packages_name ?>",
+                                        affiliation: "Google Merchandise Store",
+                                        coupon: "SUMMER_FUN",
+                                        discount: 2.22,
+                                        index: 0,
+                                        item_brand: "Package",
+                                        item_category: "Package",
+                                        item_category2: "Package",
+                                        item_category3: "Package",
+                                        item_category4: "Package",
+                                        item_category5: "Package",
+                                        item_list_id: "Package",
+                                        item_list_name: "Package",
+                                        item_variant: "Package",
+                                        location_id: "<?php echo $_SERVER['REMOTE_ADDR']; ?>",
+                                        price: <?= $row->amount ?>,
+                                        quantity: 1
+                                },
+                            <?php
+                        }
+                        ?>
+                        ]}
+            });
+</script>
+
+
+
 
 
 
@@ -174,10 +230,6 @@
             <div class="row" style=" display: flex; flex-wrap: wrap;">
 
                 <?php
-                $this->db->select('*');
-                $this->db->from('packages');
-                $this->db->where('status', '1');
-                $query = $this->db->get();
                 foreach ($query->result() as $row) {
                     // Initialize totals
                     $total_market_price = 0;
@@ -196,17 +248,17 @@
                                         <h4 style="font-size: 14px; font-weight: bold;">M. Price</h4>
                                         <h4 style="font-size: 14px; font-weight: bold;">R. Price</h4>
                                     </div>
-    
+
                                     <?php
                                     $item = json_decode($row->packages_item);
                                     foreach ($item as $key => $value) {
                                         $market_price = (float) $value->market_price;
                                         $regular_price = (float) $value->regular_price;
-    
+
                                         // Add to totals
                                         $total_market_price += $market_price;
                                         $total_regular_price += $regular_price;
-    
+
                                         echo '<li>
                                             <div style="display: flex; justify-content: space-between; align-items: center; width: 85%;">
                                                 <div style="width:33%; text-align:start">' . $value->name . '</div>
@@ -250,7 +302,7 @@
                                         <span style="color: red; font-weight: bold; font-size: 12px;">(Discounted Price)</span>
                                     <?php endif; ?>
                                 </h3>
-    
+
                                 <a href="<?= base_url('site/purchase_create/' . $row->id) ?>" class="btn btn-primary btn-block">Purchase Now</a>
                             </div>
                         </div>

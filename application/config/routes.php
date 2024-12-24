@@ -57,6 +57,7 @@ $route['translate_uri_dashes'] 	= FALSE;
 // $route['course'] 				= 'site/course';
 $route['article/(:any)'] 		  = 'site/article/$1';
 $route['service/(:any)'] 		  = 'site/services/$1';
+$route['pages/(:any)'] 		  = 'site/pages/$1';
 
 $route['events'] 				  = 'site/events';
 $route['apply'] 				  = 'site/apply';
@@ -73,4 +74,7 @@ $route['payment_process']         = 'site/payment_process';
 $route['payment/success/(:any)/(:any)'] 		  = 'site/payment_success/$1/$2';
 $route['payment/fail/(:any)'] 		  = 'site/payment_fail/$1';
 $route['payment/cancel/(:any)'] 		  = 'site/payment_cancel/$1';
+
+// sitemap
+$route['sitemap']                 = 'site/sitemap';
 

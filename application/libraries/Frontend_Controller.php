@@ -18,6 +18,7 @@ class Frontend_Controller extends MY_Controller
 		$this->data['setting'] = $this->Common_model->get_info('setting');
 		$this->data['article_list'] = $this->Site_model->get_data('article');
 		$this->data['services'] = $this->Site_model->get_data('services');
+		$this->data['pages'] = $this->Site_model->get_data('pages');
 		$this->data['social'] = $this->Site_model->get_data('social');
 		$this->data['category_list'] = $this->Site_model->get_data('category');
 		$this->data['homepage_article'] = $this->Site_model->get_homepage_show('article');

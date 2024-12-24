@@ -200,6 +200,16 @@ class Site_model extends CI_Model {
         return $query;
     }
 
+    public function get_info_by_slug_of_pages($page_link) {
+        $this->db->select('*');
+        $this->db->from('pages');
+        $this->db->where('page_link', $page_link);
+        $query = $this->db->get()->row(); 
+        // echo $this->db->last_query(); exit;       
+
+        return $query;
+    }
+
     public function get_info_by_slug_of_news($slug) {
         $this->db->select('*');
         $this->db->from('news');
