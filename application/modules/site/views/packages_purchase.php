@@ -95,6 +95,83 @@
     }
 </style>
 
+<?php
+$package_info = $package_info;
+$packages_items = json_decode($package_info->packages_item, true);
+$total_market_price = 0;
+$total_regular_price = 0;
+foreach ($packages_items as $key => $value) {
+    // dd($value['market_price']);
+    $total_market_price += $value['market_price'];
+    $total_regular_price += $value['regular_price'];
+}
+
+if ($package_info->amount > 0) {
+    $discount_percentage = $package_info->amount; // Assume $row->amount is the discount percentage
+    $discounted_price = $total_regular_price - ($total_regular_price * $discount_percentage / 100);
+} else {
+    $discounted_price = $total_regular_price;
+}
+
+$user = $this->session->userdata();
+if (!empty($user)) {
+    $firstName = isset($user['first_name']) ? $user['first_name'] : 'Customer';
+    $lastName = isset($user['last_name']) ? $user['last_name'] : '';
+    $email = isset($user['email']) ? $user['email'] : '';
+    $phone = isset($user['phone']) ? $user['phone'] : '';
+    
+} else {
+    // Default values for non-logged-in users
+    $firstName = 'Guest';
+    $lastName = 'User';
+    $email =  '';
+    $phone = '';
+    
+}
+
+$ip = ($_SERVER['REMOTE_ADDR'] === '::1') ? '103.73.199.12' : $_SERVER['REMOTE_ADDR']; // Replace with the user's IP address
+$apiToken = 'e7c866514030b4'; // Replace with your actual token
+$url = "https://ipinfo.io/{$ip}/json?token={$apiToken}";
+
+$response = file_get_contents($url);
+$locationData = json_decode($response, true);
+?>
+
+<script>
+    dataLayer.push({
+        event: "Add To Cart",
+        name: "<?=  $firstName . ' ' . $lastName ?>",
+        phone_number: "<?= $phone ?>",
+        email: "<?= $email ?>",
+        city: "<?= $locationData['city'] ? $locationData['city'] : 'Unknown' ?>",
+        zip_code: "<?= $locationData['postal'] ? $locationData['postal'] : 'Unknown' ?>",
+        country: "<?= $locationData['country'] ? $locationData['country'] : 'Unknown' ?>",
+        items: [{
+            item_id: "<?= $package_info->id ?>",
+            item_name: "<?= $package_info->packages_name ?>",
+            affiliation: "Google Merchandise Store",
+            coupon: "SUMMER_FUN",
+            discount: <?= $package_info->amount ?>,
+            location_id: "<?= $_SERVER['REMOTE_ADDR'] ?>",
+            regular_price: <?= $total_regular_price ?>,
+            market_price_price: <?= $total_market_price ?>,
+            discounted_price: <?= $discounted_price ?>,
+            quantity: 1,
+            packages_item: [
+                <?php
+                $packages_items = json_decode($package_info->packages_item, true); // Decode the JSON
+                foreach ($packages_items as $item): ?> {
+                        name: "<?= $item['name'] ?>",
+                        regular_price: "<?= $item['regular_price'] ?>",
+                        market_price: "<?= $item['market_price'] ?>"
+                    },
+                <?php endforeach; ?>
+            ]
+        }]
+    });
+</script>
+
+
 <div class="content-area">
     <div class="c_box">
 

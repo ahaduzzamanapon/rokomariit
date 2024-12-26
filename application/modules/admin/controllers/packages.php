@@ -102,7 +102,7 @@ class Packages extends Backend_Controller
         if (isset($parsed_url['query'])) {
             parse_str($parsed_url['query'], $query);
         }
-        return $query['v'] ?? null; // Return the video ID if available, or null otherwise
+        return $query['v'] ? $query['v'] : null; // Return the video ID if available, or null otherwise
     }
 
     public function edit($id)

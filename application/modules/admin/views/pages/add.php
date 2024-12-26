@@ -35,7 +35,7 @@
               </div>
               <div class="form-group col-md-4">
                 <label>Link</label>
-                <span>Default set "https://mysoftheaven.com/pages/"</span>
+                <span>Default set "https://rokomariit.com/pages/"</span>
                 <input type="text" class="form-control" name="link_pages" required id="link_pages" onblur="link_check(this.value)" placeholder="Enter link" value="<?=set_value('link_pages')?>" />
                 <span id="link_valid"></span>
               </div>

@@ -2,6 +2,27 @@
 <html lang="en">
 
 <head>
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KT36QHFJ');
+    </script>
+    <!-- End Google Tag Manager →
+
+
     <meta charset="UTF-8">
     <title><?= $meta_title ?> | <?= $domain_title ?></title>
 
@@ -52,31 +73,31 @@
 
         });
 
-        (function(w, d, s, l, i) {
+        // (function(w, d, s, l, i) {
 
-            w[l] = w[l] || [];
+        //     w[l] = w[l] || [];
 
-            w[l].push({
+        //     w[l].push({
 
-                'gtm.start': new Date().getTime(),
+        //         'gtm.start': new Date().getTime(),
 
-                event: 'gtm.js'
+        //         event: 'gtm.js'
 
-            });
+        //     });
 
-            var f = d.getElementsByTagName(s)[0],
+        //     var f = d.getElementsByTagName(s)[0],
 
-                j = d.createElement(s),
+        //         j = d.createElement(s),
 
-                dl = l != 'dataLayer' ? '&l=' + l : '';
+        //         dl = l != 'dataLayer' ? '&l=' + l : '';
 
-            j.async = true;
+        //     j.async = true;
 
-            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        //     j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
 
-            f.parentNode.insertBefore(j, f);
+        //     f.parentNode.insertBefore(j, f);
 
-        })(window, document, 'script', 'dataLayer', 'GTM-KT36QHFJ');
+        // })(window, document, 'script', 'dataLayer', 'GTM-KT36QHFJ');
     </script>
 
 
@@ -95,10 +116,10 @@
     update_sitemap_txt(current_url());
     ?>
 
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KT36QHFJ"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KT36QHFJ"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
     <!-- PRELOADER -->
     <!-- <div id="preloader">

@@ -171,52 +171,96 @@ $this->db->select('*');
 $this->db->from('packages');
 $this->db->where('status', '1');
 $query = $this->db->get();
+// dd($this->session->userdata() );
+// dd($query->result());
+$total_market_price = 0;
+$total_regular_price = 0;
+foreach ($query->result() as $row) {
+    $packages_items = json_decode($row->packages_item, true);
+    foreach ($packages_items as $key => $value) {
+        // dd($value['market_price']);
+        $total_market_price += $value['market_price'];
+        $total_regular_price += $value['regular_price'];
+    }
+}
+
+// dd($total_regular_price);
+$user = $this->session->userdata();
+// Check if user session exists and set values accordingly
+if (!empty($user)) {
+    $firstName = isset($user['first_name']) ? $user['first_name'] : 'Customer';
+    $lastName = isset($user['last_name']) ? $user['last_name'] : '';
+    $email = isset($user['email']) ? $user['email'] : '';
+    $phone = isset($user['phone']) ? $user['phone'] : '';
+    
+} else {
+    // Default values for non-logged-in users
+    $firstName = 'Guest';
+    $lastName = 'User';
+    $email =  '';
+    $phone = '';
+    
+}
+
+
+// $firstName = isset($user) ? $user['first_name'] : 'Customer';
+// $lastName = isset($user) ? $user['last_name'] : '';
+
+$ip = ($_SERVER['REMOTE_ADDR'] === '::1') ? '103.73.199.12' : $_SERVER['REMOTE_ADDR']; // Replace with the user's IP address
+$apiToken = 'e7c866514030b4'; // Replace with your actual token
+$url = "https://ipinfo.io/{$ip}/json?token={$apiToken}";
+
+$response = file_get_contents($url);
+$locationData = json_decode($response, true);
+
 ?>
 
 
 <script>
     dataLayer.push({
-        ecommerce: null
-    });
-    dataLayer.push({
-                event: "view_item_list",
-                name: "MD Masud",
-                phone_number: "01327701184",
-                email: "foodbd.com1@gmail.com",
-                city: "Dhaka",
-                zip_code: "1212",
-                country: "Bangladesh",
-                ecommerce: {
-                    items: [
+        event: "view_item_list",
+        name: "<?=  $firstName . ' ' . $lastName ?>",
+        phone_number: "<?= $phone ?>",
+        email: "<?= $email ?>",
+        city: "<?= $locationData['city'] ? $locationData['city'] : 'Unknown' ?>",
+        zip_code: "<?= $locationData['postal'] ? $locationData['postal'] : 'Unknown' ?>",
+        country: "<?= $locationData['country'] ? $locationData['country'] : 'Unknown' ?>",
+        // ecommerce: {
+        items: [
+            <?php foreach ($query->result() as $row): ?> {
+                <?php
+                    if ($row->amount > 0) {
+                        $discount_percentage = $row->amount; // Assume $row->amount is the discount percentage
+                        $discounted_price = $total_regular_price - ($total_regular_price * $discount_percentage / 100);
+                    } else {
+                        $discounted_price = $total_regular_price;
+                    }
+                ?>
+                    item_id: "<?= $row->id ?>",
+                    item_name: "<?= $row->packages_name ?>",
+                    affiliation: "Google Merchandise Store",
+                    coupon: "SUMMER_FUN",
+                    discount: <?= $row->amount ?>,
+                    location_id: "<?= $_SERVER['REMOTE_ADDR'] ?>",
+                    regular_price: <?= $total_regular_price ?>,
+                    market_price_price: <?= $total_market_price ?>,
+                    discounted_price: <?= $discounted_price ?>,
+                    quantity: 1,
+                    packages_item: [
                         <?php
-                        foreach ($query->result() as $row) {
-                           
-                            ?>
-                                {
-                                        item_id: "<?= $row->id ?>",
-                                        item_name: "<?= $row->packages_name ?>",
-                                        affiliation: "Google Merchandise Store",
-                                        coupon: "SUMMER_FUN",
-                                        discount: 2.22,
-                                        index: 0,
-                                        item_brand: "Package",
-                                        item_category: "Package",
-                                        item_category2: "Package",
-                                        item_category3: "Package",
-                                        item_category4: "Package",
-                                        item_category5: "Package",
-                                        item_list_id: "Package",
-                                        item_list_name: "Package",
-                                        item_variant: "Package",
-                                        location_id: "<?php echo $_SERVER['REMOTE_ADDR']; ?>",
-                                        price: <?= $row->amount ?>,
-                                        quantity: 1
-                                },
-                            <?php
-                        }
-                        ?>
-                        ]}
-            });
+                        $packages_items = json_decode($row->packages_item, true); // Decode the JSON
+                        foreach ($packages_items as $item): ?> {
+                                name: "<?= $item['name'] ?>",
+                                regular_price: "<?= $item['regular_price'] ?>",
+                                market_price: "<?= $item['market_price'] ?>"
+                            },
+                        <?php endforeach; ?>
+                    ]
+                },
+            <?php endforeach; ?>
+        ]
+        // }
+    });
 </script>
 
 

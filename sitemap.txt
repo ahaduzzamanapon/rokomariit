@@ -1,1 +1,7 @@
 http://localhost/rokomariit/packages
+http://localhost/rokomariit/
+http://localhost/rokomariit/article/about-rokomari-it
+http://localhost/rokomariit/site/purchase_create/1
+http://localhost/rokomariit/site/packages_details/1
+http://localhost/rokomariit/site/packages_details/2
+http://localhost/rokomariit/site/purchase_create/2

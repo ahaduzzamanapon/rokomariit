@@ -14,6 +14,7 @@ class Login extends Backend_Controller {
 
 	public function index(){
 		//validate form input
+		// dd('sdjfoj');
 		$this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')), 'required');
 		$this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
 
