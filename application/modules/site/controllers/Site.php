@@ -6,6 +6,9 @@ class Site extends Frontend_Controller
     function __construct()
     {
         parent::__construct();
+        $this->config->load('ion_auth', TRUE);
+		$this->lang->load('ion_auth');
+
         $this->load->model('Site_model');
         $this->load->model('Common_model');
         $this->form_validation->set_error_delimiters('<div class="alert alert-warning"> <i class="fa fa-warning"></i> ', '</div>');
@@ -97,7 +100,7 @@ class Site extends Frontend_Controller
 
     public function purchase_create($id)
     {
-        
+
         $this->db->where('id', $id);
         $this->data['package_info'] = $this->db->get('packages')->row();
         $user_id = $this->session->userdata('user_id');
@@ -470,10 +473,11 @@ class Site extends Frontend_Controller
             <p>Link: <a href="' . base_url('login') . '">' . base_url('login') . ' Go to login </a></p>
             ';
 
-
-
-        $this->session->set_flashdata('success',  $data_view);
-        redirect(base_url("site/purchase_create/$package_id"));
+            
+            $this->session->set_flashdata('success',  $data_view);
+            $this->session->set_userdata($user_info);
+            // dd($user_info);
+            redirect(base_url("site/purchase_create/$package_id"));
     }
     public function trigger_login($email, $password)
     {

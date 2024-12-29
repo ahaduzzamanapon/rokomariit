@@ -113,20 +113,20 @@ if ($package_info->amount > 0) {
     $discounted_price = $total_regular_price;
 }
 
-$user = $this->session->userdata();
-if (!empty($user)) {
-    $firstName = isset($user['first_name']) ? $user['first_name'] : '';
-    $lastName = isset($user['last_name']) ? $user['last_name'] : '';
-    $email = isset($user['email']) ? $user['email'] : '';
-    $phone = isset($user['phone']) ? $user['phone'] : '';
-    
+$user_id = $this->session->user_id;
+$user_obj = $this->db->where('id', $user_id)->get('users')->row();
+
+if (!empty($user_obj)) {
+    $firstName = $user_obj->first_name;
+    $lastName = $user_obj->last_name;
+    $email = $user_obj->email;
+    $phone = $user_obj->phone;
 } else {
     // Default values for non-logged-in users
     $firstName = '';
     $lastName = '';
     $email =  '';
     $phone = '';
-    
 }
 
 $ip = ($_SERVER['REMOTE_ADDR'] === '::1') ? '103.73.199.12' : $_SERVER['REMOTE_ADDR']; // Replace with the user's IP address
@@ -148,9 +148,9 @@ $locationData = json_decode($response, true);
             phone_number: "<?= $phone ?>",
             email: "<?= $email ?>",
             visitor_type: "Customer",
-            city: "<?= $locationData['city'] ?? 'Unknown' ?>",
-            zip_code: "<?= $locationData['postal'] ?? 'Unknown' ?>",
-            country: "<?= $locationData['country'] ?? 'Unknown' ?>",
+            city: "<?= $locationData['city'] ? $locationData['city'] : 'Unknown' ?>",
+            zip_code: "<?= $locationData['postal'] ? $locationData['postal'] : 'Unknown' ?>",
+            country: "<?= $locationData['country'] ? $locationData['country'] : 'Unknown' ?>",
             items: [{
                 item_id: "<?= $package_info->id ?>",
                 item_name: "<?= $package_info->packages_name ?>",
@@ -164,10 +164,10 @@ $locationData = json_decode($response, true);
                 quantity: 1,
                 packages_item: [
                     <?php foreach ($packages_items as $item): ?> {
-                        name: "<?= $item['name'] ?>",
-                        regular_price: "<?= $item['regular_price'] ?>",
-                        market_price: "<?= $item['market_price'] ?>"
-                    },
+                            name: "<?= $item['name'] ?>",
+                            regular_price: "<?= $item['regular_price'] ?>",
+                            market_price: "<?= $item['market_price'] ?>"
+                        },
                     <?php endforeach; ?>
                 ]
             }]
@@ -179,9 +179,9 @@ $locationData = json_decode($response, true);
             phone_number: "<?= $phone ?>",
             email: "<?= $email ?>",
             visitor_type: "Customer",
-            city: "<?= $locationData['city'] ?? 'Unknown' ?>",
-            zip_code: "<?= $locationData['postal'] ?? 'Unknown' ?>",
-            country: "<?= $locationData['country'] ?? 'Unknown' ?>",
+            city: "<?= $locationData['city'] ? $locationData['city'] : 'Unknown' ?>",
+            zip_code: "<?= $locationData['postal'] ? $locationData['postal'] : 'Unknown' ?>",
+            country: "<?= $locationData['country'] ? $locationData['country'] : 'Unknown' ?>",
             items: [{
                 item_id: "<?= $package_info->id ?>",
                 item_name: "<?= $package_info->packages_name ?>",
@@ -195,10 +195,10 @@ $locationData = json_decode($response, true);
                 quantity: 1,
                 packages_item: [
                     <?php foreach ($packages_items as $item): ?> {
-                        name: "<?= $item['name'] ?>",
-                        regular_price: "<?= $item['regular_price'] ?>",
-                        market_price: "<?= $item['market_price'] ?>"
-                    },
+                            name: "<?= $item['name'] ?>",
+                            regular_price: "<?= $item['regular_price'] ?>",
+                            market_price: "<?= $item['market_price'] ?>"
+                        },
                     <?php endforeach; ?>
                 ]
             }]
@@ -211,7 +211,7 @@ $locationData = json_decode($response, true);
     if(<?php echo $this->session->flashdata('success'); ?>){
         dataLayer.push({
             event: "",
-            name: "<?=  $firstName . ' ' . $lastName ?>",
+            name: "<?= $firstName . ' ' . $lastName ?>",
             phone_number: "<?= $phone ?>",
             email: "<?= $email ?>",
             city: "<?= $locationData['city'] ? $locationData['city'] : 'Unknown' ?>",
@@ -243,7 +243,7 @@ $locationData = json_decode($response, true);
     }else{
         dataLayer.push({
             event: "Add To Cart",
-            name: "<?=  $firstName . ' ' . $lastName ?>",
+            name: "<?= $firstName . ' ' . $lastName ?>",
             phone_number: "<?= $phone ?>",
             email: "<?= $email ?>",
             city: "<?= $locationData['city'] ? $locationData['city'] : 'Unknown' ?>",

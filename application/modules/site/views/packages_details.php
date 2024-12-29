@@ -136,12 +136,16 @@
         $discounted_price = $total_regular_price;
     }
 
-    $user = $this->session->userdata();
-    if (!empty($user)) {
-        $firstName = isset($user['first_name']) ? $user['first_name'] : '';
-        $lastName = isset($user['last_name']) ? $user['last_name'] : '';
-        $email = isset($user['email']) ? $user['email'] : '';
-        $phone = isset($user['phone']) ? $user['phone'] : '';
+    // $user = $this->session->userdata();
+
+    $user_id = $this->session->user_id;
+    $user_obj = $this->db->where('id', $user_id)->get('users')->row();
+
+    if (!empty($user_obj)) {
+        $firstName = $user_obj->first_name;
+        $lastName = $user_obj->last_name;
+        $email = $user_obj->email;
+        $phone = $user_obj->phone;
         
     } else {
         // Default values for non-logged-in users
