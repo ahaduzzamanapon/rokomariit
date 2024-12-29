@@ -5,3 +5,5 @@ http://localhost/rokomariit/site/purchase_create/1
 http://localhost/rokomariit/site/packages_details/1
 http://localhost/rokomariit/site/packages_details/2
 http://localhost/rokomariit/site/purchase_create/2
+http://localhost/rokomariit/site/purchase_create/3
+http://localhost/rokomariit/pages/best-software-company-in-bd

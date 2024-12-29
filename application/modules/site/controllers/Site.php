@@ -97,10 +97,7 @@ class Site extends Frontend_Controller
 
     public function purchase_create($id)
     {
-
-
-
-
+        
         $this->db->where('id', $id);
         $this->data['package_info'] = $this->db->get('packages')->row();
         $user_id = $this->session->userdata('user_id');

@@ -138,15 +138,15 @@
 
     $user = $this->session->userdata();
     if (!empty($user)) {
-        $firstName = isset($user['first_name']) ? $user['first_name'] : 'Customer';
+        $firstName = isset($user['first_name']) ? $user['first_name'] : '';
         $lastName = isset($user['last_name']) ? $user['last_name'] : '';
         $email = isset($user['email']) ? $user['email'] : '';
         $phone = isset($user['phone']) ? $user['phone'] : '';
         
     } else {
         // Default values for non-logged-in users
-        $firstName = 'Guest';
-        $lastName = 'User';
+        $firstName = '';
+        $lastName = '';
         $email =  '';
         $phone = '';
         
@@ -166,6 +166,7 @@
         name: "<?=  $firstName . ' ' . $lastName ?>",
         phone_number: "<?= $phone ?>",
         email: "<?= $email ?>",
+        visitor_type: "Customer",
         city: "<?= $locationData['city'] ? $locationData['city'] : 'Unknown' ?>",
         zip_code: "<?= $locationData['postal'] ? $locationData['postal'] : 'Unknown' ?>",
         country: "<?= $locationData['country'] ? $locationData['country'] : 'Unknown' ?>",

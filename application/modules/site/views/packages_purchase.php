@@ -115,15 +115,15 @@ if ($package_info->amount > 0) {
 
 $user = $this->session->userdata();
 if (!empty($user)) {
-    $firstName = isset($user['first_name']) ? $user['first_name'] : 'Customer';
+    $firstName = isset($user['first_name']) ? $user['first_name'] : '';
     $lastName = isset($user['last_name']) ? $user['last_name'] : '';
     $email = isset($user['email']) ? $user['email'] : '';
     $phone = isset($user['phone']) ? $user['phone'] : '';
     
 } else {
     // Default values for non-logged-in users
-    $firstName = 'Guest';
-    $lastName = 'User';
+    $firstName = '';
+    $lastName = '';
     $email =  '';
     $phone = '';
     
@@ -138,38 +138,142 @@ $locationData = json_decode($response, true);
 ?>
 
 <script>
-    dataLayer.push({
-        event: "Add To Cart",
-        name: "<?=  $firstName . ' ' . $lastName ?>",
-        phone_number: "<?= $phone ?>",
-        email: "<?= $email ?>",
-        city: "<?= $locationData['city'] ? $locationData['city'] : 'Unknown' ?>",
-        zip_code: "<?= $locationData['postal'] ? $locationData['postal'] : 'Unknown' ?>",
-        country: "<?= $locationData['country'] ? $locationData['country'] : 'Unknown' ?>",
-        items: [{
-            item_id: "<?= $package_info->id ?>",
-            item_name: "<?= $package_info->packages_name ?>",
-            affiliation: "Google Merchandise Store",
-            coupon: "SUMMER_FUN",
-            discount: <?= $package_info->amount ?>,
-            location_id: "<?= $_SERVER['REMOTE_ADDR'] ?>",
-            regular_price: <?= $total_regular_price ?>,
-            market_price_price: <?= $total_market_price ?>,
-            discounted_price: <?= $discounted_price ?>,
-            quantity: 1,
-            packages_item: [
-                <?php
-                $packages_items = json_decode($package_info->packages_item, true); // Decode the JSON
-                foreach ($packages_items as $item): ?> {
+    var successFlash = <?php echo json_encode($this->session->flashdata('success')); ?>;
+    var errorFlash = <?php echo json_encode($this->session->flashdata('error')); ?>;
+
+    if (successFlash || errorFlash) {
+        dataLayer.push({
+            event: "purchase",
+            name: "<?= $firstName . ' ' . $lastName ?>",
+            phone_number: "<?= $phone ?>",
+            email: "<?= $email ?>",
+            visitor_type: "Customer",
+            city: "<?= $locationData['city'] ?? 'Unknown' ?>",
+            zip_code: "<?= $locationData['postal'] ?? 'Unknown' ?>",
+            country: "<?= $locationData['country'] ?? 'Unknown' ?>",
+            items: [{
+                item_id: "<?= $package_info->id ?>",
+                item_name: "<?= $package_info->packages_name ?>",
+                affiliation: "Google Merchandise Store",
+                coupon: "SUMMER_FUN",
+                discount: <?= $package_info->amount ?>,
+                location_id: "<?= $_SERVER['REMOTE_ADDR'] ?>",
+                regular_price: <?= $total_regular_price ?>,
+                market_price_price: <?= $total_market_price ?>,
+                discounted_price: <?= $discounted_price ?>,
+                quantity: 1,
+                packages_item: [
+                    <?php foreach ($packages_items as $item): ?> {
                         name: "<?= $item['name'] ?>",
                         regular_price: "<?= $item['regular_price'] ?>",
                         market_price: "<?= $item['market_price'] ?>"
                     },
-                <?php endforeach; ?>
-            ]
-        }]
-    });
+                    <?php endforeach; ?>
+                ]
+            }]
+        });
+    } else {
+        dataLayer.push({
+            event: "Add To Cart",
+            name: "<?= $firstName . ' ' . $lastName ?>",
+            phone_number: "<?= $phone ?>",
+            email: "<?= $email ?>",
+            visitor_type: "Customer",
+            city: "<?= $locationData['city'] ?? 'Unknown' ?>",
+            zip_code: "<?= $locationData['postal'] ?? 'Unknown' ?>",
+            country: "<?= $locationData['country'] ?? 'Unknown' ?>",
+            items: [{
+                item_id: "<?= $package_info->id ?>",
+                item_name: "<?= $package_info->packages_name ?>",
+                affiliation: "Google Merchandise Store",
+                coupon: "SUMMER_FUN",
+                discount: <?= $package_info->amount ?>,
+                location_id: "<?= $_SERVER['REMOTE_ADDR'] ?>",
+                regular_price: <?= $total_regular_price ?>,
+                market_price_price: <?= $total_market_price ?>,
+                discounted_price: <?= $discounted_price ?>,
+                quantity: 1,
+                packages_item: [
+                    <?php foreach ($packages_items as $item): ?> {
+                        name: "<?= $item['name'] ?>",
+                        regular_price: "<?= $item['regular_price'] ?>",
+                        market_price: "<?= $item['market_price'] ?>"
+                    },
+                    <?php endforeach; ?>
+                ]
+            }]
+        });
+    }
 </script>
+
+
+<!-- <script>
+    if(<?php echo $this->session->flashdata('success'); ?>){
+        dataLayer.push({
+            event: "",
+            name: "<?=  $firstName . ' ' . $lastName ?>",
+            phone_number: "<?= $phone ?>",
+            email: "<?= $email ?>",
+            city: "<?= $locationData['city'] ? $locationData['city'] : 'Unknown' ?>",
+            zip_code: "<?= $locationData['postal'] ? $locationData['postal'] : 'Unknown' ?>",
+            country: "<?= $locationData['country'] ? $locationData['country'] : 'Unknown' ?>",
+            items: [{
+                item_id: "<?= $package_info->id ?>",
+                item_name: "<?= $package_info->packages_name ?>",
+                affiliation: "Google Merchandise Store",
+                coupon: "SUMMER_FUN",
+                discount: <?= $package_info->amount ?>,
+                location_id: "<?= $_SERVER['REMOTE_ADDR'] ?>",
+                regular_price: <?= $total_regular_price ?>,
+                market_price_price: <?= $total_market_price ?>,
+                discounted_price: <?= $discounted_price ?>,
+                quantity: 1,
+                packages_item: [
+                    <?php
+                    $packages_items = json_decode($package_info->packages_item, true); // Decode the JSON
+                    foreach ($packages_items as $item): ?> {
+                            name: "<?= $item['name'] ?>",
+                            regular_price: "<?= $item['regular_price'] ?>",
+                            market_price: "<?= $item['market_price'] ?>"
+                        },
+                    <?php endforeach; ?>
+                ]
+            }]
+        });
+    }else{
+        dataLayer.push({
+            event: "Add To Cart",
+            name: "<?=  $firstName . ' ' . $lastName ?>",
+            phone_number: "<?= $phone ?>",
+            email: "<?= $email ?>",
+            city: "<?= $locationData['city'] ? $locationData['city'] : 'Unknown' ?>",
+            zip_code: "<?= $locationData['postal'] ? $locationData['postal'] : 'Unknown' ?>",
+            country: "<?= $locationData['country'] ? $locationData['country'] : 'Unknown' ?>",
+            items: [{
+                item_id: "<?= $package_info->id ?>",
+                item_name: "<?= $package_info->packages_name ?>",
+                affiliation: "Google Merchandise Store",
+                coupon: "SUMMER_FUN",
+                discount: <?= $package_info->amount ?>,
+                location_id: "<?= $_SERVER['REMOTE_ADDR'] ?>",
+                regular_price: <?= $total_regular_price ?>,
+                market_price_price: <?= $total_market_price ?>,
+                discounted_price: <?= $discounted_price ?>,
+                quantity: 1,
+                packages_item: [
+                    <?php
+                    $packages_items = json_decode($package_info->packages_item, true); // Decode the JSON
+                    foreach ($packages_items as $item): ?> {
+                            name: "<?= $item['name'] ?>",
+                            regular_price: "<?= $item['regular_price'] ?>",
+                            market_price: "<?= $item['market_price'] ?>"
+                        },
+                    <?php endforeach; ?>
+                ]
+            }]
+        });
+    }
+</script> -->
 
 
 <div class="content-area">
