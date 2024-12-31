@@ -1,13 +1,16 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Dashboard_model extends CI_Model {
+class Dashboard_model extends CI_Model
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function get_members_count() {
+    public function get_members_count()
+    {
         // count query
         $this->db->select('COUNT(*) as count');
         $this->db->from('members');
@@ -18,7 +21,8 @@ class Dashboard_model extends CI_Model {
 
         return $ret;
     }
-    public function get_count($table) {
+    public function get_count($table)
+    {
 
         $this->db->select('count(*)');
         $query = $this->db->get($table);
@@ -26,4 +30,9 @@ class Dashboard_model extends CI_Model {
         return $cnt['count(*)'];
     }
 
+    public function get_user_data_count($table, $where = [])
+    {
+        $this->db->where($where);
+        return $this->db->count_all_results($table);
+    }
 }

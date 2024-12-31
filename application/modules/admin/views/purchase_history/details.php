@@ -16,16 +16,16 @@
 
                 <div class="box-body">
                     <div id="infoMessage"></div>
-                    <?php if($this->session->flashdata('success')): ?>
+                    <?php if ($this->session->flashdata('success')): ?>
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <?= $this->session->flashdata('success'); ?>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                    <?php endif; 
-                  
-                
+                    <?php endif;
+
+
                     $userPurchase = $user_purchase_packages;
                     $packageInfo = $package_info;
                     $paymentInfo = $payment_info;
@@ -36,15 +36,15 @@
                             <h4 class="section-title">User Purchase Details</h4>
                             <ul class="detail-list">
                                 <li><strong>Name:</strong> <?= $userPurchase->first_name . " " . $userPurchase->last_name ?></li>
-                                <li><strong>Progress Status:</strong> 
-                                    <?php 
-                                        if ($userPurchase->purchase_status == 1) {
-                                            echo '<span class="label label-warning">Pending</span>';
-                                        } elseif ($userPurchase->purchase_status == 2) {
-                                            echo '<span class="label label-info">Processing</span>';
-                                        } else {
-                                            echo '<span class="label label-success">Completed</span>';
-                                        }
+                                <li><strong>Progress Status:</strong>
+                                    <?php
+                                    if ($userPurchase->purchase_status == 1) {
+                                        echo '<span class="label label-warning">Pending</span>';
+                                    } elseif ($userPurchase->purchase_status == 2) {
+                                        echo '<span class="label label-info">Processing</span>';
+                                    } else {
+                                        echo '<span class="label label-success">Completed</span>';
+                                    }
                                     ?>
                                 </li>
                                 <li><strong>Payment Status:</strong> <?= $userPurchase->payment_status ?></li>
@@ -58,12 +58,22 @@
                             <ul class="detail-list">
                                 <li><strong>Name:</strong> <?= $packageInfo->packages_name ?></li>
                                 <li><strong>Description:</strong> <?= $packageInfo->description ?></li>
-                                <li><strong>Amount:</strong> <?= $packageInfo->amount ?></li>
+                                <li><strong>Discount:</strong> <?= $packageInfo->amount ?></li>
                                 <li><strong>Items:</strong>
                                     <ul class="package-items">
-                                        <?php foreach(json_decode($packageInfo->packages_item) as $item): ?>
-                                            <li><i class="fa fa-check-circle"></i> <?= $item ?></li>
+                                        <div class="item-row" style="margin-bottom: 10px;">
+                                            <h4 style="display:inline-block; width:32%; margin-right:1%; font-weight:700">Item Name</h4>
+                                            <h4 style="display:inline-block; width:32%; margin-right:1%; font-weight:700">Regular Price</h4>
+                                            <h4 style="display:inline-block; width:32%; margin-right:1%; font-weight:700">Market Price</h4>
+                                        </div>
+                                        <?php foreach (json_decode($packageInfo->packages_item) as $key => $item): ?>
+                                            <div class="item-row" style="margin-bottom: 10px;">
+                                                <input type="text" class="form-control" name="packages_item[<?= $key ?>][name]" value="<?= $item->name ?>" readonly placeholder="Item Name" style="display:inline-block; width:32%; margin-right:1%;">
+                                                <input type="number" class="form-control" name="packages_item[<?= $key ?>][regular_price]" value="<?= $item->regular_price ?>" readonly placeholder="Regular Price" style="display:inline-block; width:32%; margin-right:1%;">
+                                                <input type="number" class="form-control" name="packages_item[<?= $key ?>][market_price]" value="<?= $item->market_price ?>" readonly placeholder="Market Price" style="display:inline-block; width:32%;">
+                                            </div>
                                         <?php endforeach; ?>
+
                                     </ul>
                                 </li>
                             </ul>
@@ -103,6 +113,7 @@
         text-transform: uppercase;
         letter-spacing: 1px;
     }
+
     .styled-box {
         background: linear-gradient(135deg, #f0f4ff, #ffffff);
         box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
@@ -110,6 +121,7 @@
         padding: 25px;
         margin-top: 20px;
     }
+
     .box-header {
         background: #4a90e2;
         color: #fff;
@@ -117,6 +129,7 @@
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
     }
+
     .section-title {
         font-size: 1.4em;
         color: #333;
@@ -125,43 +138,52 @@
         display: inline-block;
         padding-bottom: 5px;
     }
+
     .detail-section {
         margin-bottom: 20px;
         background: #f9fbff;
         padding: 20px;
         border-radius: 8px;
     }
+
     .detail-list {
         list-style: none;
         padding: 0;
         font-size: 1.05em;
     }
+
     .detail-list li {
         padding: 8px 0;
         border-bottom: 1px dashed #e0e4ec;
     }
+
     .detail-list li strong {
         color: #4a90e2;
         font-weight: 600;
     }
+
     .package-items {
         list-style: none;
         padding-left: 0;
     }
+
     .package-items li {
         color: #4a90e2;
         font-weight: 500;
     }
+
     .package-items li i {
         color: #28a745;
         margin-right: 5px;
     }
+
     .alert-success {
         background-color: #e8f5e9;
         border-color: #c8e6c9;
         color: #388e3c;
         font-size: 1.05em;
     }
+
     .breadcrumb li a {
         color: #4a90e2;
     }

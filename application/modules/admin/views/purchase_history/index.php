@@ -30,7 +30,7 @@
                                 <th>SL</th>
                                 <th>Package Name</th>
                                 <th>User name</th>
-                                <th>Price</th>
+                                <th>Discount</th>
                                 <th>Payment Status</th>
                                 <th>Transaction</th>
                                 <th>Progress Status</th>
@@ -45,7 +45,7 @@
                                 <td><?=$key+1;?></td>
                                 <td><?=$row->packages_name;?></td>
                                 <td><?=$row->first_name.' '.$row->last_name;?></td>
-                                <td><?=$row->amount;?></td>
+                                <td><?=$row->amount;?>%</td>
                                 <td><?=$row->status_title;?></td>
                                 <td><?=$row->transaction_id;?></td>
                                 <td>
@@ -67,6 +67,7 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li><a href="<?=base_url('admin/purchase_history/details/'.$row->purchase_id)?>">Details</a>
+                                            <li><a href="<?=base_url('admin/purchase_history/purchase_pdf/'.$row->purchase_id)?>">download</a>
                                             </li>
                                         </ul>
                                     </div>

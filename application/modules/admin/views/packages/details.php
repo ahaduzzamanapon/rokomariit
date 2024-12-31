@@ -50,6 +50,11 @@
                   <td class="col-md-1">:</td>
                   <td class="col-md-4">
                     <?php if (!empty($package_items)): ?>
+                      <div class="item-row" style="margin-bottom: 10px;">
+                        <h4 style="display:inline-block; width:31%; margin-right:1%; font-weight:700">Item Name</h4>
+                        <h4 style="display:inline-block; width:31%; margin-right:1%; font-weight:700">Regular Price</h4>
+                        <h4 style="display:inline-block; width:31%; margin-right:1%; font-weight:700">Market Price</h4>
+                      </div>
                       <?php foreach ($package_items as $key => $item): ?>
                         <div class="item-row" style="margin-bottom: 10px;">
                           <input type="text" class="form-control" name="packages_item[<?= $key ?>][name]" value="<?= $item['name'] ?>" readonly placeholder="Item Name" style="display:inline-block; width:32%; margin-right:1%;">

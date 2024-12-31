@@ -119,7 +119,7 @@
      //              }
      //         });
      //     });
-     });
+    //  });
      //     $(document).ready(function(){	
      // 	$('#show_captcha').load('captcha.php');
      // });

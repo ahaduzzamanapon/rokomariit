@@ -43,7 +43,7 @@ class Purchase_history extends Backend_Controller {
 		$this->data['package_info'] = $this->db->where('id', $this->data['user_purchase_packages']->package_id)->get('packages')->row();
 		$this->data['payment_info'] = $this->db->where('mer_txnid', $this->data['user_purchase_packages']->transaction_id)->get('payment_info')->row();
 
-		// dd($this->data);
+		// dd($this->data['payment_info']);
 		$this->data['meta_title'] = 'Package Details';
 		$this->data['subview'] = 'purchase_history/details';
 		$this->load->view('backend/_layout_main', $this->data);
@@ -58,6 +58,17 @@ class Purchase_history extends Backend_Controller {
 		$this->db->update('user_purchase_packages', ['status' => $status]);
 		echo 'success';
 		
+	}
+
+	public function purchase_pdf($id){
+		$this->data['user_purchase_packages'] = $this->db->where('id', $id)->get('user_purchase_packages')->row();
+		$this->data['package_info'] = $this->db->where('id', $this->data['user_purchase_packages']->package_id)->get('packages')->row();
+		$this->data['payment_info'] = $this->db->where('mer_txnid', $this->data['user_purchase_packages']->transaction_id)->get('payment_info')->row();
+		// dd($this->data['payment_info']);
+
+		$this->data['meta_title'] = 'Package Details';
+		$this->data['subview'] = 'purchase_history/purchase_pdf';
+		$this->load->view('backend/_layout_main', $this->data);
 	}
 
 	// public function blank(){
