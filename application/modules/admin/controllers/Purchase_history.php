@@ -28,6 +28,7 @@ class Purchase_history extends Backend_Controller {
 			$this->db->where('user_purchase_packages.user_id', $user_id);
 		}
 		$this->data['results'] = $this->db->get()->result(); 
+		// dd($this->data['results']);
 		$this->data['meta_title'] = 'Purchase history';
 		$this->data['subview'] = 'purchase_history/index';
     	$this->load->view('backend/_layout_main', $this->data);
@@ -64,7 +65,7 @@ class Purchase_history extends Backend_Controller {
 		$this->data['user_purchase_packages'] = $this->db->where('id', $id)->get('user_purchase_packages')->row();
 		$this->data['package_info'] = $this->db->where('id', $this->data['user_purchase_packages']->package_id)->get('packages')->row();
 		$this->data['payment_info'] = $this->db->where('mer_txnid', $this->data['user_purchase_packages']->transaction_id)->get('payment_info')->row();
-		// dd($this->data['payment_info']);
+		// dd($this->data['package_info']);
 
 		$this->data['meta_title'] = 'Package Details';
 		$this->data['subview'] = 'purchase_history/purchase_pdf';

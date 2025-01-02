@@ -15,6 +15,20 @@
         margin-right: auto;
     }
 
+    .list-unstyled {
+        height: 200px;
+        overflow-y: scroll;
+        /* Hide scrollbar */
+        scrollbar-width: none;
+        /* Firefox */
+        -ms-overflow-style: none;
+    }
+
+    .list-unstyled::-webkit-scrollbar {
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        display: none;
+    }
+
     /* Heading */
     .packages_info h3 {
         font-size: 1.8rem;
@@ -281,9 +295,15 @@ $locationData = json_decode($response, true);
 
         <section class="page-section with-sidebar">
             <?php if ($this->session->flashdata('success')): ?>
-                <div class="alert alert-success">
-                    <a class="close" data-dismiss="alert">&times;</a>
-                    <?php echo $this->session->flashdata('success'); ?>
+                <div class="alert alert-success" style="display: flex; justify-content: space-between;">
+                    <div>
+                        <a class="close" data-dismiss="alert">&times;</a>
+                        <?php echo $this->session->flashdata('success'); ?>
+                    </div>
+                    <div>
+                        <?php $purchase_id = $this->uri->segment(4); ?>
+                        <a class="btn btn-primary" style="color: white;" href="<?= base_url('site/packages_invoice/' . $purchase_id) ?>">Print Invoice</a>
+                    </div>
                 </div>
             <?php endif; ?>
             <?php if ($this->session->flashdata('error')): ?>
@@ -308,9 +328,9 @@ $locationData = json_decode($response, true);
                         <div class="mt-3" style="width: 80%;">
                             <ul class="list-unstyled">
                                 <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: bold;">
-                                    <h4 style="font-size: 14px; font-weight: bold;">S. Name</h4>
-                                    <h4 style="font-size: 14px; font-weight: bold;">M. Price</h4>
-                                    <h4 style="font-size: 14px; font-weight: bold;">R. Price</h4>
+                                    <h4 style="font-size: 14px; font-weight: bold;">Name</h4>
+                                    <h4 style="font-size: 14px; font-weight: bold;">Market Price</h4>
+                                    <h4 style="font-size: 14px; font-weight: bold;">RIT Price</h4>
                                 </div>
 
                                 <?php
@@ -368,6 +388,20 @@ $locationData = json_decode($response, true);
                                     <?php endif; ?>
                                 </h3>
 
+                                <?php
+                                if ($package_info->user_payment > 0) {
+                                    // dd($row->user_payment);
+                                    $user_payment = $package_info->user_payment;
+                                    $payment = (float) $discounted_price * (float) $user_payment / 100;
+                                    // dd($payment);
+                                } else {
+                                    $payment = $discounted_price;
+                                }
+
+                                ?>
+
+
+
                             </div>
                         </div>
                     </div>
@@ -410,11 +444,19 @@ $locationData = json_decode($response, true);
                             <div class="mb-3 col-md-6">
                                 <label for="amount" class="form-label">Price</label>
                                 <input type="text" class="form-control" name="amount" id="amount"
-                                    value="<?= $discounted_price ?>" readonly>
+                                    value="<?= ceil($payment) ?>" readonly>
                             </div>
+
                         </div>
+                        <div class="col-md-12">
+
+                            <h3 style="color: black; font-size: 14px; font-weight: 700;">
+                                User has to pay for this package: ৳ <?= number_format($payment, 2) ?> ( <?= $package_info->user_payment ?>%)
+                            </h3>
+                        </div>
+
                         <div class="col-md-12 text-right">
-                            <button type="submit" class="btn btn-primary">Purchase</button>
+                            <button type="submit" class="btn btn-primary">Submit Work Order</button>
                         </div>
                         <?php echo form_close(); ?>
                     </div>

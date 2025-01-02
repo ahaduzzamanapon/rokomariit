@@ -55,7 +55,7 @@
     }
 
     .card-p-header h3 {
-        font-size: 26px;
+        font-size: 20px;
         margin-bottom: 8px;
         font-weight: bold;
     }
@@ -75,6 +75,18 @@
     .card-p-body ul {
         list-style: none;
         padding: 0;
+        height: 280px !important;
+        overflow-y: scroll !important;
+        /* Hide scrollbar */
+        scrollbar-width: none;
+        /* Firefox */
+        -ms-overflow-style: none;
+        /* IE and Edge */
+    }
+
+    .card-p-body ul::-webkit-scrollbar {
+        display: none;
+        /* Chrome, Safari, and Opera */
     }
 
     .card-p-body ul li {
@@ -131,9 +143,9 @@
     }
 
     .custom-col-width {
-        flex: 0 0 30%;
+        flex: 0 0 47%;
         /* 31% approximates 3.9 columns */
-        max-width: 30%;
+        max-width: 47%;
     }
 
     /* Breadcrumbs Styling */
@@ -195,7 +207,6 @@ if (!empty($user_obj)) {
     $lastName = $user_obj->last_name;
     $email = $user_obj->email;
     $phone = $user_obj->phone;
-    
 } else {
     // Default values for non-logged-in users
     $firstName = '';
@@ -203,7 +214,7 @@ if (!empty($user_obj)) {
     $email =  '';
     $phone = '';
     // $visitor_type = 'Customer';
-    
+
 }
 
 
@@ -223,7 +234,7 @@ $locationData = json_decode($response, true);
 <script>
     dataLayer.push({
         event: "view_item_list",
-        name: "<?=  $firstName . ' ' . $lastName ?>",
+        name: "<?= $firstName . ' ' . $lastName ?>",
         phone_number: "<?= $phone ?>",
         email: "<?= $email ?>",
         visitor_type: "Customer",
@@ -233,34 +244,34 @@ $locationData = json_decode($response, true);
         // ecommerce: {
         items: [
             <?php foreach ($query->result() as $row): ?> {
-                <?php
+                    <?php
                     if ($row->amount > 0) {
                         $discount_percentage = $row->amount; // Assume $row->amount is the discount percentage
                         $discounted_price = $total_regular_price - ($total_regular_price * $discount_percentage / 100);
                     } else {
                         $discounted_price = $total_regular_price;
                     }
-                ?>
+                    ?>
                     item_id: "<?= $row->id ?>",
-                    item_name: "<?= $row->packages_name ?>",
-                    affiliation: "Google Merchandise Store",
-                    coupon: "SUMMER_FUN",
-                    discount: <?= $row->amount ?>,
-                    location_id: "<?= $_SERVER['REMOTE_ADDR'] ?>",
-                    regular_price: <?= $total_regular_price ?>,
-                    market_price_price: <?= $total_market_price ?>,
-                    discounted_price: <?= $discounted_price ?>,
-                    quantity: 1,
-                    packages_item: [
-                        <?php
-                        $packages_items = json_decode($row->packages_item, true); // Decode the JSON
-                        foreach ($packages_items as $item): ?> {
-                                name: "<?= $item['name'] ?>",
-                                regular_price: "<?= $item['regular_price'] ?>",
-                                market_price: "<?= $item['market_price'] ?>"
-                            },
-                        <?php endforeach; ?>
-                    ]
+                        item_name: "<?= $row->packages_name ?>",
+                        affiliation: "Google Merchandise Store",
+                        coupon: "SUMMER_FUN",
+                        discount: <?= $row->amount ?>,
+                        location_id: "<?= $_SERVER['REMOTE_ADDR'] ?>",
+                        regular_price: <?= $total_regular_price ?>,
+                        market_price_price: <?= $total_market_price ?>,
+                        discounted_price: <?= $discounted_price ?>,
+                        quantity: 1,
+                        packages_item: [
+                            <?php
+                            $packages_items = json_decode($row->packages_item, true); // Decode the JSON
+                            foreach ($packages_items as $item): ?> {
+                                    name: "<?= $item['name'] ?>",
+                                    regular_price: "<?= $item['regular_price'] ?>",
+                                    market_price: "<?= $item['market_price'] ?>"
+                                },
+                            <?php endforeach; ?>
+                        ]
                 },
             <?php endforeach; ?>
         ]
@@ -284,18 +295,21 @@ $locationData = json_decode($response, true);
                     $total_market_price = 0;
                     $total_regular_price = 0;
                 ?>
-                    <a href="<?= base_url('site/packages_details/' . $row->id) ?>" class="">
-                        <div class="col-sm-12 col-md-3 custom-col-width card_p">
+                    <a href="<?= base_url('site/packages_details/' . rawurlencode($row->packages_name)) ?>" class="">
+                        <div class="col-sm-12 col-md-6 custom-col-width card_p">
                             <div class="card-p-header">
-                                <h3><?= $row->packages_name ?></h3>
-                                <p><?= $row->description ?></p>
+                                <h3><?= implode(' ', array_slice(explode(' ',$row->packages_name), 0, 5)) ; ?></h3>
+                                <p>
+                                    <?= implode(' ', array_slice(explode(' ', $row->description), 0, 10)) . '...'; ?>
+                                </p>
+
                             </div>
                             <div class="card-p-body">
                                 <ul class="list-unstyled">
                                     <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: bold;">
-                                        <h4 style="font-size: 14px; font-weight: bold;">S. Name</h4>
-                                        <h4 style="font-size: 14px; font-weight: bold;">M. Price</h4>
-                                        <h4 style="font-size: 14px; font-weight: bold;">R. Price</h4>
+                                        <h4 style="font-size: 14px; font-weight: bold; padding-left:30px"> Name</h4>
+                                        <h4 style="font-size: 14px; font-weight: bold; padding-left:30px">Market Price</h4>
+                                        <h4 style="font-size: 14px; font-weight: bold;">RIT Price</h4>
                                     </div>
 
                                     <?php
@@ -309,7 +323,7 @@ $locationData = json_decode($response, true);
                                         $total_regular_price += $regular_price;
 
                                         echo '<li>
-                                            <div style="display: flex; justify-content: space-between; align-items: center; width: 85%;">
+                                            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                                                 <div style="width:33%; text-align:start">' . $value->name . '</div>
                                                 <div style="width:33%; text-align:center">' . number_format($market_price, 2) . '</div>
                                                 <div style="width:33%; text-align:end">' . number_format($regular_price, 2) . '</div>
@@ -352,7 +366,19 @@ $locationData = json_decode($response, true);
                                     <?php endif; ?>
                                 </h3>
 
-                                <a href="<?= base_url('site/purchase_create/' . $row->id) ?>" class="btn btn-primary btn-block">Purchase Now</a>
+                                <?php 
+                                    if ($row->user_payment > 0) {
+                                        // dd($row->user_payment);
+                                        $user_payment = $row->user_payment;
+                                        $payment = (float) $discounted_price * (float) $user_payment / 100;
+                                        // dd($payment);
+                                    }else{
+                                        $payment = $discounted_price;
+                                    }
+                                    
+                                ?>
+
+                                <a href="<?= base_url('site/purchase_create/' . rawurlencode($row->packages_name)) ?>" class="btn btn-primary btn-block">Submit Work Order ( <?= number_format($row->user_payment)  ?>%) ( <?= number_format($payment, 2) ?>৳)</a>
                             </div>
                         </div>
                     </a>

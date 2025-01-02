@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -30,12 +29,12 @@
             padding-bottom: 10px;
         }
 
-        .header .logo {
+        .header .site-logo {
             display: flex;
             align-items: center;
         }
 
-        .header .logo img {
+        .header .site-logo img {
             width: 50px;
             margin-right: 10px;
         }
@@ -134,8 +133,8 @@
 
 <body>
     <div class="invoice-container" id="printableArea">
-        <div class="header">
-            <div class="logo">
+        <div class="header" style="box-shadow: none;">
+            <div class="site-logo">
                 <a href="<?= base_url(); ?>"><img src="<?= base_url(); ?>setting_img/logo.png" alt="Rokomari IT Ltd" style="width: 60px;"></a>
             </div>
             <div>
@@ -201,6 +200,7 @@
             //     $discounted_price = $total_regular_price;
             // }
             // 
+
             $due_amount = ($total_regular_price - $payment_info->amount)
 
             ?>

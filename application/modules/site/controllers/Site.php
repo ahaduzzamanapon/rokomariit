@@ -81,10 +81,12 @@ class Site extends Frontend_Controller
         $this->load->view('frontend/_layout_main', $this->data);
     }
 
-    public function packages_details($id)
+    public function packages_details($name)
     {
-        $this->db->where('id', $id);
+        $name = urldecode($name);
+        $this->db->where('packages_name', $name);
         $this->data['package_info'] = $this->db->get('packages')->row();
+        // dd($name);
         $user_id = $this->session->userdata('user_id');
         if ($user_id) {
             $this->data['user_info'] = $this->db->where('id', $user_id)->get('users')->row();
@@ -98,10 +100,10 @@ class Site extends Frontend_Controller
         $this->load->view('frontend/_layout_main', $this->data);
     }
 
-    public function purchase_create($id)
+    public function purchase_create($name)
     {
-
-        $this->db->where('id', $id);
+        $name = urldecode($name);
+        $this->db->where('packages_name', $name);
         $this->data['package_info'] = $this->db->get('packages')->row();
         $user_id = $this->session->userdata('user_id');
         if ($user_id) {
@@ -178,7 +180,7 @@ class Site extends Frontend_Controller
         $tran_id = "rit" . time() . rand(1111111, 9999999); // Unique transaction ID
 
         $this->load->library('curl');
-
+        // dd($amount);
         // Prepare data for JSON payload
         $postData = array(
             "store_id" => $store_id,
@@ -201,6 +203,7 @@ class Site extends Frontend_Controller
             "cus_phone" => $user_info->phone,
             "type" => "json"
         );
+        // dd($postData);
 
         // Initialize cURL
         $curl = curl_init();
@@ -238,7 +241,7 @@ class Site extends Frontend_Controller
 
         // Decode response
         $responseObj = json_decode($response);
-
+        // dd($responseObj);
         // Check if payment URL exists and redirect
         if (isset($responseObj->payment_url) && !empty($responseObj->payment_url)) {
             $paymentUrl = $responseObj->payment_url;
@@ -460,10 +463,12 @@ class Site extends Frontend_Controller
             'transaction_id' => $a['mer_txnid'],
             'create_at' => date('Y-m-d H:i:s'),
         );
+        
         $this->db->insert('user_purchase_packages', $data_user_purchase_packages);
-
-
-
+        $purchase_id = $this->db->insert_id();        
+        $package_name = $this->db->where('id', $package_id)->get('packages')->row()->packages_name;
+        // dd($package_name);
+        
         $data_view = '
             Payment Successful 
             Please login to your account.
@@ -472,13 +477,29 @@ class Site extends Frontend_Controller
             <p>Password: ' . htmlspecialchars($user_info->password_r) . '</p>
             <p>Link: <a href="' . base_url('login') . '">' . base_url('login') . ' Go to login </a></p>
             ';
-
-            
+        
+            // dd($purchase_id);
             $this->session->set_flashdata('success',  $data_view);
+            $this->session->set_flashdata('purchase_id',  $purchase_id);
             $this->session->set_userdata($user_info);
             // dd($user_info);
-            redirect(base_url("site/purchase_create/$package_id"));
+            redirect(base_url("site/purchase_create/$package_name/$purchase_id"));
     }
+
+
+    public function packages_invoice($id)
+    {
+        $this->data['user_purchase_packages'] = $this->db->where('id', $id)->get('user_purchase_packages')->row();
+		$this->data['package_info'] = $this->db->where('id', $this->data['user_purchase_packages']->package_id)->get('packages')->row();
+		$this->data['payment_info'] = $this->db->where('mer_txnid', $this->data['user_purchase_packages']->transaction_id)->get('payment_info')->row();
+		// dd($this->data['package_info']);
+
+		$this->data['meta_title'] = 'Package Invoice';
+		$this->data['subview'] = 'packages_invoice';
+        $this->load->view('frontend/_layout_main', $this->data);
+    }
+
+
     public function trigger_login($email, $password)
     {
         $title = "Login Credentials";

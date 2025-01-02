@@ -119,55 +119,53 @@
 </style>
 
 <?php
-    $package_info = $package_info;
-    $packages_items = json_decode($package_info->packages_item, true);
-    $total_market_price = 0;
-    $total_regular_price = 0;
-    foreach ($packages_items as $key => $value) {
-        // dd($value['market_price']);
-        $total_market_price += $value['market_price'];
-        $total_regular_price += $value['regular_price'];
-    }
+$package_info = $package_info;
+$packages_items = json_decode($package_info->packages_item, true);
+$total_market_price = 0;
+$total_regular_price = 0;
+foreach ($packages_items as $key => $value) {
+    // dd($value['market_price']);
+    $total_market_price += $value['market_price'];
+    $total_regular_price += $value['regular_price'];
+}
 
-    if ($package_info->amount > 0) {
-        $discount_percentage = $package_info->amount; // Assume $row->amount is the discount percentage
-        $discounted_price = $total_regular_price - ($total_regular_price * $discount_percentage / 100);
-    } else {
-        $discounted_price = $total_regular_price;
-    }
+if ($package_info->amount > 0) {
+    $discount_percentage = $package_info->amount; // Assume $row->amount is the discount percentage
+    $discounted_price = $total_regular_price - ($total_regular_price * $discount_percentage / 100);
+} else {
+    $discounted_price = $total_regular_price;
+}
 
-    // $user = $this->session->userdata();
+// $user = $this->session->userdata();
 
-    $user_id = $this->session->user_id;
-    $user_obj = $this->db->where('id', $user_id)->get('users')->row();
+$user_id = $this->session->user_id;
+$user_obj = $this->db->where('id', $user_id)->get('users')->row();
 
-    if (!empty($user_obj)) {
-        $firstName = $user_obj->first_name;
-        $lastName = $user_obj->last_name;
-        $email = $user_obj->email;
-        $phone = $user_obj->phone;
-        
-    } else {
-        // Default values for non-logged-in users
-        $firstName = '';
-        $lastName = '';
-        $email =  '';
-        $phone = '';
-        
-    }
+if (!empty($user_obj)) {
+    $firstName = $user_obj->first_name;
+    $lastName = $user_obj->last_name;
+    $email = $user_obj->email;
+    $phone = $user_obj->phone;
+} else {
+    // Default values for non-logged-in users
+    $firstName = '';
+    $lastName = '';
+    $email =  '';
+    $phone = '';
+}
 
-    $ip = ($_SERVER['REMOTE_ADDR'] === '::1') ? '103.73.199.12' : $_SERVER['REMOTE_ADDR']; // Replace with the user's IP address
-    $apiToken = 'e7c866514030b4'; // Replace with your actual token
-    $url = "https://ipinfo.io/{$ip}/json?token={$apiToken}";
+$ip = ($_SERVER['REMOTE_ADDR'] === '::1') ? '103.73.199.12' : $_SERVER['REMOTE_ADDR']; // Replace with the user's IP address
+$apiToken = 'e7c866514030b4'; // Replace with your actual token
+$url = "https://ipinfo.io/{$ip}/json?token={$apiToken}";
 
-    $response = file_get_contents($url);
-    $locationData = json_decode($response, true);
+$response = file_get_contents($url);
+$locationData = json_decode($response, true);
 ?>
 
 <script>
     dataLayer.push({
         event: "view_item",
-        name: "<?=  $firstName . ' ' . $lastName ?>",
+        name: "<?= $firstName . ' ' . $lastName ?>",
         phone_number: "<?= $phone ?>",
         email: "<?= $email ?>",
         visitor_type: "Customer",
@@ -315,7 +313,20 @@
 
                             </div>
                         </div>
-                        <a href="<?= base_url('site/purchase_create/' . $package_info->id) ?>" class="btn btn-primary btn-block">Purchase Now</a>
+
+                        <?php
+                        if ($package_info->user_payment > 0) {
+                            // dd($row->user_payment);
+                            $user_payment = $package_info->user_payment;
+                            $payment = (float) $discounted_price * (float) $user_payment / 100;
+                            // dd($payment);
+                        } else {
+                            $payment = $discounted_price;
+                        }
+
+                        ?>
+
+                        <a href="<?= base_url('site/purchase_create/' . rawurlencode($package_info->packages_name)) ?>" class="btn btn-primary btn-block">Submit Work Order ( <?= number_format($package_info->user_payment)  ?>%) ( <?= number_format($payment, 2) ?>৳)</a>
                     </div>
 
                     <div class="col-md-3"></div>

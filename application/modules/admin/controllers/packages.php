@@ -77,6 +77,10 @@ class Packages extends Backend_Controller
                 'packages_name' => $this->input->post('packages_name'),
                 'description' => $this->input->post('description'),
                 'amount' => $this->input->post('amount'),
+                'user_payment' => $this->input->post('user_payment'),
+                'meta_tags' => $this->input->post('meta_tags'),
+                'meta_keys' => $this->input->post('meta_keys'),
+                'meta_description' => $this->input->post('meta_description'),
                 'packages_item' => $packages_item_json, // Save as JSON
                 'package_video' => $video_id,
                 'package_video_title_1' => $this->input->post('video_title_1'),

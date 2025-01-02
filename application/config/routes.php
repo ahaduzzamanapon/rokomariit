@@ -67,7 +67,7 @@ $route['privacy-policy'] 		  = 'site/privacyPolicy';
 
 // packages
 $route['packages'] 		          = 'site/packages';
-$route['purchase_create/(:any)']  = 'site/purchase_create/$1';
+$route['purchase_create/(:any)']  = 'site/purchase_create/$1/$2';
 $route['payment_process']         = 'site/payment_process';
 
 //payment

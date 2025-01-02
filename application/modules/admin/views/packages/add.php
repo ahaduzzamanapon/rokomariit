@@ -30,7 +30,7 @@
                         </div>
                     <?php endif; ?>
                     <div class="row">
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="package-name">Package Name</label>
                                 <input type="text" class="form-control" id="package-name" name="packages_name" value="<?= set_value('name') ?>" placeholder="Enter package name">
@@ -73,19 +73,9 @@
                             </script>
 
                             <div class="form-group">
-                                <label for="video_link">Video Link </label>
-                                <input type="text" class="form-control" id="video_link" name="video_link" value="<?= set_value('video_link') ?>" placeholder="Enter video link">
-                                <small class="text-danger"><?php echo form_error('video_link'); ?></small>
-                            </div>
-                            <div class="form-group">
-                                <label for="video_title_1">Video Title 1</label>
-                                <input type="text" class="form-control" id="video_title_1" name="video_title_1" value="<?= set_value('video_title_1') ?>" placeholder="Enter video title">
-                                <small class="text-danger"><?php echo form_error('video_title_1'); ?></small>
-                            </div>
-                            <div class="form-group">
-                                <label for="video_title_2">Video Title 2</label>
-                                <input type="text" class="form-control" id="video_title_2" name="video_title_2" value="<?= set_value('video_title_2') ?>" placeholder="Enter video title">
-                                <small class="text-danger"><?php echo form_error('video_title_2'); ?></small>
+                                <label for="user_payment">User Payment (%)</label>
+                                <input type="number" class="form-control" id="user_payment" name="user_payment" value="<?= set_value('user_payment') ?>" placeholder="Enter User Payment %">
+                                <small class="text-danger"><?php echo form_error('user_payment'); ?></small>
                             </div>
 
                             <div class="form-group">
@@ -98,6 +88,40 @@
                             </div>
                             <div class="box-footer">
                                 <?php echo form_submit('submit', 'Save', "class='btn btn-primary pull-right'"); ?>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="meta_keys">Meta Keyword</label>
+                                <input type="text" class="form-control" id="meta_keys" name="meta_keys" value="<?= set_value('meta_keys') ?>" placeholder="Enter Meta Keyword">
+                                <small class="text-danger"><?php echo form_error('meta_keys'); ?></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="meta_tags">Meta Tags</label>
+                                <input type="text" class="form-control" id="meta_tags" name="meta_tags" value="<?= set_value('meta_tags') ?>" placeholder="Enter Meta Tags">
+                                <small class="text-danger"><?php echo form_error('meta_tags'); ?></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="meta_description">Meta Description</label>
+                                <textarea class="form-control" id="meta_description" name="meta_description" placeholder="Enter meta_description"><?= set_value('meta_description') ?></textarea>
+                                <small class="text-danger"><?php echo form_error('meta_description'); ?></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="video_title_1">Video Title 1</label>
+                                <!-- <input type="text" class="form-control" id="video_title_1" name="video_title_1" value="<?= set_value('video_title_1') ?>" placeholder="Enter video title"> -->
+                                <textarea class="form-control" id="video_title_1" name="video_title_1" placeholder="Enter video title"><?= set_value('video_title_1') ?></textarea>
+                                <small class="text-danger"><?php echo form_error('video_title_1'); ?></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="video_title_2">Video Title 2</label>
+                                <!-- <input type="text" class="form-control" id="video_title_2" name="video_title_2" value="<?= set_value('video_title_2') ?>" placeholder="Enter video title"> -->
+                                <textarea class="form-control" id="video_title_2" name="video_title_2" placeholder="Enter Video Title"><?= set_value('video_title_2') ?></textarea>
+                                <small class="text-danger"><?php echo form_error('video_title_2'); ?></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="video_link">Video Link </label>
+                                <input type="text" class="form-control" id="video_link" name="video_link" value="<?= set_value('video_link') ?>" placeholder="Enter video link">
+                                <small class="text-danger"><?php echo form_error('video_link'); ?></small>
                             </div>
                         </div>
                     </div>
