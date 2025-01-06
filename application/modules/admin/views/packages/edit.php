@@ -46,16 +46,20 @@
                         <div id="item-list">
                             <?php if (!empty($package_items)): ?>
                                 <?php foreach ($package_items as $key => $item): ?>
-                                    <div class="item-row" style="margin-bottom: 10px;">
-                                        <input type="text" class="form-control" name="packages_item[<?= $key ?>][name]" value="<?= $item['name'] ?>" placeholder="Item Name" style="display:inline-block; width:32%; margin-right:1%;">
-                                        <input type="number" class="form-control" name="packages_item[<?= $key ?>][regular_price]" value="<?= $item['regular_price'] ?>" placeholder="Regular Price" style="display:inline-block; width:32%; margin-right:1%;">
-                                        <input type="number" class="form-control" name="packages_item[<?= $key ?>][market_price]" value="<?= $item['market_price'] ?>" placeholder="Market Price" style="display:inline-block; width:32%;">
+                                    <div class="item-row" style="margin-bottom: 10px;" id="row-<?= $key ?>">
+                                        <input type="text" class="form-control" name="packages_item[<?= $key ?>][name]" value="<?= $item['name'] ?>" placeholder="Item Name" style="display:inline-block; width:30%; margin-right:1%;">
+                                        <input type="number" class="form-control" name="packages_item[<?= $key ?>][regular_price]" value="<?= $item['regular_price'] ?>" placeholder="Regular Price" style="display:inline-block; width:30%; margin-right:1%;">
+                                        <input type="number" class="form-control" name="packages_item[<?= $key ?>][market_price]" value="<?= $item['market_price'] ?>" placeholder="Market Price" style="display:inline-block; width:30%; margin-right:1%;">
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="removeItem('row-<?= $key ?>')" style="margin-left: 5px;">
+                                            <i class="fa fa-times"></i>
+                                        </button>
                                     </div>
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </div>
                         <button type="button" class="btn btn-sm btn-primary" onclick="addItem()">Add Item</button>
                     </div>
+
                     <div class="form-group">
                         <label for="video_link">Video Link </label>
                         <input type="text" class="form-control" id="video_link" name="video_link" value="<?= set_value('video_link', $package->package_video) ?>" placeholder="Enter video link">
@@ -87,15 +91,26 @@
 
     function addItem() {
         var html = `
-            <div class="item-row" style="margin-bottom: 10px;">
+            <div class="item-row" style="margin-bottom: 10px;" id="row-` + itemCount + `">
                 <input type="text" class="form-control" name="packages_item[` + itemCount + `][name]" placeholder="Item Name" style="display:inline-block; width:32%; margin-right:1%;">
                 <input type="number" class="form-control" name="packages_item[` + itemCount + `][regular_price]" placeholder="Regular Price" style="display:inline-block; width:32%; margin-right:1%;">
-                <input type="number" class="form-control" name="packages_item[` + itemCount + `][market_price]" placeholder="Market Price" style="display:inline-block; width:32%;">
+                <input type="number" class="form-control" name="packages_item[` + itemCount + `][market_price]" placeholder="Market Price" style="display:inline-block; width:32%; margin-right:1%;">
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeItem('row-` + itemCount + `')" style="margin-left: 5px;">
+                    <i class="fa fa-times"></i>
+                </button>
             </div>`;
         document.getElementById('item-list').insertAdjacentHTML('beforeend', html);
         itemCount++;
     }
+
+    function removeItem(rowId) {
+        var row = document.getElementById(rowId);
+        if (row) {
+            row.remove(); // Remove the row
+        }
+    }
 </script>
+
 
 
 <!-- /.content -->

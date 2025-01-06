@@ -180,7 +180,8 @@ class Packages extends Backend_Controller
 
     function delete($id)
     {
-        $this->data['info'] = $this->packages_model->delete($id);
+        $this->db->where('id', $id);
+        $this->db->delete('packages');
         $this->session->set_flashdata('success', 'Information delete successfully.');
         redirect('admin/packages/all');
     }

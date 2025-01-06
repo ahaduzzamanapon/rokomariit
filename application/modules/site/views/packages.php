@@ -167,11 +167,18 @@
 
     }
 
-    @media (max-width: 425px) {
+    @media (max-width: 425px) and (min-width: 360px) {
         .custom-col-width {
             flex: 0 0 100%;
-            max-width: 100%;
+            max-width: 100% !important;
         }
+
+        .card_p {
+            padding: 20px;
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+
     }
 </style>
 
@@ -298,7 +305,7 @@ $locationData = json_decode($response, true);
                     <a href="<?= base_url('site/packages_details/' . rawurlencode($row->packages_name)) ?>" class="">
                         <div class="col-sm-12 col-md-6 custom-col-width card_p">
                             <div class="card-p-header">
-                                <h3><?= implode(' ', array_slice(explode(' ',$row->packages_name), 0, 5)) ; ?></h3>
+                                <h3><?= implode(' ', array_slice(explode(' ', $row->packages_name), 0, 5)); ?></h3>
                                 <p>
                                     <?= implode(' ', array_slice(explode(' ', $row->description), 0, 10)) . '...'; ?>
                                 </p>
@@ -366,16 +373,16 @@ $locationData = json_decode($response, true);
                                     <?php endif; ?>
                                 </h3>
 
-                                <?php 
-                                    if ($row->user_payment > 0) {
-                                        // dd($row->user_payment);
-                                        $user_payment = $row->user_payment;
-                                        $payment = (float) $discounted_price * (float) $user_payment / 100;
-                                        // dd($payment);
-                                    }else{
-                                        $payment = $discounted_price;
-                                    }
-                                    
+                                <?php
+                                if ($row->user_payment > 0) {
+                                    // dd($row->user_payment);
+                                    $user_payment = $row->user_payment;
+                                    $payment = (float) $discounted_price * (float) $user_payment / 100;
+                                    // dd($payment);
+                                } else {
+                                    $payment = $discounted_price;
+                                }
+
                                 ?>
 
                                 <a href="<?= base_url('site/purchase_create/' . rawurlencode($row->packages_name)) ?>" class="btn btn-primary btn-block">Submit Work Order ( <?= number_format($row->user_payment)  ?>%) ( <?= number_format($payment, 2) ?>৳)</a>

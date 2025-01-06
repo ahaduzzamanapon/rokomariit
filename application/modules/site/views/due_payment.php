@@ -101,10 +101,6 @@
         flex-direction: column;
     }
 
-    .item-details {
-        width: 80%;
-    }
-
     /* Responsive Layout */
     @media (max-width: 767px) {
         .col-md-6 {
@@ -112,20 +108,20 @@
         }
     }
 
-    @media (min-width: 360px) and (max-width: 425px) {
+    @media (min-width: 425px) {
         .item-details {
             width: 100% !important;
         }
 
-        .page-section{
+        .page-section {
             position: relative;
             padding-top: 12px !important;
         }
-        .packages_purchase{
+
+        .packages_purchase {
             padding-top: 1px !important;
         }
     }
-
 </style>
 
 <?php
@@ -341,10 +337,10 @@ $locationData = json_decode($response, true);
                 <div class="row g-4">
                     <!-- Package Information -->
                     <div class="col-md-6 packages_info text-left" style="border-right: 3px solid black;">
-                        <h1 class="text-center" style="font-weight: bold;" >Package Information</h1>
-                        <h2 class="text-primary text-center mb-3" style="font-weight: 600; font-size: 26px;"><?= $package_info->packages_name ?></h2>
+                        <h1>Package Information</h1>
+                        <h2 class="text-primary text-center mb-3"><?= $package_info->packages_name ?></h2>
                         <p class="text-muted text-center"><?= $package_info->description ?></p>
-                        <div class="mt-3 item-details">
+                        <div class="mt-3 item-details" style="width: 80%;">
                             <ul class="list-unstyled">
                                 <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: bold;">
                                     <h4 style="font-size: 14px; font-weight: bold;">Name</h4>
@@ -364,7 +360,7 @@ $locationData = json_decode($response, true);
                                     $total_market_price += $market_price;
                                     $total_regular_price += $regular_price;
 
-                                    echo '<li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
+                                    echo '<li>
                                         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                                             <div style="width:33%; text-align:start">' . $value->name . '</div>
                                             <div style="width:33%; text-align:center">' . number_format($market_price, 2) . '</div>
@@ -417,7 +413,7 @@ $locationData = json_decode($response, true);
                                     $payment = $discounted_price;
                                 }
 
-                                $due_amount = ($discounted_price - $payment);
+                                $due_amount = ($user_purchase_packages->due_amount - $user_purchase_packages->due_amount);
                                 // dd($due_amount);
 
                                 ?>
@@ -464,23 +460,19 @@ $locationData = json_decode($response, true);
                                     placeholder="Enter your email" required aria-label="Email">
                             </div> -->
                             <div class="mb-3 col-md-6">
-                                <label for="amount" class="form-label">Price</label>
+                                <label for="amount" class="form-label">Due Price</label>
                                 <input type="text" class="form-control" name="amount" id="amount"
-                                    value="<?= ceil($payment) ?>" readonly>
+                                    value="<?= ceil($user_purchase_packages->due_amount) ?>" readonly>
                             </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="due_amount" class="form-label">Due Price</label>
-                                <input type="text" class="form-control" name="due_amount" id="due_amount"
+                            <!-- <div class="mb-3 col-md-6">
+                                <label for="due_amount" class="form-label">Due Price</label> -->
+                                <input type="hidden" class="form-control" name="due_amount" id="due_amount"
                                     value="<?= ceil($due_amount) ?>" readonly>
-                            </div>
+                                
+                                <input type="hidden" name="purchase_id" value="<?= $user_purchase_packages->id ? $user_purchase_packages->id : "" ?>">
+                            <!-- </div> -->
                             <input type="hidden" name="total_amount" value="<?= ceil($discounted_price) ?>">
 
-                        </div>
-                        <div class="col-md-12">
-
-                            <h3 style="color: black; font-size: 14px; font-weight: 700;">
-                                User has to pay for this package: ৳ <?= number_format($payment, 2) ?> ( <?= $package_info->user_payment ?>%)
-                            </h3>
                         </div>
 
                         <div class="col-md-12 text-right">

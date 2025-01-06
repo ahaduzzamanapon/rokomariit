@@ -5,6 +5,7 @@ class Packages_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('Common_model');
     }
 
     public function get_data() {
@@ -24,18 +25,18 @@ class Packages_model extends CI_Model {
     }
 
     function delete($id) {
-        $img_path = 'service_img/';
-        $img_path_icon = 'service_img/icon_img/';
-        $info = $this->get_info($id);
+        // $img_path = 'service_img/';
+        // $img_path_icon = 'service_img/icon_img/';
+        // $info = $this->get_info($id);
 
-        if(!empty($info->image_file)){
-           unlink($img_path.$info->image_file);
-           // @unlink($img_path_thumbs.$info->image_file);
-        }
-        if(!empty($info->fa_icon)){
-            unlink($img_path_icon.$info->fa_icon);
-            // @unlink($img_path_thumbs.$info->image_file);
-         }
+        // if(!empty($info->image_file)){
+        //    unlink($img_path.$info->image_file);
+        //    // @unlink($img_path_thumbs.$info->image_file);
+        // }
+        // if(!empty($info->fa_icon)){
+        //     unlink($img_path_icon.$info->fa_icon);
+        //     // @unlink($img_path_thumbs.$info->image_file);
+        //  }
 
         $this->db->where('id', $id);
         $this->db->delete('packages');

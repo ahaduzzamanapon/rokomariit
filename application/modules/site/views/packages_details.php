@@ -100,14 +100,15 @@
     }
 
     .video_title {
-        margin-top: 25px;
-        margin-bottom: 25px;
-        font-weight: 700;
+        margin-top: 55px;
+        margin-bottom: 55px;
+        /* font-weight: 700; */
     }
 
     iframe {
-        width: 840px;
-        height: 480px;
+        width: 95%;
+        height: 680px;
+        border-radius: 15px;
     }
 
     /* Responsive Layout */
@@ -115,6 +116,49 @@
         .col-md-6 {
             margin-bottom: 20px;
         }
+    }
+
+    @media (min-width: 360px) and (max-width: 425px) {
+        .video_title h1 {
+            font-size: 22px;
+            line-height: 30px;
+            padding: 5px;
+        }
+
+        .video_title h3 {
+            font-size: 18px;
+            line-height: 30px;
+            padding: 5px;
+        }
+
+        .video_title {
+            margin-top: 25px;
+            margin-bottom: 2px;
+            /* font-weight: 700; */
+        }
+
+        iframe {
+            width: 95%;
+            height: 350px;
+            border-radius: 15px;
+        }
+
+        .packages_info{
+            padding: 10px !important;
+        }
+
+        .item-details {
+            width: 100% !important;
+        }
+
+        .list-unstyled {
+            font-size: 13px !important;
+        }
+
+        .empty_div{
+            margin: 0px !important;
+        }
+
     }
 </style>
 
@@ -222,7 +266,7 @@ $locationData = json_decode($response, true);
             <div class="packages_purchase  ">
                 <div class="row">
                     <div class="text-center video_title">
-                        <h1 class="text-center"><?= $package_info->package_video_title_1 ?></h1>
+                        <h1 class="text-center" style="font-weight: bold; line-height: 42px;"><?= $package_info->package_video_title_1 ?></h1>
                     </div>
                     <div class="packages_video">
                         <iframe
@@ -237,23 +281,23 @@ $locationData = json_decode($response, true);
                     </div>
 
                     <div class="text-center video_title">
-                        <h3 class="text-center"><?= $package_info->package_video_title_2 ?></h3>
+                        <h3 class="text-center" style="font-weight: 600; line-height: 42px;"><?= $package_info->package_video_title_2 ?></h3>
                     </div>
 
                 </div>
                 <div class="row g-4">
-                    <div class="col-md-3"></div>
+                    <div class="col-md-3 empty_div"></div>
                     <!-- Package Information -->
                     <div class="col-md-6 packages_info text-left">
-                        <h1>Package Information</h1>
-                        <h2 class="text-primary mb-3"><?= $package_info->packages_name ?></h2>
-                        <p class="text-muted"><?= $package_info->description ?></p>
-                        <div class="mt-3" style="width: 80%;">
+                        <h1 class="text-center" style="font-weight: bold;">Package Information</h1>
+                        <h2 class="text-primary text-center mb-3" style="font-weight: bold;"><?= $package_info->packages_name ?></h2>
+                        <p class="text-muted text-center"><?= $package_info->description ?></p>
+                        <div class="mt-3 item-details" style="width: 80%;">
                             <ul class="list-unstyled">
                                 <div style="display: flex; justify-content: space-between;">
-                                    <h4 style="font-size: 14px; font-weight: bold; color: #8544FF;">S. Name</h4>
-                                    <h4 style="font-size: 14px; font-weight: bold; color: #8544FF;">M. Price</h4>
-                                    <h4 style="font-size: 14px; font-weight: bold; color: #8544FF;">R. Price</h4>
+                                    <h4 style="font-size: 14px; font-weight: bold; color: #8544FF;"> Name</h4>
+                                    <h4 style="font-size: 14px; font-weight: bold; color: #8544FF;">Market Price</h4>
+                                    <h4 style="font-size: 14px; font-weight: bold; color: #8544FF;">RIT Price</h4>
                                 </div>
 
                                 <?php

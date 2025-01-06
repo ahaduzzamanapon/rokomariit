@@ -61,16 +61,22 @@
 
                                 function add_item() {
                                     var html = '';
-                                    html += '<div class="item-row" style="margin-bottom: 10px;">';
-                                    html += '<input type="text" class="form-control" name="packages_item[' + count + '][name]" placeholder="Package Name" style="display:inline-block; width:32%; margin-right:1%;">';
-                                    html += '<input type="number" class="form-control" name="packages_item[' + count + '][regular_price]" placeholder="Regular Price" style="display:inline-block; width:32%; margin-right:1%;">';
-                                    html += '<input type="number" class="form-control" name="packages_item[' + count + '][market_price]" placeholder="Market Price" style="display:inline-block; width:32%;">';
+                                    html += '<div class="item-row" style="margin-bottom: 10px;" id="row-' + count + '">';
+                                    html += '<input type="text" class="form-control" name="packages_item[' + count + '][name]" placeholder="Package Name" style="display:inline-block; width:30%; margin-right:1%;">';
+                                    html += '<input type="number" class="form-control" name="packages_item[' + count + '][regular_price]" placeholder="Regular Price" style="display:inline-block; width:30%; margin-right:1%;">';
+                                    html += '<input type="number" class="form-control" name="packages_item[' + count + '][market_price]" placeholder="Market Price" style="display:inline-block; width:30%;">';
+                                    html += '<button type="button" class="btn btn-danger btn-sm" onclick="remove_item(' + count + ')" style="margin-left: 5px;"><i class="fa fa-times"></i></button>';
                                     html += '</div>';
 
                                     $('#item').append(html);
                                     count++; // Increment counter for next row
                                 }
+
+                                function remove_item(row_id) {
+                                    $('#row-' + row_id).remove(); // Remove the row with the specified ID
+                                }
                             </script>
+
 
                             <div class="form-group">
                                 <label for="user_payment">User Payment (%)</label>

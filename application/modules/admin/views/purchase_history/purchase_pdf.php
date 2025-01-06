@@ -189,9 +189,20 @@
             </tbody>
         </table>
 
+        <?php
+        // Calculate discounted price using percentage
+        if ($package_info->amount > 0) {
+            $discount_percentage = $package_info->amount; // Assume $row->amount is the discount percentage
+            $discounted_price = $total_regular_price - ($total_regular_price * $discount_percentage / 100);
+        } else {
+            $discounted_price = $total_regular_price;
+        }
+        ?>
+
         <div class="total-section">
             <strong>Subtotal:</strong> <span><?php echo $total_regular_price; ?></span><br>
             <strong>Discount:</strong> <span><?php echo $package_info->amount; ?> %</span><br>
+            <strong>Discount Price:</strong> <span><?php echo $discounted_price; ?></span><br>
             <?php
             // Calculate discounted price using percentage
             // if ($package_info->amount > 0) {
@@ -201,7 +212,8 @@
             //     $discounted_price = $total_regular_price;
             // }
             // 
-            $due_amount = ($total_regular_price - $payment_info->amount)
+
+            $due_amount = ($discounted_price - $payment_info->amount)
 
             ?>
             <strong>Pay For Package:</strong> <span style="font-size: 20px;"><?php echo $package_info->user_payment; ?>%</span><br>

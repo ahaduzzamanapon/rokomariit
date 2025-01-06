@@ -94,7 +94,12 @@ class Site extends Frontend_Controller
             $this->data['user_info'] = null;
         }
 
+        // dd($this->data['package_info']);
+
         $this->data['meta_title'] = 'Packages Details';
+        // $this->data['meta_keywords'] = $this->data['package_info']->meta_keys;
+        // $this->data['meta_description'] = $this->data['package_info']->meta_description;
+        // $this->data['meta_keywords'] = $this->data['package_info']->meta_keywords;
         $this->data['method'] = 'packages';
         $this->data['subview'] = 'packages_details';
         $this->load->view('frontend/_layout_main', $this->data);
@@ -112,19 +117,59 @@ class Site extends Frontend_Controller
             $this->data['user_info'] = null;
         }
 
+        // dd($this->data['package_info']);
+
         $this->data['meta_title'] = 'Packages Purchase';
         $this->data['method'] = 'packages';
         $this->data['subview'] = 'packages_purchase';
         $this->load->view('frontend/_layout_main', $this->data);
     }
 
+    public function due_payment($name, $id)
+    {
+        $name = urldecode($name);
+        // dd($name);
+        $this->db->where('packages_name', $name);
+        $this->data['package_info'] = $this->db->get('packages')->row();
+        $user_id = $this->session->userdata('user_id');
+        if ($user_id) {
+            $this->data['user_info'] = $this->db->where('id', $user_id)->get('users')->row();
+        } else {
+            $this->data['user_info'] = null;
+        }
+
+        $this->db->where('id', $id);
+        $this->data['user_purchase_packages'] = $this->db->get('user_purchase_packages')->row();
+        // dd($this->data['user_purchase_packages']);
+
+        $this->data['meta_title'] = 'Packages Purchase';
+        $this->data['meta_keywords'] = 'Packages Purchase';
+        $this->data['meta_description'] = 'Packages Purchase';
+        $this->data['method'] = 'packages';
+        $this->data['subview'] = 'due_payment';
+        $this->load->view('frontend/_layout_main', $this->data);
+    }
+
     public function payment_process()
     {
-        // dd($_POST);
+        $this->form_validation->set_rules('first_name', 'First Name', 'required|trim');
+        $this->form_validation->set_rules('last_name', 'Last Name', 'required|trim');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim');
+        $this->form_validation->set_rules('number', 'Number', 'required|numeric|min_length[11]|max_length[14]|trim');
+
+        $package_name = $this->db->where('id', $this->input->post('package_id'))->get('packages')->row()->packages_name;
+        // dd( $package_name);
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('error', validation_errors());
+            redirect('site/purchase_create/'.$package_name);
+        }
         $user_id = $this->input->post('user_id');
         $package_id = $this->input->post('package_id');
         $amount = $this->input->post('amount');
-        // dd($amount);
+        $total_amount = $this->input->post('total_amount');
+        $due_amount = $this->input->post('due_amount');
+        $purchase_id = $this->input->post('purchase_id');
+        // dd($total_amount);
         if ($user_id == '' || $user_id == null) {
             $password = '12345678';
             $data_user_info = array(
@@ -157,16 +202,21 @@ class Site extends Frontend_Controller
             $this->session->set_flashdata('credentials', $data_view);
         }
 
-        $this->initiatePayment($user_id, $package_id, $amount);
+        $this->initiatePayment($user_id, $package_id, $amount, $due_amount, $total_amount, $purchase_id);
     }
 
 
 
-    public function initiatePayment($user_id, $package_id, $amount)
+    public function initiatePayment($user_id, $package_id, $amount, $due_amount, $total_amount, $purchase_id)
     {
         // dd($amount);
         $user_info = $this->db->where('id', $user_id)->get('users')->row();
         $package_info = $this->db->where('id', $package_id)->get('packages')->row();
+
+        if (!$user_info) {
+            echo "Error: User not found with ID {$user_id}";
+            exit;
+        }
 
         $email = $user_info->email;
         // $amount = $package_info->amount;
@@ -174,7 +224,7 @@ class Site extends Frontend_Controller
         $signature_key = "dbb74894e82415a2f7ff0ec3a97e4183"; // Replace with your signature key from AamarPay
         $url = 'https://sandbox.aamarpay.com/jsonpost.php'; // Sandbox URL
         // $url = 'https://secure.aamarpay.com/jsonpost.php'; // Live URL
-        $success_url = base_url("payment/success/{$user_id}/{$package_id}");
+        $success_url = base_url("payment/success/{$user_id}/{$package_id}?due_amount={$due_amount}&total_amount={$total_amount}&purchase_id={$purchase_id}");
         $fail_url = base_url("payment/fail/{$package_id}");
         $cancel_url = base_url("payment/cancel/{$package_id}");
         $tran_id = "rit" . time() . rand(1111111, 9999999); // Unique transaction ID
@@ -257,6 +307,9 @@ class Site extends Frontend_Controller
     public function payment_success($user_id, $package_id)
     {
         $merTxnId = $_POST['mer_txnid'];
+        $due_amount = $this->input->get('due_amount');
+        $total_amount = $this->input->get('total_amount');
+        $purchase_id = $this->input->get('purchase_id');
         $store_id = "aamarpaytest";  // You have to use your Store ID / MerchantID here
         $signature_key = "dbb74894e82415a2f7ff0ec3a97e4183"; // Your have to use your signature key here ,it will be provided by aamarPay
         $url = "https://sandbox.aamarpay.com/api/v1/trxcheck/request.php?request_id=$merTxnId&store_id=$store_id&signature_key=$signature_key&type=json"; //sandbox
@@ -274,8 +327,9 @@ class Site extends Frontend_Controller
         $a = (array)json_decode($buffer);
         // echo "<pre>";
         // print_r($a);
-        // echo "</pre>";
-        $this->add_package($user_id, $package_id, $a);
+        // // echo "</pre>";
+        // exit;
+        $this->add_package($user_id, $package_id, $a, $due_amount, $total_amount, $purchase_id);
     }
     public function payment_fail($package_id)
     {
@@ -298,18 +352,19 @@ class Site extends Frontend_Controller
         // echo "<pre>";
         // print_r($a);
         // echo "</pre>";
-
+        $package_name = $this->db->where('id', $package_id)->get('packages')->row()->packages_name;
         $this->session->set_flashdata('error', 'Payment Fail');
-        redirect(base_url('site/purchase_create/' . $package_id));
+        redirect(base_url('site/purchase_create/' . $package_name));
     }
     public function payment_cancel($id)
     {
         //dd('this');
+        $package_name = $this->db->where('id', $id)->get('packages')->row()->packages_name;
         $this->session->set_flashdata('error', 'Payment Cancel');
-        redirect(base_url("site/purchase_create/$id"));
+        redirect(base_url("site/purchase_create/$package_name"));
     }
 
-    public function add_package($user_id, $package_id, $a)
+    public function add_package($user_id, $package_id, $a, $due_amount, $total_amount, $purchase_id)
     {
         $user_info = $this->db->where('id', $user_id)->get('users')->row();
         $package_info = $this->db->where('id', $package_id)->get('packages')->row();
@@ -345,6 +400,7 @@ class Site extends Frontend_Controller
                 'merchant_id' => array('type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE),
                 'store_id' => array('type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE),
                 'amount' => array('type' => 'DECIMAL', 'constraint' => '10,2', 'null' => TRUE),
+                'due_amount' => array('type' => 'DECIMAL', 'constraint' => '10,2', 'null' => TRUE),
                 'amount_bdt' => array('type' => 'DECIMAL', 'constraint' => '10,2', 'null' => TRUE),
                 'amount_original' => array('type' => 'DECIMAL', 'constraint' => '10,2', 'null' => TRUE),
                 'pay_status' => array('type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE),
@@ -415,6 +471,7 @@ class Site extends Frontend_Controller
             'merchant_id' => $a['merchant_id'],
             'store_id' => $a['store_id'],
             'amount' => $a['amount'],
+            'due_amount' => $due_amount,
             'amount_bdt' => $a['amount_bdt'],
             'amount_original' => $a['amount_original'],
             'pay_status' => $a['pay_status'],
@@ -454,21 +511,44 @@ class Site extends Frontend_Controller
         );
         $this->db->insert('payment_info', $data);
         $insert_id = $this->db->insert_id();
-        $data_user_purchase_packages = array(
-            'user_id' => $user_id,
-            'package_id' => $package_id,
-            'status' => 1,
-            'payment_status' => 1,
-            'payment_id' => $insert_id,
-            'transaction_id' => $a['mer_txnid'],
-            'create_at' => date('Y-m-d H:i:s'),
-        );
-        
-        $this->db->insert('user_purchase_packages', $data_user_purchase_packages);
-        $purchase_id = $this->db->insert_id();        
+
+        if (!empty($purchase_id)) {
+            // dd('okkkkkkkk');
+            $data_user_purchase_packages = array(
+                'user_id' => $user_id,
+                'package_id' => $package_id,
+                'status' => 1,
+                'total_amount' => $total_amount,
+                'due_amount' => $due_amount,
+                'pay_amount' => $a['amount'],
+                'payment_status' => 1,
+                'payment_id' => $insert_id,
+                'transaction_id' => $a['mer_txnid'],
+                'create_at' => date('Y-m-d H:i:s'),
+            );
+            $this->db->where('id', $purchase_id)->update('user_purchase_packages', $data_user_purchase_packages);
+        } else {
+            // dd('ldjfsljdflj');
+            $data_user_purchase_packages = array(
+                'user_id' => $user_id,
+                'package_id' => $package_id,
+                'status' => 1,
+                'total_amount' => $total_amount,
+                'due_amount' => $due_amount,
+                'pay_amount' => $a['amount'],
+                'payment_status' => 1,
+                'payment_id' => $insert_id,
+                'transaction_id' => $a['mer_txnid'],
+                'create_at' => date('Y-m-d H:i:s'),
+            );
+
+            $this->db->insert('user_purchase_packages', $data_user_purchase_packages);
+            $purchase_id = $this->db->insert_id();
+        }
+        // dd($purchase_id);
         $package_name = $this->db->where('id', $package_id)->get('packages')->row()->packages_name;
         // dd($package_name);
-        
+
         $data_view = '
             Payment Successful 
             Please login to your account.
@@ -477,25 +557,24 @@ class Site extends Frontend_Controller
             <p>Password: ' . htmlspecialchars($user_info->password_r) . '</p>
             <p>Link: <a href="' . base_url('login') . '">' . base_url('login') . ' Go to login </a></p>
             ';
-        
-            // dd($purchase_id);
-            $this->session->set_flashdata('success',  $data_view);
-            $this->session->set_flashdata('purchase_id',  $purchase_id);
-            $this->session->set_userdata($user_info);
-            // dd($user_info);
-            redirect(base_url("site/purchase_create/$package_name/$purchase_id"));
+
+        // dd($purchase_id);
+        $this->session->set_flashdata('success',  $data_view);
+        $this->session->set_flashdata('purchase_id',  $purchase_id);
+        $this->session->set_userdata($user_info);
+        redirect(base_url("site/purchase_create/$package_name/$purchase_id"));
     }
 
 
     public function packages_invoice($id)
     {
         $this->data['user_purchase_packages'] = $this->db->where('id', $id)->get('user_purchase_packages')->row();
-		$this->data['package_info'] = $this->db->where('id', $this->data['user_purchase_packages']->package_id)->get('packages')->row();
-		$this->data['payment_info'] = $this->db->where('mer_txnid', $this->data['user_purchase_packages']->transaction_id)->get('payment_info')->row();
-		// dd($this->data['package_info']);
+        $this->data['package_info'] = $this->db->where('id', $this->data['user_purchase_packages']->package_id)->get('packages')->row();
+        $this->data['payment_info'] = $this->db->where('mer_txnid', $this->data['user_purchase_packages']->transaction_id)->get('payment_info')->row();
+        // dd($this->data['package_info']);
 
-		$this->data['meta_title'] = 'Package Invoice';
-		$this->data['subview'] = 'packages_invoice';
+        $this->data['meta_title'] = 'Package Invoice';
+        $this->data['subview'] = 'packages_invoice';
         $this->load->view('frontend/_layout_main', $this->data);
     }
 
