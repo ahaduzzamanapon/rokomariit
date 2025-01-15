@@ -9,6 +9,7 @@ class Common_model extends CI_Model {
     public function get_data($table) {
         $this->db->select('*');
         $this->db->from($table);
+        $this->db->order_by('id', 'DESC');
         $query =  $this->db->get();
         
         if($query->num_rows() > 0){

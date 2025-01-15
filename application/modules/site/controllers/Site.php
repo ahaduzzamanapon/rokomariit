@@ -7,7 +7,7 @@ class Site extends Frontend_Controller
     {
         parent::__construct();
         $this->config->load('ion_auth', TRUE);
-		$this->lang->load('ion_auth');
+        $this->lang->load('ion_auth');
 
         $this->load->model('Site_model');
         $this->load->model('Common_model');
@@ -161,7 +161,7 @@ class Site extends Frontend_Controller
         // dd( $package_name);
         if ($this->form_validation->run() == false) {
             $this->session->set_flashdata('error', validation_errors());
-            redirect('site/purchase_create/'.$package_name);
+            redirect('site/purchase_create/' . $package_name);
         }
         $user_id = $this->input->post('user_id');
         $package_id = $this->input->post('package_id');
@@ -225,8 +225,8 @@ class Site extends Frontend_Controller
         $url = 'https://sandbox.aamarpay.com/jsonpost.php'; // Sandbox URL
         // $url = 'https://secure.aamarpay.com/jsonpost.php'; // Live URL
         $success_url = base_url("payment/success/{$user_id}/{$package_id}?due_amount={$due_amount}&total_amount={$total_amount}&purchase_id={$purchase_id}");
-        $fail_url = base_url("payment/fail/{$package_id}");
-        $cancel_url = base_url("payment/cancel/{$package_id}");
+        $fail_url = base_url("payment/fail/{$package_id}?due_amount={$due_amount}&total_amount={$total_amount}&purchase_id={$purchase_id}&user_id={$user_id}");
+        $cancel_url = base_url("payment/cancel/{$package_id}?user_id={$user_id}");
         $tran_id = "rit" . time() . rand(1111111, 9999999); // Unique transaction ID
 
         $this->load->library('curl');
@@ -334,6 +334,12 @@ class Site extends Frontend_Controller
     public function payment_fail($package_id)
     {
         $merTxnId = $_POST['mer_txnid'];
+        $due_amount = $this->input->get('due_amount');
+        $total_amount = $this->input->get('total_amount');
+        $purchase_id = $this->input->get('purchase_id');
+        $user_id = $this->input->get('user_id');
+        // return $merTxnId;
+        // exit;
         $store_id = "aamarpaytest";  // You have to use your Store ID / MerchantID here
         $signature_key = "dbb74894e82415a2f7ff0ec3a97e4183"; // Your have to use your signature key here ,it will be provided by aamarPay
         $url = "https://sandbox.aamarpay.com/api/v1/trxcheck/request.php?request_id=$merTxnId&store_id=$store_id&signature_key=$signature_key&type=json"; //sandbox
@@ -352,6 +358,111 @@ class Site extends Frontend_Controller
         // echo "<pre>";
         // print_r($a);
         // echo "</pre>";
+        // exit;
+
+        $data = array(
+            'user_id' => $user_id,
+            'package_id' => $package_id,
+            'pg_txnid' => $a['pg_txnid'],
+            'mer_txnid' => $a['mer_txnid'],
+            'risk_title' => $a['risk_title'],
+            'risk_level' => $a['risk_level'],
+            'cus_name' => $a['cus_name'],
+            'cus_email' => $a['cus_email'],
+            'cus_phone' => $a['cus_phone'],
+            'desc' => $a['desc'],
+            'cus_add1' => $a['cus_add1'],
+            'cus_add2' => $a['cus_add2'],
+            'cus_city' => $a['cus_city'],
+            'cus_state' => $a['cus_state'],
+            'cus_postcode' => $a['cus_postcode'],
+            'cus_country' => $a['cus_country'],
+            'cus_fax' => $a['cus_fax'],
+            'ship_name' => $a['ship_name'],
+            'ship_add1' => $a['ship_add1'],
+            'ship_add2' => $a['ship_add2'],
+            'ship_city' => $a['ship_city'],
+            'ship_state' => $a['ship_state'],
+            'ship_postcode' => $a['ship_postcode'],
+            'ship_country' => $a['ship_country'],
+            'merchant_id' => $a['merchant_id'],
+            'store_id' => $a['store_id'],
+            'amount' => $a['amount'],
+            // 'due_amount' => $due_amount,
+            'amount_bdt' => $a['amount_bdt'],
+            'amount_original' => $a['amount_original'],
+            'pay_status' => $a['pay_status'],
+            'status_code' => $a['status_code'],
+            'status_title' => $a['status_title'],
+            'cardnumber' => $a['cardnumber'],
+            'approval_code' => $a['approval_code'],
+            'payment_processor' => $a['payment_processor'],
+            'bank_trxid' => $a['bank_trxid'],
+            'payment_type' => $a['payment_type'],
+            'error_code' => $a['error_code'],
+            'error_title' => $a['error_title'],
+            'bin_country' => $a['bin_country'],
+            'bin_issuer' => $a['bin_issuer'],
+            'bin_cardtype' => $a['bin_cardtype'],
+            'bin_cardcategory' => $a['bin_cardcategory'],
+            'date' => $a['date'],
+            'date_processed' => $a['date_processed'],
+            'amount_currency' => $a['amount_currency'],
+            'rec_amount' => $a['rec_amount'],
+            'store_amount' => $a['store_amount'],
+            'processing_ratio' => $a['processing_ratio'],
+            'processing_charge' => $a['processing_charge'],
+            'ip' => $a['ip'],
+            'currency' => $a['currency'],
+            'currency_merchant' => $a['currency_merchant'],
+            'convertion_rate' => $a['convertion_rate'],
+            'opt_a' => $a['opt_a'],
+            'opt_b' => $a['opt_b'],
+            'opt_c' => $a['opt_c'],
+            'opt_d' => $a['opt_d'],
+            'verify_status' => $a['verify_status'],
+            'call_type' => $a['call_type'],
+            'email_send' => $a['email_send'],
+            'doc_recived' => $a['doc_recived'],
+            'checkout_status' => $a['checkout_status'],
+        );
+        $this->db->insert('payment_info', $data);
+        $insert_id = $this->db->insert_id();
+
+        if (!empty($purchase_id)) {
+            // dd('okkkkkkkk');
+            $data_user_purchase_packages = array(
+                'user_id' => $user_id,
+                'package_id' => $package_id,
+                'status' => 1,
+                'total_amount' => $total_amount,
+                'due_amount' => $due_amount,
+                'pay_amount' => $a['amount'],
+                'payment_status' => 1,
+                'payment_id' => $insert_id,
+                'transaction_id' => $a['mer_txnid'],
+                'create_at' => date('Y-m-d H:i:s'),
+            );
+            $this->db->where('id', $purchase_id)->update('user_purchase_packages', $data_user_purchase_packages);
+        } else {
+            // dd('ldjfsljdflj');
+            $data_user_purchase_packages = array(
+                'user_id' => $user_id,
+                'package_id' => $package_id,
+                'status' => 1,
+                'total_amount' => $total_amount,
+                'due_amount' => $due_amount,
+                'pay_amount' => $a['amount'],
+                'payment_status' => 1,
+                'payment_id' => $insert_id,
+                'transaction_id' => $a['mer_txnid'],
+                'create_at' => date('Y-m-d H:i:s'),
+            );
+
+            $this->db->insert('user_purchase_packages', $data_user_purchase_packages);
+            $purchase_id = $this->db->insert_id();
+        }
+
         $package_name = $this->db->where('id', $package_id)->get('packages')->row()->packages_name;
         $this->session->set_flashdata('error', 'Payment Fail');
         redirect(base_url('site/purchase_create/' . $package_name));

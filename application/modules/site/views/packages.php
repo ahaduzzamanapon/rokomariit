@@ -189,6 +189,7 @@
 $this->db->select('*');
 $this->db->from('packages');
 $this->db->where('status', '1');
+$this->db->order_by("id", "desc");
 $query = $this->db->get();
 // dd($this->session->userdata() );
 // dd($query->result());
