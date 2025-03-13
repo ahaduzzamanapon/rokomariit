@@ -89,3 +89,13 @@ http://localhost/rokomariit/site/payment_process
 http://localhost/rokomariit/site/purchase_create/Domain/89
 http://localhost/rokomariit/site/purchase_create/%20Custom%20Ecommerce%20Android%20App/90
 http://localhost/rokomariit/site/purchase_create/%20Custom%20Ecommerce%20Android%20App/91
+http://localhost/rokomariit/service/web-design-development
+http://localhost/rokomariit/pages/aaaaa-software-in-bangladesh
+http://localhost/rokomariit/pages
+http://localhost/rokomariit/pages/best-it-company-in-bangladesh
+http://localhost/rokomariit/tag/tags
+http://localhost/rokomariit/tag/tag
+http://localhost/rokomariit/contact-us
+http://localhost/rokomariit/pages/best-hr-payroll-software-in-bangladesh
+http://localhost/rokomariit/pages/10-best-hr-software-in-bangladesh-2024
+http://localhost/rokomariit/pages/best-e-governance-solutions-in-bangladesh

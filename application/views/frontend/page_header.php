@@ -26,16 +26,17 @@
     <meta charset="UTF-8">
     <title><?= $meta_title ?> | <?= $domain_title ?></title>
 
-    <meta name="keywords" content="<?= $meta_keywords ?>">
-    <meta name="description" content="<?= $meta_description ?>">
-    <?php
+    <meta name="keywords" content="<?= isset($meta_keywords) ? $meta_keywords : '' ?>">
+    <meta name="description" content="<?= isset($meta_description) ? $meta_description : '' ?>">
+    <meta name="tag" content="<?= isset($meta_tag) ? $meta_tag : '' ?>">
+    <!-- <?php
         if (isset($meta_tag)) {
             $meta_tag = $meta_tag;
         }else{
             $meta_tag = $meta_keywords;
         }
     ?>
-    <meta name="tag" content="<?= $meta_tag ?>">
+    <meta name="tag" content="<?= $meta_tag ?>"> -->
     <meta name="author" content="Mysoftheaven (BD) Ltd.">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 

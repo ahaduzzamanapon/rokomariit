@@ -31,6 +31,21 @@
     <div class="container">
 
         <hr class="tall_slim">
+        <div class="col-md-12">
+			<div style="display: flex; justify-content: start; align-items: center; flex-wrap: wrap; gap: 10px;">
+				<?php
+				$name_links = json_decode($info->name_link, true); // Decode JSON data
+				if (!empty($name_links)) {
+					foreach ($name_links as $item) {
+						echo '<a href="' . htmlspecialchars($item['link']) . '" target="_blank" class="btn btn-primary">'
+							. htmlspecialchars($item['name']) . '</a>';
+					}
+				} else {
+					echo '<p>No links available.</p>';
+				}
+				?>
+			</div>
+		</div>
         <div class="col-md-12" id="pages_description">
 
             <?= htmlspecialchars_decode($info->description) ?>

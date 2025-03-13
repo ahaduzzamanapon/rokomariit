@@ -53,6 +53,16 @@ class Site_model extends CI_Model {
         return $query;
     }
 
+    public function get_pages() {
+        $this->db->select('*');
+        $this->db->from('pages');
+        $this->db->where('status', 1);
+        $this->db->order_by('id', 'DESC');
+        $query = $this->db->get()->result();        
+
+        return $query;
+    }
+
      public function get_concern() {
         $this->db->select('*');
         $this->db->from('concern');

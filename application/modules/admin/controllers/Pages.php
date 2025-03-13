@@ -157,60 +157,81 @@ class Pages extends Backend_Controller
 
     public function add()
     {
-
+        // Validate the required fields
         $this->form_validation->set_rules('title_pages', 'pages title', 'required|trim');
 
         if ($this->form_validation->run() == true) {
+            // 1. Collect the multiple name/link arrays from the form
+            $metaNamePages = $this->input->post('meta_name_pages'); // array of names
+            $metaLinkPages = $this->input->post('meta_link_pages'); // array of links
 
+            // 2. Combine each pair into a single array
+            $combinedData = array();
+            if (!empty($metaNamePages) && is_array($metaNamePages)) {
+                foreach ($metaNamePages as $index => $nameValue) {
+                    $combinedData[] = array(
+                        'name' => $nameValue,
+                        // fallback if link doesn't exist at that index
+                        'link' => isset($metaLinkPages[$index]) ? $metaLinkPages[$index] : ''
+                    );
+                }
+            }
+
+            // 3. Prepare the rest of your form data
             $slug_data = array('title' => $this->input->post('title_pages'));
+            $tags = $this->input->post('meta_tags_pages'); // This is now a comma-separated string
 
             $form_data = array(
-
-                'title' => $this->input->post('title_pages'),
-
-                'page_link' => $this->input->post('link_pages'),
-
-                'slug' =>  $this->slug->create_uri($slug_data),
-
-                'description' =>  $this->input->post('description_pages'),
-
-                'meta_keys' =>  $this->input->post('meta_keys_pages'),
-
-                'meta_description' =>  $this->input->post('meta_description_pages'),
-
-                'meta_tags' =>  $this->input->post('meta_tags_pages'),
-
-                'status' => 1,
-
+                'title'            => $this->input->post('title_pages'),
+                'page_link'        => $this->input->post('link_pages'),
+                'slug'             => $this->slug->create_uri(array('title' => $this->input->post('title_pages'))),
+                'description'      => $this->input->post('description_pages'),
+                'meta_keys'        => $this->input->post('meta_keys_pages'),
+                'meta_description' => $this->input->post('meta_description_pages'),
+                'meta_tags'        => $tags,  // Store as plain text
+                'status'           => 1,
+                'name_link'        => json_encode($combinedData),
+                'imagelink'        => $this->input->post('imagelink'),
             );
 
             if ($this->Common_model->save('pages', $form_data)) {
-
-
-
-                $tags = $this->input->post('meta_tags_pages');
-
-                $tags = explode(',', $tags);
-
+                // Save tags to 'tags' table
+                $tagArray = explode(',', $tags); // Split into array
                 $link = 'pages/' . $this->input->post('link_pages');
 
-                foreach ($tags as $key => $str) {
+                $tagsArray = json_decode($tags, true); // Decode JSON to array
 
-                    $this->db->insert('tags', array('tag' => $str, 'url' => $link));
+                if (is_array($tagsArray)) {
+                    $tagValues = [];
+                    foreach ($tagsArray as $tag) {
+                        $tagValues[] = $tag['value']; // Extract only the value
+                    }
+                    // dd($tagValues);
+                    foreach ($tagValues as $tag) {
+
+                        $tags = explode(' ', $tag);
+                        $tag = implode('-', $tags);
+
+                        $this->db->insert('tags', array('tag' => $tag, 'url' => $link));
+                    }
+                    // Convert array to a comma-separated string before inserting into DB
+                    // $tagsString = implode(',', $tagValues);
+
                 }
 
-                $this->session->set_flashdata('success', 'New Page save successfully.');
+                // foreach ($tagArray as $str) {
+                //     dd($str);
+                //     $this->db->insert('tags', array('tag' => trim($str), 'url' => $link));
+                // }
 
+                $this->session->set_flashdata('success', 'New Page saved successfully.');
                 redirect("admin/pages/all");
             }
         }
 
-
-
+        // On initial load or validation error
         $this->data['meta_title'] = 'Add Pages';
-
-        $this->data['subview'] = 'pages/add';
-
+        $this->data['subview']    = 'pages/add';
         $this->load->view('backend/_layout_main', $this->data);
     }
 
@@ -339,29 +360,51 @@ class Pages extends Backend_Controller
         }
     }
 
-    function tag_add()
+    public function tag_add()
     {
+        // Enable error reporting for debugging
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
 
-        $tag = $this->input->post('tag');
+        header('Content-Type: application/json'); // Ensure proper JSON response
 
-        $all_tag = explode(',', $tag);
+        // Read raw POST data
+        $tag = $this->input->post('tag', true); // Get tag input as plain text
 
-        $valid = true;
+        if (!$tag) {
+            echo json_encode(["status" => "error", "message" => "No tag provided"]);
+            return;
+        }
 
-        foreach ($all_tag as $key => $str) {
+        $tag = trim($tag); // Trim whitespace
 
-            $this->db->where('tag', $str);
+        // Try extracting JSON value manually if stored as JSON string
+        $this->db->select("tag");
+        $query = $this->db->get('tags');
 
-            $query = $this->db->get('tags');
+        $exists = false;
+        foreach ($query->result() as $row) {
+            $dbTag = $row->tag;
 
-            if ($query->num_rows() > 0) {
+            // If the stored tag is a JSON string, extract the value
+            $decodedTag = json_decode($dbTag, true);
+            if (is_array($decodedTag) && isset($decodedTag['value'])) {
+                $dbTag = $decodedTag['value'];
+            }
 
-                echo "have";
-
-                exit;
+            if ($dbTag === $tag) {
+                $exists = true;
+                break;
             }
         }
 
-        echo "no";
+        if ($exists) {
+            echo json_encode(["status" => "have", "message" => "Tag already exists"]);
+        } else {
+            echo json_encode(["status" => "no", "message" => "Tag is available"]);
+        }
+
+        exit;
     }
 }

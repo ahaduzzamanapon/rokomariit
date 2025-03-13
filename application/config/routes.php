@@ -58,6 +58,8 @@ $route['translate_uri_dashes'] 	= FALSE;
 $route['article/(:any)'] 		  = 'site/article/$1';
 $route['service/(:any)'] 		  = 'site/services/$1';
 $route['pages/(:any)'] 		      = 'site/pages/$1';
+$route['pages']                   = 'site/allPages';
+$route['tag/(:any)']              = 'site/tag/$1';
 
 $route['events'] 				  = 'site/events';
 $route['apply'] 				  = 'site/apply';

@@ -79,13 +79,13 @@
 
                              <div class="row">
                                  <div class="col-md-12 col-lg-12 col-sm-12">
-                                     <input style="border-radius: 5px" type="text" name="name" class="form-control" placeholder="Name">
+                                     <input style="border-radius: 5px" type="text" name="name" class="form-control" placeholder="Name" required>
                                  </div>
                                  <div class="col-md-12 col-lg-12 col-sm-12">
-                                     <input style="border-radius: 5px" type="text" name="phone" class="form-control" placeholder="Phone">
+                                     <input style="border-radius: 5px" type="text" name="phone" class="form-control" placeholder="Phone" required>
                                  </div>
                                  <div class="col-md-12 col-lg-12 col-sm-12">
-                                     <input style="border-radius: 5px" type="text" name="email" class="form-control" placeholder="Email">
+                                     <input style="border-radius: 5px" type="text" name="email" class="form-control" placeholder="Email" required>
                                  </div>
                                  <div class="col-md-12 col-lg-12 col-sm-12">
                                      <textarea style="border-radius: 5px" name="" id="" name="message" cols="30" rows="5" placeholder="Message" class="form-control"></textarea>

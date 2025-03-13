@@ -28,6 +28,9 @@
 
   <link rel="stylesheet" href="<?= base_url(); ?>awedget/assets/plugins/texteditor/editor.css">
 
+    <!-- meta tag  --><!-- Tagify CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet">
+
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= base_url(); ?>awedget/assets/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins

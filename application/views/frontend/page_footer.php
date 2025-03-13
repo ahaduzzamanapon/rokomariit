@@ -35,7 +35,7 @@
          <div class="container">
              <div class="row">
                  <div class="col-sm-12 col-md-12">
-                     <div class="copyright">© Copyright <?= date('Y') ?> All Rights Reserved by <b>Rokomari IT Ltd.</b> |<a href="<?= base_url() ?>terms" target="_blank"> Terms & Conditions</a> |<a href="<?= base_url() ?>privacy-policy" target="_blank"> Privacy Policy</a>
+                     <div class="copyright">© Copyright <?= date('Y') ?> All Rights Reserved by <b>Rokomari IT Ltd.</b> |<a href="<?= base_url() ?>terms" target="_blank"> Terms & Conditions</a> |<a href="<?= base_url() ?>privacy-policy" target="_blank"> Privacy Policy</a>| <a href="<?= base_url() ?>pages" target="_blank"> Pages </a> 
                          <!-- <a href=""> <i class="fa-brands fa-twitter"></i></a> -->
 
                          <ul class="social-icon-footer pull-right hidden-xs">

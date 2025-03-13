@@ -782,6 +782,15 @@ class Site extends Frontend_Controller
         $this->load->view('frontend/_layout_main', $this->data);
     }
 
+    public function allPages()
+    {
+        //   echo "hello";
+        $this->data['pages'] = $this->Site_model->get_pages();
+        $this->data['meta_title'] = 'All Pages';
+        $this->data['subview'] = 'pages';
+        $this->load->view('frontend/_layout_main', $this->data);
+    }
+
     public function pages($page_link)
     {
         // dd('ldsj');  
@@ -795,7 +804,10 @@ class Site extends Frontend_Controller
         }
 
 
-        $this->data['meta_title'] = 'pages';
+        $this->data['meta_keywords'] = $this->data['info']->meta_keys;
+        $this->data['meta_description'] = $this->data['info']->meta_description;
+
+        $this->data['meta_title'] = $this->data['info']->title;
         $this->data['method'] = 'pages';
         $this->data['subview'] = 'pages_details';
 
@@ -978,4 +990,37 @@ class Site extends Frontend_Controller
         $this->data['subview'] = 'privacy-policy';
         $this->load->view('frontend/_layout_main', $this->data);
     }
+
+    public function tag($s)
+    {
+        // dd($s);
+        $this->db->where('tag', $s);
+        $query = $this->db->get('tags')->row();
+
+        if (!empty($query)) {
+            $slug = explode('/', $query->url);
+            if(count($slug) > 1){
+                $slug = $slug[1];
+            }else{
+                redirect('/');
+
+            }
+            
+            $this->db->like('page_link', $slug);
+            $this->data['info'] = $this->db->get('pages')->row();
+            if (empty($this->data['info'])) {
+                redirect('/');
+            }
+    
+            $this->data['meta_keywords'] = $this->data['info']->meta_keys;
+            $this->data['meta_description'] = $this->data['info']->meta_description;
+    
+            $this->data['meta_title'] = $this->data['info']->title;
+            $this->data['subview'] = 'pages_details';
+            $this->load->view('frontend/_layout_main', $this->data);
+        } else {
+            redirect('/');
+        }
+    }
+
 }
