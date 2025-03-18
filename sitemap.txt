@@ -99,3 +99,5 @@ http://localhost/rokomariit/contact-us
 http://localhost/rokomariit/pages/best-hr-payroll-software-in-bangladesh
 http://localhost/rokomariit/pages/10-best-hr-software-in-bangladesh-2024
 http://localhost/rokomariit/pages/best-e-governance-solutions-in-bangladesh
+http://localhost/rokomariit/site/purchase_create/Custom%20Ecommerce%20/93
+http://localhost/rokomariit/site/packages_invoice/93

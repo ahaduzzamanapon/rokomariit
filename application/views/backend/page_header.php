@@ -124,6 +124,16 @@
             <li class="treeview <?= backend_activate_menu_class('purchase_history'); ?>"> <a href="<?= base_url('admin/purchase_history'); ?>"> <i class="fa fa-dashboard"></i> <span>Purchase History</span></a> </li>
 
 
+            <li class="treeview <?= backend_activate_menu_class('payment_gateway'); ?>">
+              <a href="javascript:void();">
+                <i class="fa fa-dashboard"></i> <span>Payment Gateway</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="<?= base_url('admin/PaymentGateway/create') ?>"><i class="fa fa-circle-o"></i> Add Gateway</a></li>
+                <li><a href="<?= base_url('admin/PaymentGateway/index'); ?>"><i class="fa fa-circle-o"></i> All Gateway List</a></li>
+              </ul>
+            </li>
+            
             <li class="treeview <?= backend_activate_menu_class('gallery'); ?>">
               <a href="javascript:void();">
                 <i class="fa fa-dashboard"></i> <span>Gallery</span> <span class="pull-right-container"> <i class="fa fa-angle-left pull-right"></i> </span>

@@ -5,16 +5,6 @@ class Site extends Frontend_Controller
 
     function __construct()
     {
-
-
-        $this->base_url_bkash = 'https://checkout.sandbox.bka.sh/v1.2.0-beta';
-        // $base_url_bkash = 'https://checkout.pay.bka.sh/v1.2.0-beta';
-        $this->app_key = '4f6o0cjiki2rfm34kfdadl1eqq';
-        $this->app_secret = '2is7hdktrekvrbljjh44ll3d9l1dtjo4pasmjvs5vl5qr3fug4b';
-        $this->username = 'sandboxTokenizedUser02';
-        $this->password = 'sandboxTokenizedUser02@12345';
-
-
         parent::__construct();
         $this->config->load('ion_auth', TRUE);
         $this->lang->load('ion_auth');
@@ -216,48 +206,10 @@ class Site extends Frontend_Controller
     }
 
 
-    private function get_token()
-    {
-        $url = 'https://checkout.sandbox.bka.sh/v1.2.0-beta/checkout/token/grant';
-        $headers = [
-            "Content-Type: application/json",
-            "Accept: application/json",
-            'username:' . $this->username,
-            'password:' . $this->password
-        ];
-
-        $post_data = json_encode([
-            'app_key' => $this->app_key,
-            'app_secret' => $this->app_secret,
-        ]);
-
-        $response = $this->curl_post($url, $headers, $post_data);
-        $result = json_decode($response, true);
-
-        if (isset($result['id_token'])) {
-            $this->session->set_userdata('bkash_token', $result['id_token']);
-            return $result['id_token'];
-        }
-        return false;
-    }
-
-    private function curl_post($url, $headers, $post_data)
-    {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        $result = curl_exec($ch);
-        curl_close($ch);
-        return $result;
-    }
-
-
 
     public function initiatePayment($user_id, $package_id, $amount, $due_amount, $total_amount, $purchase_id)
     {
+        // dd($amount);
         $user_info = $this->db->where('id', $user_id)->get('users')->row();
         $package_info = $this->db->where('id', $package_id)->get('packages')->row();
 
@@ -266,36 +218,89 @@ class Site extends Frontend_Controller
             exit;
         }
 
-        $token = $this->session->userdata('bkash_token') ? $this->session->userdata('bkash_token') : $this->get_token();
+        $email = $user_info->email;
+        // $amount = $package_info->amount;
+        $store_id = "aamarpaytest";  // Replace with your Store ID / Merchant ID
+        $signature_key = "dbb74894e82415a2f7ff0ec3a97e4183"; // Replace with your signature key from AamarPay
+        $url = 'https://sandbox.aamarpay.com/jsonpost.php'; // Sandbox URL
+        // $url = 'https://secure.aamarpay.com/jsonpost.php'; // Live URL
+        $success_url = base_url("payment/success/{$user_id}/{$package_id}?due_amount={$due_amount}&total_amount={$total_amount}&purchase_id={$purchase_id}");
+        $fail_url = base_url("payment/fail/{$package_id}?due_amount={$due_amount}&total_amount={$total_amount}&purchase_id={$purchase_id}&user_id={$user_id}");
+        $cancel_url = base_url("payment/cancel/{$package_id}?user_id={$user_id}");
+        $tran_id = "rit" . time() . rand(1111111, 9999999); // Unique transaction ID
 
-        if (!$token) {
-            echo json_encode(["error" => "Failed to get bKash token"]);
+        $this->load->library('curl');
+        // dd($amount);
+        // Prepare data for JSON payload
+        $postData = array(
+            "store_id" => $store_id,
+            "tran_id" => $tran_id,
+            "success_url" => $success_url,
+            "fail_url" => $fail_url,
+            "cancel_url" => $cancel_url,
+            "amount" => $amount,
+            "currency" => "BDT",
+            "signature_key" => $signature_key,
+            "desc" => "Package Payment for " . $package_info->packages_name,
+            "cus_name" => $user_info->first_name . ' ' . $user_info->last_name,
+            "cus_email" => $email,
+            "cus_add1" => "Shapla House 363/H/2",
+            "cus_add2" => "North Pirerbag",
+            "cus_city" => "Dhaka",
+            "cus_state" => "Dhaka",
+            "cus_postcode" => "1207",
+            "cus_country" => "Bangladesh",
+            "cus_phone" => $user_info->phone,
+            "type" => "json"
+        );
+        // dd($postData);
+
+        // Initialize cURL
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($postData),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json'
+            ),
+            // Add these lines to disable SSL verification (for development only)
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => 0,
+        ));
+
+
+        // Execute request and handle potential errors
+        $response = curl_exec($curl);
+
+        if (curl_errno($curl)) {
+            // Handle cURL error
+            echo "cURL Error: " . curl_error($curl);
+            curl_close($curl);
             return;
         }
 
-        $url = $this->base_url_bkash . "/checkout/payment/create";
-        $tran_id = "rit" . time() . rand(1111111, 9999999); // Unique transaction ID
+        curl_close($curl);
 
-
-        $headers = [
-            "Content-Type: application/json",
-            "Authorization: $token",
-            "X-App-Key: " . $this->app_key
-        ];
-        $post_data = json_encode([
-            "amount" => $amount,
-            "currency" => "BDT",
-            "intent" => "sale",
-            "merchantInvoiceNumber" => $tran_id
-        ]);
-
-        $response = $this->curl_post($url, $headers, $post_data);
-        $result = json_decode($response, true);
-
-        if (isset($result['bkashURL'])) {
-            redirect($result['bkashURL']);
+        // Decode response
+        $responseObj = json_decode($response);
+        // dd($responseObj);
+        // Check if payment URL exists and redirect
+        if (isset($responseObj->payment_url) && !empty($responseObj->payment_url)) {
+            $paymentUrl = $responseObj->payment_url;
+            header("Location: " . $paymentUrl);
+            exit();
         } else {
-            echo json_encode(["error" => "Payment failed"]);
+            // Log or display response if payment_url is not available
+            echo "Error in Payment Processing: ";
+            print_r($response);
         }
     }
 
@@ -931,113 +936,44 @@ class Site extends Frontend_Controller
     //     // echo $this->email->print_debugger();
     //     redirect('contact-us');
     // }
-    // public function sendemail()
-    // {
-
-
-    //     $this->data['setting'] = $this->Common_model->get_info('setting');
-    //     // echo $this->session->userdata('captcha_image_text').$this->input->post('captcha_image_submit');
-    //     if ($this->session->userdata('captcha_image_text') === $this->input->post('captcha_image_submit')) {
-    //         // echo "got it";
-    //         $config = array(
-    //             'protocol' => 'smtp',
-    //             'smtp_host' => 'localhost',
-    //             'smtp_port' => 587,
-    //             'smtp_user' => '',
-    //             'smtp_pass' => '',
-    //             'mailtype'  => 'html',
-    //             'charset'   => 'iso-8859-1'
-    //         );
-
-    //         $this->load->library('email', $config);
-    //         $this->email->set_newline("\r\n");
-
-
-    //         $this->email->from($this->input->post('email'), $this->input->post('name'));
-    //         $this->email->to($this->data['setting']->contact_email);
-    //         $this->email->subject($this->input->post('subject'));
-    //         $this->email->message($this->input->post('message'));
-    //         if ($this->email->send()) {
-    //             $this->session->set_flashdata('error', '<div class="alert-alert-danger" style="color:red; display:block">Email Sent Successfully.</div>');
-    //             redirect('contact-us');
-    //         } else {
-    //             $this->session->set_flashdata('error', '<div class="alert-alert-danger" style="color:red; display:block">Email Not Sent.</div>');
-    //             redirect('contact-us');
-    //         }
-    //     } else {
-    //         $this->session->set_flashdata('error', '<div class="alert-alert-danger" style="color:red; display:block">Captcha does not Matched</div>');
-    //         redirect('contact-us');
-    //     }
-    // }
-
     public function sendemail()
     {
-        
-        $this->load->library('form_validation');
 
-        // Validate form inputs
-        $this->form_validation->set_rules('name', 'Name', 'required|trim');
-        $this->form_validation->set_rules('phone', 'Phone', 'required|trim');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim');
-        $this->form_validation->set_rules('message', 'Message', 'required|trim');
-       
-        if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('error', validation_errors());
-            redirect('contact-us');
-        }
-        // Verify Google reCAPTCHA
-        $recaptchaResponse = $this->input->post('g-recaptcha-response');
-        $secretKey = "6Lcy5_cqAAAAAOv-Ak1N7UpcRDl_tAGylXq5o2WC"; // Replace with your actual reCAPTCHA Secret Key
 
-        $verifyResponse = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secretKey}&response={$recaptchaResponse}");
-        $responseData = json_decode($verifyResponse);
+        $this->data['setting'] = $this->Common_model->get_info('setting');
+        // echo $this->session->userdata('captcha_image_text').$this->input->post('captcha_image_submit');
+        if ($this->session->userdata('captcha_image_text') === $this->input->post('captcha_image_submit')) {
+            // echo "got it";
+            $config = array(
+                'protocol' => 'smtp',
+                'smtp_host' => 'localhost',
+                'smtp_port' => 587,
+                'smtp_user' => '',
+                'smtp_pass' => '',
+                'mailtype'  => 'html',
+                'charset'   => 'iso-8859-1'
+            );
 
-        if (!$responseData->success) {
-            $this->session->set_flashdata('error', '<div class="alert alert-danger">Captcha verification failed. Please try again.</div>');
-            redirect('contact-us');
-        }
+            $this->load->library('email', $config);
+            $this->email->set_newline("\r\n");
 
-        // Configure email settings
-        $config = array(
-            'protocol' => 'smtp',
-            'smtp_host' => 'smtp.gmail.com', // Replace with your SMTP host
-            'smtp_user' => 'contact.mysoftheaven@gmail.com', // Your SMTP username
-            'smtp_pass' => 'dzqhjzslkjhdhiis',   // Your SMTP password
-            'smtp_port' => 587,
-            'mailtype'  => 'html',
-            'charset'   => 'utf-8',
-            'newline'   => "\r\n"
-        );
 
-        $this->load->library('email', $config);
-        $this->email->set_newline("\r\n");
-
-        // Prepare email
-        $this->email->from($this->input->post('email'), $this->input->post('name'));
-        $this->email->to('info@rokomariit.com'); // Replace with the recipient email
-        $this->email->subject('Contact Form Submission');
-
-        $message = "
-        <p><strong>Name:</strong> " . $this->input->post('name') . "</p>
-        <p><strong>Phone:</strong> " . $this->input->post('phone') . "</p>
-        <p><strong>Email:</strong> " . $this->input->post('email') . "</p>
-        <p><strong>Message:</strong> " . nl2br($this->input->post('message')) . "</p>
-        ";
-        // print_r($message);
-        // exit;
-        $this->email->message($message);
-
-        // Send email
-        if ($this->email->send()) {
-            $this->session->set_flashdata('success', '<div class="alert alert-success">Email sent successfully!</div>');
+            $this->email->from($this->input->post('email'), $this->input->post('name'));
+            $this->email->to($this->data['setting']->contact_email);
+            $this->email->subject($this->input->post('subject'));
+            $this->email->message($this->input->post('message'));
+            if ($this->email->send()) {
+                $this->session->set_flashdata('error', '<div class="alert-alert-danger" style="color:red; display:block">Email Sent Successfully.</div>');
+                redirect('contact-us');
+            } else {
+                $this->session->set_flashdata('error', '<div class="alert-alert-danger" style="color:red; display:block">Email Not Sent.</div>');
+                redirect('contact-us');
+            }
         } else {
-            $error = $this->email->print_debugger(['headers', 'subject', 'body']);
-            $this->session->set_flashdata('error', '<div class="alert alert-danger">Failed to send email. Error: ' . $error . '</div>');
-        }   
-
-        redirect('contact-us');
+            $this->session->set_flashdata('error', '<div class="alert-alert-danger" style="color:red; display:block">Captcha does not Matched</div>');
+            redirect('contact-us');
+        }
     }
-
 
     public function terms()
     {
@@ -1063,21 +999,22 @@ class Site extends Frontend_Controller
 
         if (!empty($query)) {
             $slug = explode('/', $query->url);
-            if (count($slug) > 1) {
+            if(count($slug) > 1){
                 $slug = $slug[1];
-            } else {
+            }else{
                 redirect('/');
-            }
 
+            }
+            
             $this->db->like('page_link', $slug);
             $this->data['info'] = $this->db->get('pages')->row();
             if (empty($this->data['info'])) {
                 redirect('/');
             }
-
+    
             $this->data['meta_keywords'] = $this->data['info']->meta_keys;
             $this->data['meta_description'] = $this->data['info']->meta_description;
-
+    
             $this->data['meta_title'] = $this->data['info']->title;
             $this->data['subview'] = 'pages_details';
             $this->load->view('frontend/_layout_main', $this->data);
@@ -1085,4 +1022,5 @@ class Site extends Frontend_Controller
             redirect('/');
         }
     }
+
 }

@@ -30,12 +30,12 @@
     <meta name="description" content="<?= isset($meta_description) ? $meta_description : '' ?>">
     <meta name="tag" content="<?= isset($meta_tag) ? $meta_tag : '' ?>">
     <!-- <?php
-        if (isset($meta_tag)) {
-            $meta_tag = $meta_tag;
-        }else{
-            $meta_tag = $meta_keywords;
-        }
-    ?>
+            if (isset($meta_tag)) {
+                $meta_tag = $meta_tag;
+            } else {
+                $meta_tag = $meta_keywords;
+            }
+            ?>
     <meta name="tag" content="<?= $meta_tag ?>"> -->
     <meta name="author" content="Mysoftheaven (BD) Ltd.">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -62,7 +62,8 @@
     <!-- Head Libs -->
     <script src="<?= base_url(); ?>fwedget/assets/plugins/modernizr.custom.js"></script>
 
-    <!-- Google Tag Manager -->
+    <!-- Google recaptcha -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -109,6 +110,28 @@
     </script>
 
 
+    <style>
+        @media screen and (min-width: 350px) and (max-width: 460px) {
+            .navigation{
+                background-color: #45a7e7 !important;
+                border: 2px solid #45a7e7 !important;
+            }
+
+            .sf-menu > li > a {
+                background-color: transparent !important;
+            }
+            .menu-toggle-close .fa {
+                color: #45a7e7 !important;
+                background-color: #fff;
+            }
+
+            .btn-grad-training {
+                padding: 5px 0px !important;
+            }
+
+        }
+    </style>
+
 
     <!-- End Google Tag Manager -->
 
@@ -141,7 +164,7 @@
         </div>
         <div id="preloader-title">Loading</div>
     </div>
-</div> -->
+    </div> -->
     <!-- /PRELOADER -->
 
     <!-- WRAPPER -->
@@ -184,7 +207,7 @@
 
 
                     <!-- Mobile menu toggle button -->
-                    <a href="#" class="menu-toggle btn ripple-effect btn-theme-transparent" style="border: 2px solid; background: #000000e6; width: 70px;" ;><i class="fa fa-bars fa-2x" style="margin-top: 15px;width: 100%!important"></i></a>
+                    <a href="#" class="menu-toggle btn ripple-effect btn-theme-transparent" style="border: 2px solid;" ;><i class="fa fa-bars fa-2x" style="margin-top: 15px; padding: 5px; width: 55px!important;background-color: #45a7e7;"></i></a>
                     <!-- /Mobile menu toggle button -->
 
                     <!-- Navigation -->
@@ -236,9 +259,9 @@
                                                     echo 'active';
                                                 } ?>"><a href="<?= base_url() . 'packages' ?>">Packages</a>
                                     </li>
-                                    <li class="<?php if ($method == 'pages') {
-                                                    echo 'active';
-                                                } ?>"><a href="#">Pages</a>
+                                    <!-- <li class="<?php if ($method == 'pages') {
+                                                        echo 'active';
+                                                    } ?>"><a href="#">Pages</a>
                                         <ul>
                                             <?php
                                             $i = 0;
@@ -252,7 +275,7 @@
                                             }
                                             ?>
                                         </ul>
-                                    </li>
+                                    </li> -->
                                     <!-- <li><a href="<?= base_url() . '#' ?>">E-Learning</a></li> -->
                                     <!-- <li class="<?php if ($method == 'events') {
                                                         echo 'active';

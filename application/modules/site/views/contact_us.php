@@ -58,6 +58,13 @@
              </div>
          </section>
 
+         <?php if ($this->session->flashdata('success')): ?>
+             <div class="alert alert-success">
+                 <a class="close" data-dismiss="alert">&times;</a>
+                 <?php echo $this->session->flashdata('success'); ?>
+             </div>
+         <?php endif; ?>
+
          <section class="page-section color" style="margin-top:-5%;">
              <div class="container">
 
@@ -88,9 +95,13 @@
                                      <input style="border-radius: 5px" type="text" name="email" class="form-control" placeholder="Email" required>
                                  </div>
                                  <div class="col-md-12 col-lg-12 col-sm-12">
-                                     <textarea style="border-radius: 5px" name="" id="" name="message" cols="30" rows="5" placeholder="Message" class="form-control"></textarea>
+                                     <textarea style="border-radius: 5px" id="" name="message" cols="30" rows="5" placeholder="Message" class="form-control"></textarea>
                                  </div>
-                                 <div class="col-md-6 col-lg-6 col-sm-12">
+                                 <div class="col-md-12 col-lg-12 col-sm-12">
+                                     <div class="g-recaptcha" data-sitekey="6Lcy5_cqAAAAADc6-mq5udzT-x649FXjpShLPcCX"></div>
+                                     <div><?php echo form_error('g-recaptcha-response'); ?></div>
+                                 </div>
+                                 <!-- <div class="col-md-6 col-lg-6 col-sm-12">
                                      <div class="form-group">
 
                                          <div class="input-group">
@@ -111,7 +122,7 @@
                                          </p>
                                      </div>
 
-                                 </div>
+                                 </div> -->
                                  <div class="col-md-6 col-lg-6 col-sm-12">
                                      <input type="submit" class="form-control contact-btn" value="SUBMIT">
                                  </div>
