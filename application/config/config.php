@@ -27,7 +27,6 @@ $config['modules_locations'] = array(
 |
 */
 
-
 $hrsale_url = ( 
     (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || 
     (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') 
@@ -37,8 +36,6 @@ $hrsale_url .= "://".$_SERVER['HTTP_HOST'];
 $hrsale_url .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 
 $config['base_url'] = $hrsale_url;
-
-
 /*
 |--------------------------------------------------------------------------
 | Index File

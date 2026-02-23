@@ -24,7 +24,7 @@
                      <div class="contact-info">
                          <div class="col-lg-4">
                              <img src="<?= base_url() ?>gallery_img/location.png" alt="" style="height:35%;width:35%; margin-top:40px;margin-bottom:-10px;">
-                             <p style="color:black;"> Raisa & Shikdhar Tower,3/8 <br> North Pirerbag, Dhaka-1207</p>
+                             <p style="color:black;"> P.R.Tower , 924/1 , Level 8 Begum Rokeya, <br> Prof. Abdullah Sarani, Dhaka 1216</p>
 
                          </div>
                          <div class="col-lg-4">
@@ -143,7 +143,7 @@
 
                          <a href="<?= base_url(); ?>"><img src="<?= base_url(); ?>setting_img/<?= $setting->image_file ?>" alt="Rokomari IT Ltd" width="100px" height="70px" /></a>
 
-                         <h5 style="color:black; font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" style="color:black;"></i>&nbsp;&nbsp;&nbsp;Raisa & Shikdhar Tower,3/8<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;North Pirerbag, Dhaka-1216</p>
+                         <h5 style="color:black; font-family: 'Roboto', sans-serif;"><i class="fa fa-map-marker" style="color:black;"></i>&nbsp;&nbsp;&nbsp;P.R.Tower , 924/1 , Level 8 Begum Rokeya,<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prof. Abdullah Sarani, Dhaka 1216</p>
                          </h5>
                          <h5 style="color:black; font-family: 'Roboto', sans-serif;"><i class="fa fa-phone" style="color:black;"></i>&nbsp;&nbsp; +8801775015791<p>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;+8801913036591</p>
                          </h5>

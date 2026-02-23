@@ -38,7 +38,7 @@
                                         <i class="pull-left fa fa-home"></i>
                                         <div class="media-body">
                                             <strong>Address:</strong><br>
-                                            <? //=$item->address?>  Raisa & Shikder Tower, 3/8, North Pirerbag, Dhaka-1207.
+                                            <? //=$item->address?>  P.R.Tower , 924/1 , Level 8 Begum Rokeya, Prof. Abdullah Sarani, Dhaka 1216
                                         </div>
                                     </div>
                                     <div class="media">

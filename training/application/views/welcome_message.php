@@ -476,13 +476,13 @@
                             <div class="title">
                             <div class="date_time">
                                     <div class="date">
-                                        <p style="color: #0000000"><b>
+                                        <p style="color: #000000"><b>
                                             <!-- <img src="assets/img/course-img/calender.png" alt="" style="height:10%; width:10%;"> -->
                                             <span class="icon-calendar"></span> 
                                             Comming soon</b></p>
                                     </div>
                                     <div class="time">
-                                        <p style="color: #0000000"><b>
+                                        <p style="color: #000000"><b>
                                         <!-- <img src="assets/img/course-img/clock.png" alt="" style="height:30%; width:30%;"> -->
                                             <span class="icon-clock"></span> 
                                             Comming soon</b></p>
@@ -526,10 +526,10 @@
                             <div class="title">
                             <div class="date_time">
                                     <div class="date">
-                                        <p style="color: #0000000"><b><span class="icon-calendar"></span> Comming soon</b></p>
+                                        <p style="color: #000000"><b><span class="icon-calendar"></span> Comming soon</b></p>
                                     </div>
                                     <div class="time">
-                                        <p style="color: #0000000"><b><span class="icon-clock"></span> Comming soon</b></p>
+                                        <p style="color: #000000"><b><span class="icon-clock"></span> Comming soon</b></p>
                                     </div>
                                 </div>
                                 <a href="#"><h5>Free seminar on how to Learn And Develop Yourself</h5></a>
@@ -570,10 +570,10 @@
                             <div class="title">
                             <div class="date_time">
                                     <div class="date">
-                                        <p style="color: #0000000"><b><span class="icon-calendar"></span> 26 April, 2022</b></p>
+                                        <p style="color: #000000"><b><span class="icon-calendar"></span> 26 April, 2022</b></p>
                                     </div>
                                     <div class="time">
-                                        <p style="color: #0000000"><b><span class="icon-clock"></span> 2:30</b></p>
+                                        <p style="color: #000000"><b><span class="icon-clock"></span> 2:30</b></p>
                                     </div>
                                 </div>
                                 <a href="#"><h5>Free seminar on how to Learn And Develop Yourself</h5></a>

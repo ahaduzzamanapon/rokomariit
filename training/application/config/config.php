@@ -25,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 if($_SERVER['HTTP_HOST'] === 'localhost'){
-    $config['base_url'] = 'http://localhost/rokomariit_trainning/training/';
+    $config['base_url'] = 'http://localhost/rokomariit/training/';
 }elseif($_SERVER['HTTP_HOST'] === '192.168.1.126'){
     $config['base_url'] = 'http://192.168.1.126/rokomariit_trainning/training/';
 }else{
